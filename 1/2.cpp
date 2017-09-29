@@ -4,17 +4,22 @@ using namespace std;
 
 int main()
 {
-  int a = 0, b = 0;
+  int a = 0;
+  int b = 0;
   cout << "Введите значения a и b : " << endl;
   cin >> a >> b;
+
   int answer = 0;
+  int sign = a * b;
+  a = abs(a);
+  b = abs(b);
   while (a >= b)
   {
     a -= b;
     ++answer;
   }
 
-  cout << "Неполное частно от деления a на b : " << answer << endl;
+  cout << "Неполное частное от деления a на b : " << ((sign > 0) ? answer : -++answer) << endl;
 
   return 0;
 }
