@@ -1,6 +1,7 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+#include <clocale>
 
 using namespace std;
 
@@ -61,18 +62,23 @@ void qsort(vector<int>& array, int lo, int hi)
 
 int main()
 {
+    setlocale(LC_ALL, "Russian");
+
     int t = 0;
     vector<int> array;
+    cout << "Введите значения элементов в массиве : " << endl;
     while (cin >> t)
     {
         array.push_back(t);
     }
+
     int size = array.size();
     qsort(array, 0, size - 1);
 
     int maxCount = 0;
     int maxCountNumber = array[0];
-    for (int i = 0; i < size; ++i)
+    int i = 0;
+    while (i < size)
     {
         int number = array[i];
         int count = 0;
@@ -88,7 +94,7 @@ int main()
         }
     }
 
-    cout << maxCountNumber << endl;
+    cout << "Наиболее часто встречающийся элемент в массиве - " << maxCountNumber << endl;
 
     return 0;
 }
