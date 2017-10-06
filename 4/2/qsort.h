@@ -2,5 +2,5 @@
 
 #include <vector>
 
-// Quick sort.
+// Sort array using quick sort.
 void qsort(std::vector<int>& array, int lo, int hi);

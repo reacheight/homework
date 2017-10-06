@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <map>
 #include <algorithm>
 
 using namespace std;
@@ -31,17 +32,17 @@ void bubbleSort(vector<int>& v)
 void countingSort(vector<int>& v)
 {
   int maxElement = *max_element(v.begin(), v.end());
-  vector<int> counts(maxElement + 1, 0);
+  map<int, int> counts;
   for (int elem : v)
   {
     ++counts[elem];
   }
   int j = 0;
-  for (int i = 0; i <= maxElement; ++i)
+  for (auto pair : counts)
   {
-    for (int k = 0; k < counts[i]; ++k)
+    for (int k = 0; k < pair.second; ++k)
     {
-      v[j] = i;
+      v[j] = pair.first;
       ++j;
     }
   }
@@ -50,18 +51,20 @@ void countingSort(vector<int>& v)
 int main()
 {
   int t = 0;
-  vector<int> array;
+  vector<int> arrayForBubble;
+  vector<int> arrayForCounting;
   cout << "Введите значения чисел в массиве : " << endl;
   while (cin >> t)
   {
-    array.push_back(t);
+    arrayForBubble.push_back(t);
+    arrayForCounting.push_back(t);
   }
   cout << "Сортировка пузырьком : " << endl;
-  bubbleSort(array);
-  printVector(array);
+  bubbleSort(arrayForBubble);
+  printVector(arrayForBubble);
   cout << "Сортировка подсчётом : " << endl;
-  countingSort(array);
-  printVector(array);
+  countingSort(arrayForCounting);
+  printVector(arrayForCounting);
 
   return 0;
 }

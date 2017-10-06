@@ -13,7 +13,8 @@ int randInt()
 
 bool isContained(const vector<int>& array, int size, int value)
 {
-  int left = 0, right = size - 1;
+  int left = 0;
+  int right = size - 1;
 
   if (size == 0 || array[left] > value || array[right] < value)
   {
@@ -40,7 +41,8 @@ bool isContained(const vector<int>& array, int size, int value)
 int partition(vector<int>& array, int lo, int hi)
 {
   int pivot = array[lo];
-  int i = lo, j = hi;
+  int i = lo;
+  int j = hi;
   while (i <= j)
   {
     while (array[i] < pivot)
@@ -94,7 +96,8 @@ void qsort(vector<int>& array, int lo, int hi)
 
 int main()
 {
-  int n = 0, k = 0;
+  int n = 0;
+  int k = 0;
   cout << "Введите значения n и k: " << endl;
   cin >> n >> k;
   vector<int> array(n);

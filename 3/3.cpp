@@ -8,7 +8,8 @@ using namespace std;
 int partition(vector<int>& array, int lo, int hi)
 {
     int pivot = array[lo];
-    int i = lo, j = hi;
+    int i = lo;
+    int j = hi;
     while (i <= j)
     {
         while (array[i] < pivot)
