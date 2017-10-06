@@ -46,7 +46,6 @@ int main()
   cin >> a >> n;
 
   cout << a << " в степени " << n << " = " << powerLog(a, n);
-  cout << endl << i;
 
   return 0;
 }
