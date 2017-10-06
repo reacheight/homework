@@ -5,7 +5,8 @@ using namespace std;
 
 int main()
 {
-  string s = "", s1 = "";
+  string s = "";
+  string s1 = "";
   int answer = 0;
 
   cout << "Введите S и S1 : " << endl;
@@ -17,20 +18,30 @@ int main()
     {
       bool isSubString = true;
       int start = i;
-      for (int j = 0; j < s1.size(); ++j)
+      int j = 0;
+      while (start < s.size() && j < s1.size())
       {
         if (s[start] != s1[j])
         {
           isSubString = false;
         }
+
         ++start;
+        ++j;
       }
+
+      if (j != s1.size())
+      {
+        isSubString = false;
+      }
+
       if (isSubString)
       {
         ++answer;
       }
     }
   }
+
   cout << "Строка S1 входит в S " << answer << " раз." << endl;
 
   return 0;
