@@ -16,7 +16,8 @@ long long powerLog(int a, int n)
 
   if (n % 2 == 0)
   {
-    return powerLog(a, n / 2) * powerLog(a, n / 2);
+    long long pow = powerLog(a, n / 2);
+    return pow * pow;
   }
 
   return powerLog(a, n - 1) * a;
@@ -45,6 +46,7 @@ int main()
   cin >> a >> n;
 
   cout << a << " в степени " << n << " = " << powerLog(a, n);
+  cout << endl << i;
 
   return 0;
 }
