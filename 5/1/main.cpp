@@ -1,4 +1,5 @@
 #include <iostream>
+#include <clocale>
 
 #include <list.h>
 
@@ -36,6 +37,8 @@ void eraseValue(List* list)
 
 int main()
 {
+    setlocale(LC_ALL, "Russian"); 
+
     List* list = createList();
 
     while (true)
