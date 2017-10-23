@@ -43,6 +43,7 @@ void insertionSort(vector<int>& array, int lo, int hi)
 
 void qsort(vector<int>& array, int lo, int hi)
 {
+  // sort [lo : hi]
   int size = hi - lo + 1;
   if (size < 10)
   {
