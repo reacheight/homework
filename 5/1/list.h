@@ -1,16 +1,19 @@
 #pragma once
 
+// List element structure.
 struct ListElement
 {
     int value;
     ListElement* next;
 };
 
+// List structure.
 struct List
 {
     ListElement* sentinel = new ListElement {};
 };
 
+// Create empty list.
 List* createList();
 
 // Check if the list is empty.

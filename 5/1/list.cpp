@@ -42,18 +42,31 @@ void insert(List* list, int value)
 void erase(List* list, int value)
 {
     ListElement* previous = list->sentinel;
-    while (previous->next->value != value)
+    while (previous->next != nullptr && previous->next->value != value)
     {
         previous = previous->next;
     }
 
-    ListElement* tmp = previous->next;
-    previous->next = tmp->next;
-    delete tmp;
+    if (previous->next != nullptr)
+    {
+        ListElement* tmp = previous->next;
+        previous->next = tmp->next;
+        delete tmp;
+    }
+    else
+    {
+        std::cout << "Такого элемента в списке нет." << std::endl;
+    }
 }
 
 void printList(List *list)
 {
+    if (isEmpty(list))
+    {
+        std::cout << "Список пуст." << std::endl;
+        return ;
+    }
+
     ListElement* start = list->sentinel->next;
 
     while (start != nullptr)

@@ -1,7 +1,7 @@
 #include <iostream>
 #include <clocale>
 
-#include <list.h>
+#include "list.h"
 
 using namespace std;
 
@@ -37,7 +37,7 @@ void eraseValue(List* list)
 
 int main()
 {
-    setlocale(LC_ALL, "Russian"); 
+    setlocale(LC_ALL, "Russian");
 
     List* list = createList();
 
@@ -61,6 +61,7 @@ int main()
 
             case 3 : printList(list);
                      break;
+            default : cout << "Нет команды под таким номером." << endl;
         }
     }
 

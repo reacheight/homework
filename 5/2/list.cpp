@@ -7,13 +7,21 @@ List* createList()
     return new List{};
 }
 
-void deleteList(List *list)
+void deleteList(List* list)
 {
     while (list->head != list->head->next)
     {
         ListElement* newHead = list->head->next;
+
+        ListElement* last = newHead;
+        while (last->next != list->head)
+        {
+            last = last->next;
+        }
+
         delete list->head;
         list->head = newHead;
+        last->next = newHead;
     }
     delete list->head;
     delete list;
@@ -24,7 +32,7 @@ bool isEmpty(List* list)
     return list->head == nullptr;
 }
 
-void insert(ListElement *prev, int value)
+void insert(ListElement* prev, int value)
 {
     ListElement* newElement = new ListElement;
     newElement->value = value;
@@ -43,34 +51,37 @@ void insertFirst(List* list, int value)
     }
     else {
         newHead->next = list->head;
+
+        ListElement* last = list->head;
+        while (last->next != list->head)
+        {
+            last = last->next;
+        }
+
+        last->next = newHead;
     }
 
     list->head = newHead;
 }
 
-ListElement* first(List *list)
+ListElement* first(List* list)
 {
     return list->head;
 }
 
-ListElement* next(ListElement *element)
+ListElement* next(ListElement* element)
 {
     return element->next;
 }
 
-int value(ListElement *element)
+int value(ListElement* element)
 {
     return element->value;
 }
 
-bool isHead(ListElement* prev)
+void erase(List* list, ListElement* prev)
 {
-    return prev->next->value > prev->value && prev->next->value > prev->next->next->value;
-}
-
-void erase(List* list, ListElement *prev)
-{
-    if (isHead(prev))
+    if (prev->next == list->head)
     {
         ListElement* newHead = prev->next->next;
         delete prev->next;
@@ -111,4 +122,16 @@ int listSize(List* list)
     }
 
     return size;
+}
+
+void printList(List* list)
+{
+    std::cout << list->head->value << " ";
+
+    ListElement* start = list->head->next;
+    while (start != list->head)
+    {
+        std::cout << start->value << " ";
+        start = start->next;
+    }
 }

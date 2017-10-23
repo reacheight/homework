@@ -1,11 +1,13 @@
 #pragma once
 
+// List element structure.
 struct ListElement
 {
     int value;
     ListElement* next;
 };
 
+// List structure.
 struct List
 {
     ListElement* head;
@@ -43,3 +45,6 @@ void initializeList(List* list, int n);
 
 // Return size of the list.
 int listSize(List* list);
+
+// Print all elements from the list.
+void printList(List* list);
