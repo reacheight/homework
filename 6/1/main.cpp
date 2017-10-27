@@ -38,7 +38,12 @@ int main()
                 case '*' : result = first * second;
                            break;
 
-                case '/' : result = second / first;
+                case '/' : if (first == 0)
+                           {
+                               cout << "Деление на ноль." << endl;
+                               return 0;
+                           }
+                           result = second / first;
                            break;
 
                 default : cout << "Данная операция не поддерживается" << endl;
