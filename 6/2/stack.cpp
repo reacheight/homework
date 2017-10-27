@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 
 #include "stack.h"
 
@@ -33,29 +34,21 @@ bool isEmpty(Stack* stack)
 
 int pop(Stack* stack)
 {
-    if (!isEmpty(stack))
-    {
-        int value = stack->head->value;
-        StackElement* next = stack->head->next;
-        delete stack->head;
-        stack->head = next;
+    assert(!isEmpty(stack));
 
-        return value;
-    }
+    int value = stack->head->value;
+    StackElement* next = stack->head->next;
+    delete stack->head;
+    stack->head = next;
 
-    std::cout << "Stack is empty, pop returns -1.\n";
-    return -1;
+    return value;
 }
 
 int top(Stack *stack)
 {
-    if (!isEmpty(stack))
-    {
-        return stack->head->value;
-    }
+    assert(!isEmpty(stack));
 
-    std::cout << "Stack is empty, top returns -1.\n";
-    return -1;
+    return stack->head->value;
 }
 
 int size(Stack *stack)
@@ -71,20 +64,14 @@ int size(Stack *stack)
     return result;
 }
 
-void deleteStackElements(StackElement* element)
-{
-    if (element == nullptr)
-    {
-        return;
-    }
-
-    StackElement* next = element->next;
-    delete element;
-    deleteStackElements(next);
-}
-
 void deleteStack(Stack* stack)
 {
-    deleteStackElements(stack->head);
-    delete stack;
+    while (stack->head != nullptr)
+    {
+        StackElement* newHead = stack->head->next;
+        delete stack->head;
+        stack->head = newHead;
+    }
+
+    stack = nullptr;
 }

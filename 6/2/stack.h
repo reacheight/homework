@@ -1,8 +1,5 @@
 #pragma once
 
-// Element of the stack.
-struct StackElement;
-
 // Stack.
 struct Stack;
 
