@@ -42,12 +42,42 @@ bool isEmpty(List *list)
     return list->sentinel->next == nullptr;
 }
 
-void insert(List* list, std::string key, std::string value)
+ListElement* sentinel(List* list)
+{
+    return list->sentinel;
+}
+
+ListElement* first(List* list)
+{
+    return list->sentinel->next;
+}
+
+ListElement* next(ListElement* previous)
+{
+    return previous->next;
+}
+
+bool isEnd(ListElement* element)
+{
+    return element == nullptr;
+}
+
+std::string key(ListElement* element)
+{
+    return element->note.key;
+}
+
+std::string value(ListElement* element)
+{
+    return element->note.value;
+}
+
+void insert(ListElement* previous, std::string key, std::string value)
 {
     ListElement* newElement = new ListElement;
     newElement->note = {key, value};
-    newElement->next = list->sentinel->next;
-    list->sentinel->next = newElement;
+    newElement->next = previous->next;
+    previous->next = newElement;
 }
 
 void printList(List *list)

@@ -2,7 +2,8 @@
 #include <fstream>
 #include <string>
 
-#include <list.h>
+#include "list.h"
+#include "merge_sort.h"
 
 using namespace std;
 
@@ -49,11 +50,14 @@ int main()
 
         if (!in.eof())
         {
-            insert(list, key, value);
+            ListElement* previous = sentinel(list);
+            insert(previous, key, value);
+            previous = next(previous);
         }
     }
 
     printList(list);
+    printList(mergeSort(list));
 
     deleteList(list);
 

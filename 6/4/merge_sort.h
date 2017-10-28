@@ -1,3 +1,3 @@
 #pragma once
 
-void mergeSort(List* list);
+List* mergeSort(List* list);
