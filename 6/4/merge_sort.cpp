@@ -12,13 +12,13 @@ void extend(ListElement* previous, ListElement* start)
     }
 }
 
-List* merge(List* a, List* b)
+List* merge(List* listA, List* listB)
 {
     List* newList = createList();
     ListElement* previous = sentinel(newList);
 
-    ListElement* i = first(a);
-    ListElement* j = first(b);
+    ListElement* i = first(listA);
+    ListElement* j = first(listB);
     while (!isEnd(i) && !isEnd(j))
     {
         if (key(i) <= key(j))
@@ -63,5 +63,6 @@ List* mergeSort(List* list)
 
         return merge(firstHalf, secondHalf);
     }
+
     return list;
 }

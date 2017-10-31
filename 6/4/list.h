@@ -13,7 +13,7 @@ List* createList();
 bool isEmpty(List* list);
 
 // Delete list.
-void deleteList(List* list);
+void deleteList(List*& list);
 
 // Sentinel of the list.
 ListElement* sentinel(List* list);

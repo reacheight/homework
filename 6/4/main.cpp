@@ -1,6 +1,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <locale>
 
 #include "list.h"
 #include "merge_sort.h"
@@ -9,6 +10,8 @@ using namespace std;
 
 int main()
 {
+    setlocale(LC_ALL, "Russian");
+
     ifstream in("database.txt");
 
     if (!in.is_open())
@@ -48,15 +51,15 @@ int main()
             value = name;
         }
 
+        ListElement* previous = sentinel(list);
         if (!in.eof())
-        {
-            ListElement* previous = sentinel(list);
+        {         
             insert(previous, key, value);
             previous = next(previous);
         }
     }
 
-    printList(list);
+    cout << "Отсортированный список:" << endl;
     printList(mergeSort(list));
 
     deleteList(list);

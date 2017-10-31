@@ -25,7 +25,7 @@ List* createList()
     return new List{};
 }
 
-void deleteList(List *list)
+void deleteList(List*& list)
 {
     while (list->sentinel->next != nullptr)
     {
