@@ -1,6 +1,7 @@
 #include <iostream>
+#include <clocale>
 
-#include "binary_tree.h"
+#include "set.h"
 
 using namespace std;
 
@@ -14,18 +15,18 @@ void printMenu()
             "5 - напечатать элементы множества в порядке убывания" << endl;
 }
 
-void insertValue(Tree* tree)
+void insertValue(Set* set)
 {
     cout << "Введите значение, которое вы хотите добавить в множество:" << endl;
     int value = 0;
     cin >> value;
 
-    insert(tree, value);
+    insert(set, value);
 }
 
-bool isTreeEmpty(Tree* tree)
+bool isSetEmpty(Set* set)
 {
-    if (isEmpty(tree))
+    if (isEmpty(set))
     {
         cout << "Множество пусто." << endl;
         return true;
@@ -34,30 +35,32 @@ bool isTreeEmpty(Tree* tree)
     return false;
 }
 
-void eraseValue(Tree* tree)
+void eraseValue(Set* set)
 {
-    if (!isTreeEmpty(tree))
+    if (!isSetEmpty(set))
     {
         cout << "Введите значение, которое вы хотите удалить из множества:" << endl;
         int value = 0;
         cin >> value;
 
-        erase(tree, value);
+        erase(set, value);
     }
 }
 
-void isContainValue(Tree* tree)
+void isContainValue(Set* set)
 {
     cout << "Введите значение, которое вы хотите проверить на пренадлежность множеству:" << endl;
     int value = 0;
     cin >> value;
 
-    cout << "Данное значение " << (isContained(tree, value) ? "содержится " : "не содержится ") << "в множестве." << endl;
+    cout << "Данное значение " << (isContained(set, value) ? "содержится " : "не содержится ") << "в множестве." << endl;
 }
 
 int main()
 {
-    Tree* tree = createTree();
+    setlocale(LC_ALL, "Russian");
+
+    Set* set = createSet();
 
     while (true)
     {
@@ -68,28 +71,28 @@ int main()
 
         switch (command)
         {
-            case 0 : deleteTree(tree);
+            case 0 : deleteSet(set);
                      return 0;
 
-            case 1 : insertValue(tree);
+            case 1 : insertValue(set);
                      break;
 
-            case 2 : eraseValue(tree);
+            case 2 : eraseValue(set);
                      break;
 
-            case 3 : isContainValue(tree);
+            case 3 : isContainValue(set);
                      break;
 
-            case 4 : if (!isTreeEmpty(tree))
+            case 4 : if (!isSetEmpty(set))
                      {
-                        printTree(root(tree));
+                        printSet(root(set));
                         cout << endl;
                      }
                      break;
 
-            case 5 : if (!isTreeEmpty(tree))
+            case 5 : if (!isSetEmpty(set))
                      {
-                        printTree(root(tree), true);
+                        printSet(root(set), true);
                         cout << endl;
                      }
                      break;
