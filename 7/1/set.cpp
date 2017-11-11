@@ -31,107 +31,150 @@ bool isContained(Set* set, int value)
     return position;
 }
 
+void getParentAndPos(Node*& child, Node*& parent, int value, bool isInsert=true)
+{
+    while ((isInsert && child) || (!isInsert && child->value != value))
+    {
+        parent = child;
+        child = (child->value > value) ? child->leftChild : child->rightChild;
+    }
+}
+
+
 void insert(Set* set, int value)
 {
-    if (!isContained(set, value))
+    if (isContained(set, value))
     {
-        Node* start = set->root;
-        Node* parent = nullptr;
-        while (start)
-        {
-            parent = start;
-            start = (start->value > value) ? start->leftChild : start->rightChild;
-        }
+        return;
+    }
 
-        Node* newNode = new Node{};
-        newNode->value = value;
+    Node* start = set->root;
+    Node* parent = nullptr;
+    getParentAndPos(start, parent, value);
 
-        if (!parent)
+    Node* newNode = new Node{};
+    newNode->value = value;
+
+    if (!parent)
+    {
+        set->root = newNode;
+    }
+    else
+    {
+        if (parent->value > value)
         {
-            set->root = newNode;
+            parent->leftChild = newNode;
         }
         else
         {
-            if (parent->value > value)
-            {
-                parent->leftChild = newNode;
-            }
-            else
-            {
-                parent->rightChild = newNode;
-            }
+            parent->rightChild = newNode;
         }
     }
 }
 
+bool isList(Node* node)
+{
+    return !node->leftChild && !node->rightChild;
+}
+
 void erase(Set* set, int value)
 {
-    assert(isContained(set, value) && !isEmpty(set));
+    if (!isContained(set, value) || isEmpty(set))
+    {
+        return;
+    }
 
     Node* position = set->root;
     Node* parent = nullptr;
-    while (position->value != value)
-    {
-        parent = position;
-        position = (position->value > value) ? position->leftChild : position->rightChild;
-    }
+    getParentAndPos(position, parent, value, false);
 
     if (!position->leftChild && !position->rightChild)
     {
         if (!parent)
         {
-            delete position;
             set->root = nullptr;
+            return;
+        }
+
+        if (position->value > parent->value)
+        {
+            parent->rightChild = nullptr;
         }
         else
         {
-            if (position->value > parent->value)
-            {
-                delete position;
-                parent->rightChild = nullptr;
-            }
-            else
-            {
-                delete position;
-                parent->leftChild = nullptr;
-            }
+            parent->leftChild = nullptr;
         }
+
+        delete position;
     }
     else if (position->leftChild && position->rightChild)
     {
         Node* start = position->rightChild;
+        Node* startParent = position;
         while (start->leftChild)
         {
+            startParent = start;
             start = start->leftChild;
         }
 
-        if (!start->leftChild)
+        position->value = start->value;
+
+        if (startParent == position)
         {
-            position->value = start->value;
-            position->rightChild = start->rightChild;
-            delete start;
+            if (position == set->root)
+            {
+                set->root->rightChild = start->rightChild;
+            }
+            else
+            {
+                position->rightChild = start->rightChild;
+            }
         }
         else
         {
-            position->value = start->leftChild->value;
-            delete start->leftChild;
-            start->leftChild = nullptr;
+            startParent->leftChild = start->rightChild;
         }
+
+        delete start;
     }
     else
     {
         if (position->leftChild)
         {
-            position->value = position->leftChild->value;
-            delete position->leftChild;
-            position->leftChild = nullptr;
+            if (parent == nullptr)
+            {
+                set->root = position->leftChild;
+                return;
+            }
+
+            if (position->value > parent->value)
+            {
+                parent->rightChild = position->leftChild;
+            }
+            else
+            {
+                parent->leftChild = position->leftChild;
+            }
         }
         else
         {
-            position->value = position->rightChild->value;
-            delete position->rightChild;
-            position->rightChild = nullptr;
+            if (parent == nullptr)
+            {
+                set->root = position->rightChild;
+                return;
+            }
+
+            if (position->value > parent->value)
+            {
+                parent->rightChild = position->rightChild;
+            }
+            else
+            {
+                parent->leftChild = position->rightChild;
+            }
         }
+
+        delete position;
     }
 }
 
@@ -163,6 +206,7 @@ void deleteSetNodes(Node* root)
 void deleteSet(Set*& set)
 {
     deleteSetNodes(set->root);
+    delete set;
     set = nullptr;
 }
 

@@ -26,30 +26,39 @@ void insertValue(Set* set)
 
 bool isSetEmpty(Set* set)
 {
-    if (isEmpty(set))
+    if (!isEmpty(set))
     {
-        cout << "Множество пусто." << endl;
-        return true;
+        return false;
     }
 
-    return false;
+    cout << "Множество пусто." << endl;
+    return true;
+
 }
 
 void eraseValue(Set* set)
 {
-    if (!isSetEmpty(set))
+    if (isSetEmpty(set))
     {
-        cout << "Введите значение, которое вы хотите удалить из множества:" << endl;
-        int value = 0;
-        cin >> value;
-
-        erase(set, value);
+        return;
     }
+
+    cout << "Введите значение, которое вы хотите удалить из множества:" << endl;
+    int value = 0;
+    cin >> value;
+
+    if (!isContained(set, value))
+    {
+        cout << "Данного элемента нет в множестве" << endl;
+        return;
+    }
+
+    erase(set, value);
 }
 
 void isContainValue(Set* set)
 {
-    cout << "Введите значение, которое вы хотите проверить на пренадлежность множеству:" << endl;
+    cout << "Введите значение, которое вы хотите проверить на принадлежность множеству:" << endl;
     int value = 0;
     cin >> value;
 
