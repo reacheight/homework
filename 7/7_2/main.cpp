@@ -1,4 +1,6 @@
 #include <iostream>
+#include <fstream>
+#include <string>
 
 #include "tree.h"
 
@@ -6,11 +8,23 @@ using namespace std;
 
 int main()
 {
-    Tree* tree = createTree("(* (+ 1 1) 2)");
+    ifstream in("file.txt");
+    if (!in.is_open())
+    {
+        cout << "Не удалось открыть файл" << endl;
+        return -1;
+    }
+
+    string query = "";
+    getline(in, query);
+
+    Tree* tree = createTree(query);
 
     printTree(tree);
 
     cout << calculate(tree) << endl;
+
+    deleteTree(tree);
 
     return 0;
 }

@@ -1,12 +1,12 @@
 #include <string>
 #include <iostream>
+#include <cmath>
 
 #include "tree.h"
 
 struct Node
 {
-    std::
-    string value;
+    std::string value;
     Node* leftChild;
     Node* rightChild;
 };
@@ -18,11 +18,14 @@ struct Tree
 
 bool isInteger(std::string str)
 {
-    for (char c : str)
+    for (size_t i = 0; i < str.length(); ++i)
     {
-        if ('0' > c || '9' < c)
+        if ('0' > str[i] || '9' < str[i])
         {
-            return false;
+            if (str[i] != '-' || i != 0 || str.length() <= 1)
+            {
+                return false;
+            }
         }
     }
 
@@ -38,8 +41,17 @@ void parseQuery(std::string& sign, std::string& leftQuery, std::string& rightQue
     {
         if (query[i] == '(')
         {
-            while (query[i] != ')')
+            int bracketCount = -1;
+            while (query[i] != ')' || bracketCount != 0)
             {
+                if (query[i] == '(')
+                {
+                    ++bracketCount;
+                }
+                if (query[i] == ')')
+                {
+                    --bracketCount;
+                }
                 if (isLeft)
                 {
                     leftQuery = leftQuery + query[i];
@@ -138,17 +150,36 @@ void printTree(Tree* tree)
     std::cout << std::endl;
 }
 
+int stringToInteger(std::string str)
+{
+    int result = 0;
+    if (str[0] == '-')
+    {
+        int exp = str.length() - 2;
+        for (size_t i = 1; i < str.length(); ++i)
+        {
+            result -= (str[i] - '0') * pow(10, exp);
+            --exp;
+        }
+
+        return result;
+    }
+
+    int exp = str.length() - 1;
+    for (size_t i = 0; i < str.length(); ++i)
+    {
+        result += (str[i] - '0') * pow(10, exp);
+        --exp;
+    }
+
+    return result;
+}
+
 int recursiveCalculate(Node* node)
 {
     if (isInteger(node->value))
     {
-        int result = 0;
-        for (char c : node->value)
-        {
-            result += c - '0';
-        }
-
-        return result;
+        return stringToInteger(node->value);
     }
 
     int leftOperand= recursiveCalculate(node->leftChild);
@@ -174,5 +205,25 @@ int recursiveCalculate(Node* node)
 
 int calculate(Tree* tree)
 {
-    recursiveCalculate(tree->root);
+    return recursiveCalculate(tree->root);
+}
+
+void deleteTreeElements(Node* node)
+{
+    if (!node)
+    {
+        return;
+    }
+
+    deleteTreeElements(node->leftChild);
+    deleteTreeElements(node->rightChild);
+
+    delete node;
+}
+
+void deleteTree(Tree*& tree)
+{
+    deleteTreeElements(tree->root);
+    delete tree;
+    tree = nullptr;
 }

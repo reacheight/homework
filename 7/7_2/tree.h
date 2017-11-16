@@ -13,4 +13,4 @@ void printTree(Tree* tree);
 int calculate(Tree* tree);
 
 // Delete tree.
-void deleteTree(Tree* tree);
+void deleteTree(Tree*& tree);
