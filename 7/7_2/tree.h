@@ -3,7 +3,7 @@
 // Structure of the tree.
 struct Tree;
 
-// Create tree and initilize it with arithmetic expression.
+// Create tree and initialize with arithmetic expression.
 Tree* createTree(std::string query);
 
 // Print tree in the prefix form.
