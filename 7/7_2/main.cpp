@@ -17,6 +17,7 @@ int main()
 
     string query = "";
     getline(in, query);
+    in.close();
 
     Tree* tree = createTree(query);
 
