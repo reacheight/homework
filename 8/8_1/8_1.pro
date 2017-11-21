@@ -4,8 +4,8 @@ CONFIG -= app_bundle
 CONFIG -= qt
 
 SOURCES += main.cpp \
-    splaytree.cpp
+    associativeArray.cpp
 
 HEADERS += \
-    splaytree.h
+    associativeArray.h
 

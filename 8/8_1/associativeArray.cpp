@@ -1,6 +1,6 @@
 #include <string>
 
-#include "splaytree.h"
+#include "аssociativeАrray.h"
 
 using namespace std;
 
@@ -12,19 +12,19 @@ struct Node
     Node* rightChild;
 };
 
-struct Tree
+struct Map
 {
     Node* root{};
 };
 
-Tree* createTree()
+Map* createMap()
 {
-    return new Tree{};
+    return new Map{};
 }
 
-string find(Tree* tree, string key)
+string find(Map* map, string key)
 {
-    Node* current_pos = tree->root;
+    Node* current_pos = map->root;
     while (current_pos && current_pos->key != key)
     {
         current_pos = (key > current_pos->key) ? current_pos->rightChild : current_pos->leftChild;
@@ -38,14 +38,14 @@ string find(Tree* tree, string key)
     return "";
 }
 
-bool isContained(Tree* tree, string key)
+bool isContained(Map* map, string key)
 {
-    return find(tree, key) != "";
+    return find(map, key) != "";
 }
 
-void push(Tree* tree, string key, string value)
+void push(Map* map, string key, string value)
 {
-    Node* current_pos = tree->root;
+    Node* current_pos = map->root;
     Node* parent = nullptr;
     while (current_pos)
     {
@@ -57,7 +57,7 @@ void push(Tree* tree, string key, string value)
 
     if (!parent)
     {
-        tree->root = newNode;
+        map->root = newNode;
         return;
     }
 
@@ -127,30 +127,30 @@ void recursiveDeleteElement(Node*& node, string key)
     }
 }
 
-void deleteElement(Tree* tree, string key)
+void erase(Map* map, string key)
 {
-    if (isContained(tree, key))
+    if (isContained(map, key))
     {
-        recursiveDeleteElement(tree->root, key);
+        recursiveDeleteElement(map->root, key);
     }
 }
 
-void deleteTreeElements(Node* node)
+void deleteMapElements(Node* node)
 {
     if (!node)
     {
         return;
     }
 
-    deleteTreeElements(node->leftChild);
-    deleteTreeElements(node->rightChild);
+    deleteMapElements(node->leftChild);
+    deleteMapElements(node->rightChild);
     delete node;
 }
 
-void deleteTree(Tree*& tree)
+void deleteMap(Map*& map)
 {
-    deleteTreeElements(tree->root);
+    deleteMapElements(map->root);
 
-    delete tree;
-    tree = nullptr;
+    delete map;
+    map = nullptr;
 }

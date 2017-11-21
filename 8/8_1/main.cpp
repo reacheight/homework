@@ -1,13 +1,12 @@
 #include <iostream>
-#include <string>
 
-#include "splaytree.h"
+#include "аssociativeАrray.h"
 
 using namespace std;
 
 int main()
 {
-    Tree* map = createTree();
+    Map* map = createMap();
     push(map, "keyM", "100");
     push(map, "keyF", "50");
     push(map, "keyT", "200");
@@ -15,11 +14,13 @@ int main()
     push(map, "keyB", "25");
     push(map, "keyW", "250");
 
-    deleteElement(map, "keyM");
+    erase(map, "keyM");
+
+    cout << find(map, "keyH") << endl;
 
     cout << isContained(map, "keyB") << " " << isContained(map, "keyM") << endl;
 
-    deleteTree(map);
+    deleteMap(map);
 
     return 0;
 }
