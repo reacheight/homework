@@ -6,8 +6,12 @@ struct Tree;
 // Function to create tree.
 Tree* createTree();
 
-void push(Tree* tree, string key, string value);
+void push(Tree* tree, std::string key, std::string value);
 
-string find(Tree* tree, string key);
+std::string find(Tree* tree, std::string key);
 
-void deleteElement(Tree* tree, string key);
+bool isContained(Tree* tree, std::string key);
+
+void deleteElement(Tree* tree, std::string key);
+
+void deleteTree(Tree*& tree);
