@@ -10,6 +10,7 @@ struct Node
     string value;
     Node* leftChild;
     Node* rightChild;
+    Node* parent;
 };
 
 struct Map
@@ -53,7 +54,7 @@ void push(Map* map, string key, string value)
         current_pos = (key > current_pos->key) ? current_pos->rightChild : current_pos->leftChild;
     }
 
-    Node* newNode = new Node{key, value, nullptr, nullptr};
+    Node* newNode = new Node{key, value, nullptr, nullptr, parent};
 
     if (!parent)
     {
@@ -154,43 +155,3 @@ void deleteMap(Map*& map)
     delete map;
     map = nullptr;
 }
-
-Node* getParent(Map* map, Node* node)
-{
-    Node* parent = map->root;
-
-    while (parent->leftChild != node && parent->rightChild != node)
-    {
-        parent = (node->key > parent->key) ? parent->rightChild : parent->leftChild;
-    }
-
-    return parent;
-}
-
-void zig(Map* map, Node* node)
-{
-    if (node->key > map->root)
-    {
-        map->root->rightChild = node->leftChild;
-        node->leftChild = map->root;
-        map->root = node;
-    }
-    else
-    {
-        map->root->leftChild = node->rightChild;
-        node->rightChild = map->root;
-        map->root = node;
-    }
-}
-
-//void zigZig(Map* map, Node* node)
-//{
-//    Node* parent = getParent(map, node);
-
-//    if (node->key > parent->key && parent->key > getParent(parent)->key)
-//    {
-
-//    }
-//}
-
-
