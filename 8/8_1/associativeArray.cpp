@@ -155,3 +155,49 @@ void deleteMap(Map*& map)
     delete map;
     map = nullptr;
 }
+
+void set_parent(Node* child, Node* parent)
+{
+    if (child)
+    {
+        child->parent = parent;
+    }
+}
+
+void keep_parent(Node* node)
+{
+    set_parent(node->leftChild, node);
+    set_parent(node->rightChild, node);
+}
+
+void rotate(Node* node, Node* parent)
+{
+    Node* gparent = parent->parent;
+
+    if (gparent)
+    {
+        if (gparent->leftChild == parent)
+        {
+            gparent->leftChild = node;
+        }
+        else
+        {
+            gparent->rightChild = node;
+        }
+    }
+
+    if (parent->leftChild == node)
+    {
+        parent->leftChild = node->rightChild;
+        node->rightChild = parent;
+    }
+    else
+    {
+        parent->rightChild = node->leftChild;
+        node->leftChild = parent;
+    }
+
+    keep_parent(node);
+    keep_parent(parent);
+    node->parent = gparent;
+}
