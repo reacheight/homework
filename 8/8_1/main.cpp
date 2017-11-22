@@ -12,7 +12,8 @@ int main()
     push(map, "keyT", "200");
     push(map, "keyH", "75");
     push(map, "keyB", "25");
-    push(map, "keyW", "250");
+    push(map, "keyX", "250");
+    push(map, "keyZ", "adf");
 
     erase(map, "keyM");
 

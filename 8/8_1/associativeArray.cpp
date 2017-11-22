@@ -23,13 +23,74 @@ Map* createMap()
     return new Map{};
 }
 
+Node* getNode(Map* map, string key)
+{
+    Node* node = map->root;
+
+    while (node && node->key != key)
+    {
+        node = (key > node->key) ? node->rightChild : node->leftChild;
+    }
+
+    return node;
+}
+
+void setNode(Node* node, Node* parent, Node* value)
+{
+    if (!parent)
+    {
+        return;
+    }
+
+    if (parent->leftChild == node)
+    {
+        parent->leftChild = value;
+    }
+    else
+    {
+        parent->rightChild = value;
+    }
+}
+
+void setRootOrNode(Map* map, Node* node, Node* parent, Node* value)
+{
+    if (!parent)
+    {
+        map->root = value;
+    }
+    else
+    {
+        setNode(node, parent, value);
+    }
+}
+
+Node* findMax(Node* node)
+{
+    while (node->rightChild)
+    {
+        node = node->rightChild;
+    }
+
+    return node;
+}
+
+void setParent(Node* child, Node* parent)
+{
+    if (child)
+    {
+        child->parent = parent;
+    }
+}
+
+void keepParent(Node* node)
+{
+    setParent(node->leftChild, node);
+    setParent(node->rightChild, node);
+}
+
 string find(Map* map, string key)
 {
-    Node* current_pos = map->root;
-    while (current_pos && current_pos->key != key)
-    {
-        current_pos = (key > current_pos->key) ? current_pos->rightChild : current_pos->leftChild;
-    }
+    Node* current_pos = getNode(map, key);
 
     if (current_pos)
     {
@@ -72,67 +133,44 @@ void push(Map* map, string key, string value)
     }
 }
 
-void recursiveDeleteElement(Node*& node, string key)
+void erase(Map* map, string key)
 {
-    if (key > node->key)
+    if (!isContained(map, key))
     {
-        recursiveDeleteElement(node->rightChild, key);
         return;
     }
-    else if (key < node->key)
-    {
-        recursiveDeleteElement(node->leftChild, key);
-        return;
-    }
+
+    Node* node = getNode(map, key);
+    Node* parent = node->parent;
 
     if (!node->leftChild && !node->rightChild)
     {
+        setRootOrNode(map, node, parent, nullptr);
         delete node;
-        node = nullptr;
-    }
-    else if (!node->leftChild)
-    {
-        Node* newNode = node->rightChild;
-        delete node;
-        node = newNode;
     }
     else if (!node->rightChild)
     {
-        Node* newNode = node->leftChild;
+        setRootOrNode(map, node, parent, node->leftChild);
+        node->leftChild->parent = parent;
         delete node;
-        node = newNode;
+    }
+    else if (!node->leftChild)
+    {
+        setRootOrNode(map, node, parent, node->rightChild);
+        node->rightChild->parent = parent;
+        delete node;
     }
     else
     {
-        Node* maxLeftParent = node->leftChild;
+        Node* max = findMax(node->leftChild);
 
-        if (!maxLeftParent->rightChild)
-        {
-            Node* newRightChild = node->rightChild;
-            delete node;
-            node = maxLeftParent;
-            node->rightChild = newRightChild;
+        string newKey = max->key;
+        string newValue = max->value;
 
-            return;
-        }
+        erase(map, max->key);
 
-        while (maxLeftParent->rightChild->rightChild)
-        {
-            maxLeftParent = maxLeftParent->rightChild;
-        }
-
-        node->key = maxLeftParent->rightChild->key;
-        node->value = maxLeftParent->rightChild->value;
-
-        recursiveDeleteElement(maxLeftParent->rightChild, maxLeftParent->rightChild->key);
-    }
-}
-
-void erase(Map* map, string key)
-{
-    if (isContained(map, key))
-    {
-        recursiveDeleteElement(map->root, key);
+        node->key = newKey;
+        node->value = newValue;
     }
 }
 
@@ -156,34 +194,13 @@ void deleteMap(Map*& map)
     map = nullptr;
 }
 
-void set_parent(Node* child, Node* parent)
-{
-    if (child)
-    {
-        child->parent = parent;
-    }
-}
-
-void keep_parent(Node* node)
-{
-    set_parent(node->leftChild, node);
-    set_parent(node->rightChild, node);
-}
-
 void rotate(Node* node, Node* parent)
 {
     Node* gparent = parent->parent;
 
     if (gparent)
     {
-        if (gparent->leftChild == parent)
-        {
-            gparent->leftChild = node;
-        }
-        else
-        {
-            gparent->rightChild = node;
-        }
+        setNode(parent, gparent, node);
     }
 
     if (parent->leftChild == node)
@@ -197,7 +214,7 @@ void rotate(Node* node, Node* parent)
         node->leftChild = parent;
     }
 
-    keep_parent(node);
-    keep_parent(parent);
+    keepParent(node);
+    keepParent(parent);
     node->parent = gparent;
 }
