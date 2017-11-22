@@ -88,12 +88,72 @@ void keepParent(Node* node)
     setParent(node->rightChild, node);
 }
 
+void rotate(Node* parent, Node* node)
+{
+    Node* gparent = parent->parent;
+
+    if (gparent)
+    {
+        setNode(parent, gparent, node);
+    }
+
+    if (parent->leftChild == node)
+    {
+        parent->leftChild = node->rightChild;
+        node->rightChild = parent;
+    }
+    else
+    {
+        parent->rightChild = node->leftChild;
+        node->leftChild = parent;
+    }
+
+    keepParent(node);
+    keepParent(parent);
+    node->parent = gparent;
+}
+
+void splay(Map* map, Node* node)
+{
+    if (!node->parent)
+    {
+        map->root = node;
+        return;
+    }
+
+    Node* parent = node->parent;
+    Node* gparent = parent->parent;
+
+    if (!gparent)
+    {
+        rotate(parent, node);
+        map->root = node;
+        return;
+    }
+
+    bool zigzig = (gparent->leftChild == parent) == (parent->leftChild == node);
+
+    if (zigzig)
+    {
+        rotate(gparent, parent);
+        rotate(parent, node);
+    }
+    else
+    {
+        rotate(parent, node);
+        rotate(gparent, node);
+    }
+
+    splay(map, node);
+}
+
 string find(Map* map, string key)
 {
     Node* current_pos = getNode(map, key);
 
     if (current_pos)
     {
+        splay(map, current_pos);
         return current_pos->value;
     }
 
@@ -131,6 +191,8 @@ void push(Map* map, string key, string value)
     {
         parent->leftChild = newNode;
     }
+
+    splay(map, newNode);
 }
 
 void erase(Map* map, string key)
@@ -172,6 +234,11 @@ void erase(Map* map, string key)
         node->key = newKey;
         node->value = newValue;
     }
+
+    if (parent)
+    {
+        splay(map, parent);
+    }
 }
 
 void deleteMapElements(Node* node)
@@ -192,29 +259,4 @@ void deleteMap(Map*& map)
 
     delete map;
     map = nullptr;
-}
-
-void rotate(Node* node, Node* parent)
-{
-    Node* gparent = parent->parent;
-
-    if (gparent)
-    {
-        setNode(parent, gparent, node);
-    }
-
-    if (parent->leftChild == node)
-    {
-        parent->leftChild = node->rightChild;
-        node->rightChild = parent;
-    }
-    else
-    {
-        parent->rightChild = node->leftChild;
-        node->leftChild = parent;
-    }
-
-    keepParent(node);
-    keepParent(parent);
-    node->parent = gparent;
 }
