@@ -50,6 +50,8 @@ int main()
         world[i] = {c};
     }
 
+    in.close();
+
     int countOfUsedCities = k;
     while (countOfUsedCities < n)
     {
