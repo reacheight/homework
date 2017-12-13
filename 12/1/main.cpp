@@ -8,7 +8,8 @@ using namespace std;
 
 const string SEP = "#";
 
-vector<int> prefix_function(string s) {
+vector<int> prefix_function(string s)
+{
     int n = s.length();
     vector<int> pi(n, 0);
 
