@@ -6,7 +6,8 @@
 
 using namespace std;
 
-int main() {
+int main()
+{
     setlocale(LC_ALL, "Russian");
 
     ifstream in("input.txt");
