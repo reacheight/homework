@@ -28,6 +28,13 @@ int main() {
 
     cout << "Таблица частоты слов:" << endl;
     printTable(table);
+
+    cout << "Коэффициент заполнения L = " << fillCoeff(table) << endl;
+
+    auto maxAndMid = maxAndMidSizeOfSegment(table);
+    cout << "Максимальная длина списка в сегменте равна " << maxAndMid.first << endl;
+    cout << "Средняя длина списка в сегменте равна " << maxAndMid.second << endl;
+
     deleteHashTable(table);
 
     return 0;

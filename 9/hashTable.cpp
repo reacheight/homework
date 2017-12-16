@@ -7,7 +7,7 @@
 
 using namespace std;
 
-const int SIZE = 1000;
+const int SIZE = 150;
 
 struct HashTable
 {
@@ -75,4 +75,31 @@ void deleteHashTable(HashTable*& table)
     }
     delete table;
     table = nullptr;
+}
+
+pair<int, int> maxAndMidSizeOfSegment(HashTable* table)
+{
+    int cnt = 0;
+    int sizeSum = 0;
+    int maxSize = 0;
+    for (int i = 0; i < SIZE; ++i)
+    {
+        auto curSize = listSize(table->array[i]);
+        sizeSum += curSize;
+        cnt += curSize;
+        maxSize = max(maxSize, curSize);
+    }
+
+    return {maxSize, sizeSum / cnt};
+};
+
+double fillCoeff(HashTable* table)
+{
+    int cnt = 0;
+    for (int i = 0; i < SIZE; ++i)
+    {
+        cnt += listSize(table->array[i]);
+    }
+
+    return (double) cnt / SIZE;
 }
