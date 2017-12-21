@@ -1,5 +1,6 @@
 #include <iostream>
 #include <string>
+#include <clocale>
 
 using namespace std;
 
@@ -19,7 +20,10 @@ enum class Status
 
 int main()
 {
-    string str;
+    setlocale(LC_ALL, "Russian");
+    
+    string str = "";
+    cout << "Введите последовательность символов: " << endl;
     cin >> str;
 
     Status state = Status::start;
