@@ -19,7 +19,7 @@ void printVertices(vector<vector<int>>& graph, int start)
         int vertex = queue.front();
         cout << vertex << " ";
         queue.pop();
-        
+
         for (int i = 0; i < graph[vertex].size(); ++i)
         {
             int to = graph[vertex][i];
@@ -32,7 +32,8 @@ void printVertices(vector<vector<int>>& graph, int start)
     }
 }
 
-int main() {
+int main()
+{
     setlocale(LC_ALL, "Russian");
 
     ifstream in("input.txt");
