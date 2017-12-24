@@ -167,12 +167,19 @@ bool isContained(Map* map, string key)
 
 void push(Map* map, string key, string value)
 {
-    Node* current_pos = map->root;
-    Node* parent = nullptr;
-    while (current_pos)
+    if (isContained(map, key))
     {
-        parent = current_pos;
-        current_pos = (key > current_pos->key) ? current_pos->rightChild : current_pos->leftChild;
+        auto node = getNode(map, key);
+        node->value = value;
+        return;
+    }
+
+    Node* currentPos = map->root;
+    Node* parent = nullptr;
+    while (currentPos)
+    {
+        parent = currentPos;
+        currentPos = (key > currentPos->key) ? currentPos->rightChild : currentPos->leftChild;
     }
 
     Node* newNode = new Node{key, value, nullptr, nullptr, parent};
