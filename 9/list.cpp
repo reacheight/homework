@@ -40,12 +40,7 @@ void insert(List* list, string key, int value)
     ListElement *newHead = new ListElement{};
     newHead->key = key;
     newHead->value = value;
-    newHead->next = nullptr;
-
-    if (list->head)
-    {
-        newHead->next = list->head->next;
-    }
+    newHead->next = list->head;
 
     list->head = newHead;
 }
