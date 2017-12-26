@@ -23,7 +23,7 @@ Map* createMap()
     return new Map{};
 }
 
-Node* getNode(Map* map, string key)
+Node* getNode(Map* map, const string& key)
 {
     Node* node = map->root;
 
@@ -147,25 +147,25 @@ void splay(Map* map, Node* node)
     splay(map, node);
 }
 
-string find(Map* map, string key)
+string find(Map* map, const string& key)
 {
-    Node* current_pos = getNode(map, key);
+    Node* currentPos = getNode(map, key);
 
-    if (current_pos)
+    if (currentPos)
     {
-        splay(map, current_pos);
-        return current_pos->value;
+        splay(map, currentPos);
+        return currentPos->value;
     }
 
     return "";
 }
 
-bool isContained(Map* map, string key)
+bool isContained(Map* map, const string& key)
 {
     return find(map, key) != "";
 }
 
-void push(Map* map, string key, string value)
+void push(Map* map, const string& key, const string& value)
 {
     if (isContained(map, key))
     {
@@ -202,7 +202,7 @@ void push(Map* map, string key, string value)
     splay(map, newNode);
 }
 
-void erase(Map* map, string key)
+void erase(Map* map, const string& key)
 {
     if (!isContained(map, key))
     {
