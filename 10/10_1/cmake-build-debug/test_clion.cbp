@@ -8,38 +8,38 @@
 		<Option virtualFolders="CMake Files\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/reacheight/cpp/test_clion/cmake-build-debug"/>
+				<Option working_dir="/home/reacheight/prg/homework/10/10_1/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/reacheight/cpp/test_clion/cmake-build-debug"/>
+				<Option working_dir="/home/reacheight/prg/homework/10/10_1/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/reacheight/cpp/test_clion/cmake-build-debug"/>
+				<Option working_dir="/home/reacheight/prg/homework/10/10_1/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="test_clion">
-				<Option output="/home/reacheight/cpp/test_clion/cmake-build-debug/test_clion" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/reacheight/cpp/test_clion/cmake-build-debug"/>
+				<Option output="/home/reacheight/prg/homework/10/10_1/cmake-build-debug/test_clion" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/reacheight/prg/homework/10/10_1/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -54,15 +54,15 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 test_clion"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 test_clion"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="test_clion/fast">
-				<Option output="/home/reacheight/cpp/test_clion/cmake-build-debug/test_clion" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/reacheight/cpp/test_clion/cmake-build-debug"/>
+				<Option output="/home/reacheight/prg/homework/10/10_1/cmake-build-debug/test_clion" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/reacheight/prg/homework/10/10_1/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
@@ -77,17 +77,17 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 test_clion/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/reacheight/cpp/test_clion/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 test_clion/fast"/>
+					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j4 -f &quot;/home/reacheight/prg/homework/10/10_1/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/reacheight/cpp/test_clion/main.cpp">
+		<Unit filename="/home/reacheight/prg/homework/10/10_1/main.cpp">
 			<Option target="test_clion"/>
 		</Unit>
-		<Unit filename="/home/reacheight/cpp/test_clion/CMakeLists.txt">
+		<Unit filename="/home/reacheight/prg/homework/10/10_1/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
 	</Project>

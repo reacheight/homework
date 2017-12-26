@@ -6,22 +6,8 @@
 
 using namespace std;
 
-int main()
+vector<vector<pair<int, int>>> readGraph(int n, int m, ifstream& in)
 {
-    setlocale(LC_ALL, "Russian");
-
-    ifstream in("input.txt");
-
-    if (!in.is_open())
-    {
-        cout << "Не удалось открыть файл." << endl;
-        return 1;
-    }
-
-    int n = 0;
-    int m = 0;
-    in >> n >> m;
-
     vector<vector<pair<int, int>>> graph(n + 1);
 
     for (int i = 0; i < m; ++i)
@@ -36,22 +22,11 @@ int main()
         graph[finish].push_back({start, len});
     }
 
-    int k = 0;
-    in >> k;
+    return graph;
+};
 
-    vector<vector<int>> world(k);
-    vector<bool> isUsed(n + 1, 0);
-
-    for (int i = 0; i < k; ++i)
-    {
-        int c = 0;
-        in >> c;
-        isUsed[c] = 1;
-        world[i] = {c};
-    }
-
-    in.close();
-
+void splitting(vector<vector<pair<int, int>>>& graph, vector<vector<int>>& world, vector<bool>& isUsed, int k, int n)
+{
     int countOfUsedCities = k;
     while (countOfUsedCities < n)
     {
@@ -82,7 +57,10 @@ int main()
             }
         }
     }
+}
 
+void printAnswer(vector<vector<int>>& world, int k)
+{
     for (int i = 0; i < k; ++i)
     {
         cout << "Государство №" << i + 1 << " : ";
@@ -92,6 +70,45 @@ int main()
         }
         cout << endl;
     }
+}
+
+int main()
+{
+    setlocale(LC_ALL, "Russian");
+
+    ifstream in("input.txt");
+
+    if (!in.is_open())
+    {
+        cout << "Не удалось открыть файл." << endl;
+        return 1;
+    }
+
+    int n = 0;
+    int m = 0;
+    in >> n >> m;
+
+    auto graph = readGraph(n, m, in);
+
+    int k = 0;
+    in >> k;
+
+    vector<vector<int>> world(k);
+    vector<bool> isUsed(n + 1, 0);
+
+    for (int i = 0; i < k; ++i)
+    {
+        int c = 0;
+        in >> c;
+        isUsed[c] = 1;
+        world[i] = {c};
+    }
+
+    in.close();
+
+    splitting(graph, world, isUsed, k, n);
+
+    printAnswer(world, k);
 
     return 0;
 }
