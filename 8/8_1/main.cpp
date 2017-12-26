@@ -14,9 +14,9 @@ int main()
     push(map, "keyB", "25");
     push(map, "keyX", "250");
     push(map, "keyZ", "adf");
+    push(map, "keyZ", "aasdf");
 
     erase(map, "keyM");
-    erase(map, "keyZ");
 
     cout << find(map, "keyH") << endl;
 
