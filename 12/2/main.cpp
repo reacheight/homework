@@ -46,7 +46,7 @@ int main()
     vector<int> destination(n, -1);
     minLength[0] = 0;
 
-    cout << "Ребра минимального оставного дерева: " << endl;
+    cout << "Ребра минимального остовного дерева: " << endl;
 
     for (int i = 0; i < n; ++i) {
         int v = -1;
