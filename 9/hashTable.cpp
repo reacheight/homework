@@ -14,11 +14,6 @@ struct HashTable
     List* array[SIZE];
 };
 
-struct HashElement
-{
-    ListElement* element;
-};
-
 HashTable* createHashTable()
 {
     auto newHashTable = new HashTable{};
@@ -35,7 +30,7 @@ int hashFunc(string str)
     int p = 31;
     for (char ch : str)
     {
-        result =result * p + (int) ch;
+        result = result * p + (int) ch;
     }
 
     return result;
