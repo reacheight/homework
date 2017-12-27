@@ -2,8 +2,11 @@
 #include <vector>
 #include <fstream>
 #include <clocale>
+#include <string>
 
 using namespace std;
+
+const string FILENAME = "state_table.txt";
 
 int code(char c)
 {
@@ -20,6 +23,27 @@ int code(char c)
     return 0;
 }
 
+vector<vector<int>> readStateTable(const string& filename)
+{
+    ifstream tableIn(filename);
+
+    int stringsCount = 0;
+    int rowsCount = 0;
+    tableIn >> stringsCount >> rowsCount;
+
+    vector<vector<int>> stateTable(stringsCount, vector<int>(rowsCount));
+    for (auto& string : stateTable)
+    {
+        for (auto& element : string)
+        {
+            tableIn >> element;
+        }
+    }
+    tableIn.close();
+
+    return stateTable;
+}
+
 int main()
 {
     setlocale(LC_ALL, "Russian");
@@ -30,11 +54,8 @@ int main()
         cout << "Не удалось открыть файл." << endl;
         return 1;
     }
-//                                 s   /   *
-    vector<vector<int>> matrix = {{0,  1,  0},
-                                  {0,  1,  2},
-                                  {2,  2,  3},
-                                  {2,  1,  3}};
+
+    vector<vector<int>> stateTable = readStateTable(FILENAME);
 
     int curState = 0;
     int prevState = 0;
@@ -46,7 +67,7 @@ int main()
     while (in.get(c))
     {
         prevState = curState;
-        curState = matrix[curState][code(c)];
+        curState = stateTable[curState][code(c)];
 
         if (prevState == 1 && curState == 2)
         {
