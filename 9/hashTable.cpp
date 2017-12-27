@@ -40,7 +40,7 @@ void addElement(HashTable* table, const string& key)
 {
     int h = hashFunc(key);
 
-    for (auto i = first(table->array[h % SIZE]); !isEnd(i); i = next(i))
+    for (auto i = first(table->array[abs(h % SIZE)]); !isEnd(i); i = next(i))
     {
         if (getKey(i) == key)
         {
