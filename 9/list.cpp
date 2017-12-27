@@ -35,7 +35,7 @@ void deleteList(List*& list)
     list = nullptr;
 }
 
-void insert(List* list, string key, int value)
+void insert(List* list, const string& key, int value)
 {
     ListElement *newHead = new ListElement{};
     newHead->key = key;

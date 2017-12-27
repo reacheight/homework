@@ -36,7 +36,7 @@ int hashFunc(string str)
     return result;
 }
 
-void addElement(HashTable* table, const string key)
+void addElement(HashTable* table, const string& key)
 {
     int h = hashFunc(key);
 

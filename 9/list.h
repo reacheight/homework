@@ -14,7 +14,7 @@ List* createList();
 void deleteList(List*& list);
 
 // Function to insert element to the list (into head).
-void insert(List* list, std::string key, int value);
+void insert(List* list, const std::string& key, int value);
 
 // Function to delete head of the list.
 void eraseFirst(List* list);

@@ -7,7 +7,7 @@ struct HashTable;
 HashTable* createHashTable();
 
 // Function to add element in the table.
-void addElement(HashTable* table, const std::string key);
+void addElement(HashTable* table, const std::string& key);
 
 // Function to print elements from the table.
 void printTable(HashTable* table);
