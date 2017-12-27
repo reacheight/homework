@@ -48,7 +48,7 @@ void addElement(HashTable* table, const string& key)
             return;
         }
     }
-    insert(table->array[h % SIZE], key, 1);
+    insert(table->array[abs(h % SIZE)], key, 1);
 }
 
 void printTable(HashTable* table)
