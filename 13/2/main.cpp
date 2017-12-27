@@ -27,11 +27,11 @@ vector<vector<int>> readStateTable(const string& filename)
 {
     ifstream tableIn(filename);
 
-    int stringsCount = 0;
+    int columnsCount = 0;
     int rowsCount = 0;
-    tableIn >> stringsCount >> rowsCount;
+    tableIn >> rowsCount >> columnsCount;
 
-    vector<vector<int>> stateTable(stringsCount, vector<int>(rowsCount));
+    vector<vector<int>> stateTable(rowsCount, vector<int>(columnsCount));
     for (auto& string : stateTable)
     {
         for (auto& element : string)
