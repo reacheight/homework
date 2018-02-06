@@ -2,12 +2,11 @@
 
 #include "list.h"
 
-void extend(ListElement* previous, ListElement* start)
+void extend(List* list, ListElement* start)
 {
     while (!isEnd(start))
     {
-        insert(previous, key(start), value(start));
-        previous = next(previous);
+        insert(list, getKey(start), getValue(start));
         start = next(start);
     }
 }
@@ -15,54 +14,61 @@ void extend(ListElement* previous, ListElement* start)
 List* merge(List* listA, List* listB)
 {
     List* newList = createList();
-    ListElement* previous = sentinel(newList);
 
     ListElement* i = first(listA);
     ListElement* j = first(listB);
     while (!isEnd(i) && !isEnd(j))
     {
-        if (key(i) <= key(j))
+        if (getKey(i) <= getKey(j))
         {
-            insert(previous, key(i), value(i));
+            insert(newList, getKey(i), getValue(i));
             i = next(i);
         }
         else
         {
-            insert(previous, key(j), value(j));
+            insert(newList, getKey(j), getValue(j));
             j = next(j);
         }
-        previous = next(previous);
     }
-    extend(previous, i);
-    extend(previous, j);
+    extend(newList, i);
+    extend(newList, j);
+
+    deleteList(listA);
+    deleteList(listB);
 
     return newList;
 }
 
-List* mergeSort(List* list)
+void mergeSort(List*& list)
 {
-    if (size(list) > 1)
-    {
-        List* firstHalf = createList();
-        List* secondHalf = createList();
-        ListElement* firstPrev = sentinel(firstHalf);
-        ListElement* secondPrev = sentinel(secondHalf);
-        ListElement* start = first(list);
-        for (int i = 0; i < size(list)/2; ++i)
-        {
-            insert(firstPrev, key(start), value(start));
-            start = next(start);
-        }
-        for (int i = 0; i < size(list) - size(list)/2; ++i)
-        {
-            insert(secondPrev, key(start), value(start));
-            start = next(start);
-        }
-        firstHalf = mergeSort(firstHalf);
-        secondHalf = mergeSort(secondHalf);
+    auto size = listSize(list);
 
-        return merge(firstHalf, secondHalf);
+    if (size <= 1)
+    {
+        return;
     }
 
-    return list;
+    List* firstHalf = createList();
+    List* secondHalf = createList();
+    ListElement* start = first(list);
+    for (int i = 0; i < size; ++i)
+    {
+        if (i < size/2)
+        {
+            insert(firstHalf, getKey(start), getValue(start));
+        }
+        else
+        {
+            insert(secondHalf, getKey(start), getValue(start));
+        }
+
+        start = next(start);
+    }
+
+    mergeSort(firstHalf);
+    mergeSort(secondHalf);
+
+    deleteList(list);
+
+    list = merge(firstHalf, secondHalf);
 }

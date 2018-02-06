@@ -1,4 +1,4 @@
 #pragma once
 
 // Merge sort.
-List* mergeSort(List* list);
+List* mergeSort(List*& list);

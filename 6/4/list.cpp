@@ -3,6 +3,8 @@
 
 #include "list.h"
 
+using namespace std;
+
 struct Note
 {
     std::string key;
@@ -17,7 +19,8 @@ struct ListElement
 
 struct List
 {
-    ListElement* sentinel = new ListElement {};
+    ListElement* head;
+    ListElement* tail;
 };
 
 List* createList()
@@ -27,34 +30,44 @@ List* createList()
 
 void deleteList(List*& list)
 {
-    while (list->sentinel->next != nullptr)
+    while (list->head != nullptr)
     {
-        ListElement* newHead = list->sentinel->next->next;
-        delete list->sentinel->next;
-        list->sentinel->next = newHead;
+        ListElement* newHead = list->head->next;
+        delete list->head;
+        list->head = newHead;
     }
-    delete list->sentinel;
+
+    delete list;
     list = nullptr;
 }
 
-bool isEmpty(List *list)
+void insert(List* list, string key, string value)
 {
-    return list->sentinel->next == nullptr;
-}
+    ListElement* newTail = new ListElement{};
+    newTail->note = {key, value};
+    newTail->next = nullptr;
 
-ListElement* sentinel(List* list)
-{
-    return list->sentinel;
+    if (!list->head)
+    {
+        list->head = newTail;
+    }
+
+    if (list->tail)
+    {
+        list->tail->next = newTail;
+    }
+
+    list->tail = newTail;
 }
 
 ListElement* first(List* list)
 {
-    return list->sentinel->next;
+    return list->head;
 }
 
-ListElement* next(ListElement* previous)
+ListElement* next(ListElement* element)
 {
-    return previous->next;
+    return element->next;
 }
 
 bool isEnd(ListElement* element)
@@ -62,48 +75,22 @@ bool isEnd(ListElement* element)
     return element == nullptr;
 }
 
-std::string key(ListElement* element)
-{
-    return element->note.key;
-}
-
-std::string value(ListElement* element)
+string getValue(ListElement* element)
 {
     return element->note.value;
 }
 
-void insert(ListElement* previous, std::string key, std::string value)
+string getKey(ListElement* element)
 {
-    ListElement* newElement = new ListElement;
-    newElement->note = {key, value};
-    newElement->next = previous->next;
-    previous->next = newElement;
+    return element->note.key;
 }
 
-void printList(List *list)
-{
-    if (isEmpty(list))
-    {
-        std::cout << "Список пуст." << std::endl;
-        return ;
-    }
-
-    ListElement* start = list->sentinel->next;
-
-    while (start != nullptr)
-    {
-        std::cout << start->note.key << " - " << start->note.value << std::endl;
-        start = start->next;
-    }
-
-    std::cout << std::endl;
-}
-
-int size(List *list)
+int listSize(List* list)
 {
     int size = 0;
-    ListElement* start = list->sentinel;
-    while (start->next != nullptr)
+
+    ListElement* start = list->head;
+    while (start)
     {
         ++size;
         start = start->next;
@@ -112,3 +99,26 @@ int size(List *list)
     return size;
 }
 
+void printList(List *list)
+{
+    if (!list->head)
+    {
+        std::cout << "Список пуст." << std::endl;
+        return;
+    }
+
+    ListElement* start = list->head;
+
+    while (start != nullptr)
+    {
+        cout << start->note.key << " - " << start->note.value << endl;
+        start = start->next;
+    }
+
+    cout << endl;
+}
+
+bool isEmpty(List* list)
+{
+    return !list->head;
+}

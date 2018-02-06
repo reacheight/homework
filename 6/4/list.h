@@ -15,9 +15,6 @@ bool isEmpty(List* list);
 // Delete list.
 void deleteList(List*& list);
 
-// Sentinel of the list.
-ListElement* sentinel(List* list);
-
 // First element from the list.
 ListElement* first(List* list);
 
@@ -25,19 +22,19 @@ ListElement* first(List* list);
 ListElement* next(ListElement* previous);
 
 // Key of the element.
-std::string key(ListElement* element);
+std::string getKey(ListElement* element);
 
 // Value of the element.
-std::string value(ListElement* element);
+std::string getValue(ListElement* element);
 
 // Check if element is end of the list.
 bool isEnd(ListElement* element);
 
-// Insert new note to the list.
-void insert(ListElement* previous, std::string key, std::string value);
+// Insert new note to the end of the list.
+void insert(List* list, std::string key, std::string value);
 
 // Print all notes from the list.
 void printList(List* list);
 
 // Size of list.
-int size(List* list);
+int listSize(List* list);

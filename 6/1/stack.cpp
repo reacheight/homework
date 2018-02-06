@@ -64,7 +64,7 @@ int size(Stack *stack)
     return result;
 }
 
-void deleteStack(Stack* stack)
+void deleteStack(Stack*& stack)
 {
     while (stack->head != nullptr)
     {
@@ -73,5 +73,6 @@ void deleteStack(Stack* stack)
         stack->head = newHead;
     }
 
+    delete stack->head;
     stack = nullptr;
 }

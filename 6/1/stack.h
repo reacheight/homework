@@ -22,4 +22,4 @@ int top(Stack* stack);
 int size(Stack* stack);
 
 // Delete stack.
-void deleteStack(Stack* stack);
+void deleteStack(Stack*& stack);

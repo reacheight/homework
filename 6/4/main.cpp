@@ -17,10 +17,10 @@ int main()
     if (!in.is_open())
     {
         cout << "Не удалось открыть файл." << endl;
-        return 0;
+        return 1;
     }
 
-    cout << "Отcортировать записи" << endl << "1 - по именам" << endl << "2 - по записям" << endl;
+    cout << "Отcортировать записи" << endl << "1 - по именам" << endl << "2 - по номерам" << endl;
     int type = 0;
     while (type != 1 && type != 2)
     {
@@ -51,16 +51,15 @@ int main()
             value = name;
         }
 
-        ListElement* previous = sentinel(list);
         if (!in.eof())
-        {         
-            insert(previous, key, value);
-            previous = next(previous);
+        {
+            insert(list, key, value);
         }
     }
 
     cout << "Отсортированный список:" << endl;
-    printList(mergeSort(list));
+    mergeSort(list);
+    printList(list);
 
     deleteList(list);
 
