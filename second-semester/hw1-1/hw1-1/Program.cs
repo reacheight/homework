@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace hw1_1
+namespace Factorial
 {
-    class Program
+    public class Program
     {
-        static int Factorial(int n) => n <= 1 ? 1 : n * Factorial(n - 1);
+        public static int Factorial(int n) => n <= 1 ? 1 : n * Factorial(n - 1);
 
-        static int ReadNonnegativeInt()
+        public static int ReadNonnegativeInt()
         {
             Console.WriteLine("Введите целое неотрицательное число:");
             var inputData = Console.ReadLine();
@@ -29,7 +29,7 @@ namespace hw1_1
             return n;
         }
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var n = ReadNonnegativeInt();
             Console.WriteLine("{0}! = {1}", n, Factorial(n));
