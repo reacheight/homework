@@ -6,11 +6,12 @@ namespace hw1_1
     {
         static int Factorial(int n) => n <= 1 ? 1 : n * Factorial(n - 1);
 
-        static void Main(string[] args)
+        static int ReadNonnegativeInt()
         {
             Console.WriteLine("Введите целое неотрицательное число:");
             var inputData = Console.ReadLine();
             int n;
+
             while (!int.TryParse(inputData, out n) || n < 0)
             {
                 if (n < 0)
@@ -25,6 +26,12 @@ namespace hw1_1
                 inputData = Console.ReadLine();
             }
 
+            return n;
+        }
+
+        static void Main(string[] args)
+        {
+            var n = ReadNonnegativeInt();
             Console.WriteLine("{0}! = {1}", n, Factorial(n));
         }
     }
