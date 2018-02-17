@@ -50,8 +50,7 @@ namespace Fibonacci
         public static void Main(string[] args)
         {
             var n = ReadNonnegativeInt();
-            Console.WriteLine("Число Фибоначчи под номером {0} - {1}", n, Fibonacci(n));
-            Console.Read();
+            Console.WriteLine($"Число Фибоначчи под номером {n} - {Fibonacci(n)}");
         }
     }
 }
