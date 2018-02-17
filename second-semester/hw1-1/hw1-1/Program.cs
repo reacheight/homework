@@ -32,7 +32,7 @@ namespace Factorial
         public static void Main(string[] args)
         {
             var n = ReadNonnegativeInt();
-            Console.WriteLine("{0}! = {1}", n, Factorial(n));
+            Console.WriteLine($"{n}! = {Factorial(n)}");
         }
     }
 }
