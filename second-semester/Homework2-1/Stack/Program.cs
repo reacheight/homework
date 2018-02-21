@@ -37,8 +37,6 @@ namespace Stack
 
             Console.WriteLine(oddStack.Top());
             Console.WriteLine(evenStack.Top());
-
-            Console.Read();
         }
     }
 }
