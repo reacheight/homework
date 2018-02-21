@@ -16,9 +16,7 @@ namespace Stack
         /// <param name="value">The value of the integer added to the stack</param>
         public void Push(int value)
         {
-            var newElement = new StackElement(value, this.head);
-            this.head = newElement;
-
+            this.head = new StackElement(value, this.head);
             ++this.size;
         }
 
@@ -59,10 +57,7 @@ namespace Stack
         /// Get stack size
         /// </summary>
         /// <returns>Stack size</returns>
-        public int Size()
-        {
-            return this.size;
-        }
+        public int Size() => this.size;
 
         /// <summary>
         /// Check if the stack is empty
