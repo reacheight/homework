@@ -7,16 +7,38 @@ namespace Stack
         public static void Main(string[] args)
         {
             var stack = new Stack();
-            stack.Push(3);
-            stack.Push(7);
-
-            Console.WriteLine(stack.Size());
-            Console.WriteLine(stack.Pop());
-
-            if (!stack.IsEmpty())
+            for (var i = 0; i < 10; ++i)
             {
-                Console.WriteLine(stack.Top());
+                stack.Push(i);
             }
+
+            Console.WriteLine($"Stack size is {stack.Size()}");
+
+            var oddStack = new Stack();
+            var evenStack = new Stack();
+
+            var size = stack.Size();
+
+            for (var i = 0; i < size; ++i)
+            {
+                var top = stack.Pop();
+
+                Console.WriteLine($"Top element is {top}");
+
+                if (top % 2 == 0)
+                {
+                    evenStack.Push(top);
+                }
+                else
+                {
+                    oddStack.Push(top);
+                }
+            }
+
+            Console.WriteLine(oddStack.Top());
+            Console.WriteLine(evenStack.Top());
+
+            Console.Read();
         }
     }
 }
