@@ -43,7 +43,7 @@ namespace List
                 return;
             }
 
-            var previous = this.Previous(position);
+            var previous = this.GetNode(position - 1);
             var newNode = new Node<T>(value, previous.Next);
             previous.Next = newNode;
 
@@ -68,17 +68,17 @@ namespace List
                 return;
             }
 
-            var current = this.Previous(position + 1);
-            var previous = this.Previous(position);
+            var current = this.GetNode(position);
+            var previous = this.GetNode(position - 1);
             previous.Next = current.Next;
 
             --this.Size;
         }
 
-        private Node<T> Previous(int position)
+        private Node<T> GetNode(int position)
         {
             var start = this.head;
-            for (var i = 0; i < position - 1; ++i)
+            for (var i = 0; i < position; ++i)
             {
                 start = start.Next;
             }
