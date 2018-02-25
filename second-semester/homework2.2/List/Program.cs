@@ -2,18 +2,24 @@
 
 namespace List
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        private static void Main(string[] args)
         {
-            var list = new List<double>();
+            var list = new List<int>();
 
-            for (int i = 0; i < 10; ++i)
+            for (int i = 1; i <= 10; ++i)
             {
-                list.Insert(3.14, i);
+                list.Insert(i, i - 1);
             }
 
-            list.Erase(4);
+            Console.WriteLine(list.Size);
+
+            while (!list.IsEmpty())
+            {
+                list.Erase(0);
+                Console.WriteLine(list.Size);
+            }
         }
 
     }
