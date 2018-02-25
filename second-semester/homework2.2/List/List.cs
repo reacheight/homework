@@ -2,14 +2,33 @@
 
 namespace List
 {
+    /// <summary>
+    /// Class that implements the list
+    /// </summary>
+    /// <typeparam name="T">Type of the elements of the list</typeparam>
     public class List<T>
     {
+        /// <summary>
+        /// Head of the list
+        /// </summary>
         private Node<T> head;
 
+        /// <summary>
+        /// Gets number of elements in the list
+        /// </summary>
         public int Size { get; private set; }
 
+        /// <summary>
+        /// Check if list is empty
+        /// </summary>
+        /// <returns>True if list is empty, false otherwise</returns>
         public bool IsEmpty() => this.Size == 0;
 
+        /// <summary>
+        /// Insert new element to the list
+        /// </summary>
+        /// <param name="value">Value of the element</param>
+        /// <param name="position">Position in which the element is inserted</param>
         public void Insert(T value, int position)
         {
             if (position > this.Size || position < 0)
@@ -31,6 +50,10 @@ namespace List
             ++this.Size;
         }
 
+        /// <summary>
+        /// Remove element from the list
+        /// </summary>
+        /// <param name="position">Position of the removed element</param>
         public void Erase(int position)
         {
             if (position >= this.Size || position < 0)
