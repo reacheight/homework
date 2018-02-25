@@ -4,16 +4,15 @@ namespace List
 {
     public class List<T>
     {
-        private int size;
         private Node<T> head;
 
-        public int Size => this.size;
+        public int Size { get; private set; }
 
-        public bool IsEmpty() => this.size == 0;
+        public bool IsEmpty() => this.Size == 0;
 
         public void Insert(T value, int position)
         {
-            if (position > this.size || position < 0)
+            if (position > this.Size || position < 0)
             {
                 throw new ArgumentException("Неверное значение аргумента");
             }
@@ -27,14 +26,14 @@ namespace List
 
             var previous = this.Previous(position);
             var newNode = new Node<T>(value, previous.Next);
-            previous.SetNext(newNode);
+            previous.Next = newNode;
 
-            ++this.size;
+            ++this.Size;
         }
 
         public void Erase(int position)
         {
-            if (position >= this.size || position < 0)
+            if (position >= this.Size || position < 0)
             {
                 throw new ArgumentException("Неверное значение аргумента.");
             }
@@ -48,9 +47,9 @@ namespace List
 
             var current = this.Previous(position + 1);
             var previous = this.Previous(position);
-            previous.SetNext(current.Next);
+            previous.Next = current.Next;
 
-            --this.size;
+            --this.Size;
         }
 
         private Node<T> Previous(int position)
@@ -67,35 +66,27 @@ namespace List
         private void EraseHead()
         {
             this.head = this.head.Next;
-            --this.size;
+            --this.Size;
         }
 
         private void InsertHead(T value)
         {
             var newHead = new Node<T>(value, this.head);
             this.head = newHead;
-            ++this.size;
+            ++this.Size;
         }
 
         private class Node<T>
         {
-            private readonly T value;
-            private Node<T> next;
-
             public Node(T value, Node<T> next)
             {
-                this.value = value;
-                this.next = next;
+                this.Value = value;
+                this.Next = next;
             }
 
-            public T Value => this.value;
+            public T Value { get; }
 
-            public Node<T> Next => this.next;
-
-            public void SetNext(Node<T> next)
-            {
-                this.next = next;
-            }
+            public Node<T> Next { get; set; }
         }
     }
 }
