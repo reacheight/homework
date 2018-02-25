@@ -75,6 +75,11 @@ namespace List
             --this.Size;
         }
 
+        /// <summary>
+        /// Get element from the list
+        /// </summary>
+        /// <param name="position">Position of the received element</param>
+        /// <returns>Element of the list with this position</returns>
         private Node<T> GetNode(int position)
         {
             var start = this.head;
@@ -86,12 +91,19 @@ namespace List
             return start;
         }
 
+        /// <summary>
+        /// Remove head of the list
+        /// </summary>
         private void EraseHead()
         {
             this.head = this.head.Next;
             --this.Size;
         }
 
+        /// <summary>
+        /// Insert head of the list
+        /// </summary>
+        /// <param name="value">Value of the head of the list</param>
         private void InsertHead(T value)
         {
             var newHead = new Node<T>(value, this.head);
@@ -99,16 +111,31 @@ namespace List
             ++this.Size;
         }
 
+        /// <summary>
+        /// Class that implements list node
+        /// </summary>
+        /// <typeparam name="T">Type of the elements in the list</typeparam>
         private class Node<T>
         {
+            /// <summary>
+            /// Initializes a new instance of the <see cref="Node{T}"/> class
+            /// </summary>
+            /// <param name="value">Value of the new node</param>
+            /// <param name="next">Next node in the list</param>
             public Node(T value, Node<T> next)
             {
                 this.Value = value;
                 this.Next = next;
             }
 
+            /// <summary>
+            /// Gets value of the node
+            /// </summary>
             public T Value { get; }
 
+            /// <summary>
+            /// Gets or sets next node in the list
+            /// </summary>
             public Node<T> Next { get; set; }
         }
     }
