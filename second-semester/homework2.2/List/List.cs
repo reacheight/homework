@@ -14,7 +14,7 @@ namespace List
         {
             if (position > this.Size || position < 0)
             {
-                throw new ArgumentException("Неверное значение аргумента");
+                throw new ArgumentOutOfRangeException("position", "Аргумент должен быть не меньше нуля и не больше текущего размера списка.");
             }
 
             if (position == 0)
@@ -35,7 +35,7 @@ namespace List
         {
             if (position >= this.Size || position < 0)
             {
-                throw new ArgumentException("Неверное значение аргумента.");
+                throw new ArgumentOutOfRangeException("position", "Аргумент должен быть не меньше нуля и меньше текущего размера списка.");
             }
 
             if (position == 0)
