@@ -80,7 +80,15 @@ namespace List
         /// </summary>
         /// <param name="position">Position of the element whose value is got</param>
         /// <returns>Value of the element in that position</returns>
-        public T Value(int position) => this.GetNode(position).Value;
+        public T Value(int position)
+        {
+            if (position >= this.Size || position < 0)
+            {
+                throw new ArgumentOutOfRangeException("position", "Аргумент должен быть не меньше нуля и меньше текущего размера списка.");
+            }
+
+            return this.GetNode(position).Value;
+        }
 
         /// <summary>
         /// Get element from the list
