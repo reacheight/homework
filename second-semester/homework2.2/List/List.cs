@@ -76,6 +76,13 @@ namespace List
         }
 
         /// <summary>
+        /// Get value of the element in that position
+        /// </summary>
+        /// <param name="position">Position of the element whose value is got</param>
+        /// <returns>Value of the element in that position</returns>
+        public T Value(int position) => this.GetNode(position).Value;
+
+        /// <summary>
         /// Get element from the list
         /// </summary>
         /// <param name="position">Position of the received element</param>
