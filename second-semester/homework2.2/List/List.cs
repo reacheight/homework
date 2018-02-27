@@ -33,7 +33,7 @@ namespace List
         {
             if (position > this.Size || position < 0)
             {
-                throw new ArgumentOutOfRangeException("position", "Аргумент должен быть не меньше нуля и не больше текущего размера списка.");
+                throw new ArgumentOutOfRangeException(nameof(position), "Аргумент должен быть не меньше нуля и не больше текущего размера списка.");
             }
 
             if (position == 0)
