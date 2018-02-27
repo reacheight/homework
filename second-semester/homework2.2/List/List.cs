@@ -11,7 +11,7 @@ namespace List
         /// <summary>
         /// Head of the list
         /// </summary>
-        private Node<T> head;
+        private Node head;
 
         /// <summary>
         /// Gets number of elements in the list
@@ -44,7 +44,7 @@ namespace List
             }
 
             var previous = this.GetNode(position - 1);
-            var newNode = new Node<T>(value, previous.Next);
+            var newNode = new Node(value, previous.Next);
             previous.Next = newNode;
 
             ++this.Size;
@@ -80,7 +80,7 @@ namespace List
         /// </summary>
         /// <param name="position">Position of the received element</param>
         /// <returns>Element of the list with this position</returns>
-        private Node<T> GetNode(int position)
+        private Node GetNode(int position)
         {
             var start = this.head;
             for (var i = 0; i < position; ++i)
@@ -106,7 +106,7 @@ namespace List
         /// <param name="value">Value of the head of the list</param>
         private void InsertHead(T value)
         {
-            var newHead = new Node<T>(value, this.head);
+            var newHead = new Node(value, this.head);
             this.head = newHead;
             ++this.Size;
         }
@@ -114,15 +114,14 @@ namespace List
         /// <summary>
         /// Class that implements list node
         /// </summary>
-        /// <typeparam name="T">Type of the elements in the list</typeparam>
-        private class Node<T>
+        private class Node
         {
             /// <summary>
-            /// Initializes a new instance of the <see cref="Node{T}"/> class
+            /// Initializes a new instance of the <see cref="Node"/> class
             /// </summary>
             /// <param name="value">Value of the new node</param>
             /// <param name="next">Next node in the list</param>
-            public Node(T value, Node<T> next)
+            public Node(T value, Node next)
             {
                 this.Value = value;
                 this.Next = next;
@@ -136,7 +135,7 @@ namespace List
             /// <summary>
             /// Gets or sets next node in the list
             /// </summary>
-            public Node<T> Next { get; set; }
+            public Node Next { get; set; }
         }
     }
 }
