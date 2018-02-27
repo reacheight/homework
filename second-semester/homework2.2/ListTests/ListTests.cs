@@ -1,5 +1,5 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using List;
+using System;
 
 namespace List.Tests
 {
@@ -14,28 +14,51 @@ namespace List.Tests
             list = new List<int>();
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void IsEmptyReturnsTrueIfListIsEmpty()
         {
             Assert.AreEqual(true, list.IsEmpty());
         }
 
-        [TestMethod()]
-        public void InsertTest()
+        [TestMethod]
+        public void InsertRandomNumberInHeadWillNotCrash()
         {
-            Assert.Fail();
+            int randomInteger = new Random().Next();
+            list.Insert(randomInteger, 0);
         }
 
-        [TestMethod()]
-        public void EraseTest()
+        [TestMethod]
+        public void InsertSomeRandomNumbersInHeadWillNotCrash()
         {
-            Assert.Fail();
+            var random = new Random();
+            var numberOfElements = 10;
+            
+            for (int i = 0; i < numberOfElements; ++i)
+            {
+                list.Insert(random.Next(), 0);
+            }
         }
 
-        [TestMethod()]
-        public void ValueTest()
+        [TestMethod]
+        public void InsertNotOnlyInHeadWillNotCrash()
         {
-            Assert.Fail();
+            var random = new Random();
+            var numberOfElements = 10;
+
+            for (int i = 0; i < numberOfElements; ++i)
+            {
+                list.Insert(random.Next(), i);
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void InsertFirstNotInHeadWillThrowMyException()
+        {
+            var random = new Random();
+            int randomInteger = random.Next();
+            int position = random.Next(1, 11);
+            list.Insert(randomInteger, position);
         }
     }
 }
