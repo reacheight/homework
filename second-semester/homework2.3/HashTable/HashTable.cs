@@ -2,9 +2,19 @@
 
 namespace HashTable
 {
+    /// <summary>
+    /// Class that implement the hash-table
+    /// </summary>
     public class HashTable
     {
+        /// <summary>
+        /// Number of lists in the hash table
+        /// </summary>
         private readonly int size = 150;
+
+        /// <summary>
+        /// Array of the lists
+        /// </summary>
         private List.List<string>[] array;
 
         public HashTable()
@@ -16,6 +26,10 @@ namespace HashTable
             }
         }
 
+        /// <summary>
+        /// Add value to the hash table
+        /// </summary>
+        /// <param name="value">Value added to the hash table</param>
         public void Add(string value)
         {
             if (!this.Contains(value))
@@ -24,6 +38,10 @@ namespace HashTable
             }
         }
 
+        /// <summary>
+        /// Erase value from the hash table
+        /// </summary>
+        /// <param name="value">Value erased from the hash table</param>
         public void Erase(string value)
         {
             var position = this.Position(value);
@@ -36,8 +54,18 @@ namespace HashTable
             this.GetList(value).Erase(position);
         }
 
+        /// <summary>
+        /// Check if value in the hash table
+        /// </summary>
+        /// <param name="value">Verified value</param>
+        /// <returns>True if value in the hash table, false otherwise</returns>
         public bool Contains(string value) => this.Position(value) != -1;
 
+        /// <summary>
+        /// Hash-function
+        /// </summary>
+        /// <param name="key">Key of the hash function</param>
+        /// <returns>Hash value of the key</returns>
         private static int HashFunc(string key)
         {
             int result = 0;
@@ -50,6 +78,11 @@ namespace HashTable
             return result;
         }
 
+        /// <summary>
+        /// Get position of the value in the list in the hash table
+        /// </summary>
+        /// <param name="value">Value whose position is returned</param>
+        /// <returns>Position of the value if value in the hash table, -1 otherwise</returns>
         private int Position(string value)
         {
             var list = this.GetList(value);
@@ -64,6 +97,11 @@ namespace HashTable
             return -1;
         }
 
+        /// <summary>
+        /// Get list that contains value
+        /// </summary>
+        /// <param name="value">Value whose list it returned</param>
+        /// <returns>List of the value</returns>
         private List.List<string> GetList(string value)
         {
             int hash = HashFunc(value);
