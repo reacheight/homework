@@ -145,5 +145,25 @@ namespace HashTable.Tests
                 Assert.AreEqual(array[i], list.Value(i));
             }
         }
+
+        [TestMethod]
+        public void PositionWorksRight()
+        {
+            var numberOfElements = 100;
+            for (var i = 0; i < numberOfElements; ++i)
+            {
+                list.Insert(i, i);
+            }
+
+            for (var i = 0; i < numberOfElements; ++i)
+            {
+                Assert.AreEqual(i, list.Position(i));
+            }
+
+            for (var i = numberOfElements; i < 2 * numberOfElements; ++i)
+            {
+                Assert.AreEqual(-1, list.Position(i));
+            }
+        }
     }
 }
