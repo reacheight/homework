@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace List
+namespace HashTable
 {
     /// <summary>
     /// Class that implements the list

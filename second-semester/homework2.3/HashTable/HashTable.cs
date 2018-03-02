@@ -15,14 +15,14 @@ namespace HashTable
         /// <summary>
         /// Array of the lists
         /// </summary>
-        private List.List<string>[] array;
+        private List<string>[] array;
 
         public HashTable()
         {
-            this.array = new List.List<string>[this.size];
+            this.array = new List<string>[this.size];
             for (int i = 0; i < this.size; ++i)
             {
-                this.array[i] = new List.List<string>();
+                this.array[i] = new List<string>();
             }
         }
 
@@ -102,7 +102,7 @@ namespace HashTable
         /// </summary>
         /// <param name="value">Value whose list it returned</param>
         /// <returns>List of the value</returns>
-        private List.List<string> GetList(string value)
+        private List<string> GetList(string value)
         {
             int hash = HashFunc(value);
             return this.array[hash % this.size];
