@@ -57,6 +57,7 @@
   </Choose>
   <ItemGroup>
     <Compile Include="HashTableTests.cs" />
+    <Compile Include="ListTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
