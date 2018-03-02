@@ -75,6 +75,11 @@ namespace HashTable
             --this.Size;
         }
 
+        /// <summary>
+        /// Get first position of the value in the list
+        /// </summary>
+        /// <param name="value">Value whose position is got</param>
+        /// <returns>First position of the value in the list if value in list, -1 otherwise</returns>
         public int Position(T value)
         {
             for (var i = 0; i < this.Size; ++i)
