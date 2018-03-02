@@ -75,6 +75,19 @@ namespace HashTable
             --this.Size;
         }
 
+        public int Position(T value)
+        {
+            for (var i = 0; i < this.Size; ++i)
+            {
+                if (value.Equals(this.Value(i)))
+                {
+                    return i;
+                }
+            }
+
+            return -1;
+        }
+
         /// <summary>
         /// Get value of the element in that position
         /// </summary>
