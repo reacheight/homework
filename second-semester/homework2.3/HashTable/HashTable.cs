@@ -64,23 +64,6 @@ namespace HashTable
         public bool Contains(T value) => this.GetList(value).Position(value) != -1;
 
         /// <summary>
-        /// Hash-function
-        /// </summary>
-        /// <param name="key">Key of the hash function</param>
-        /// <returns>Hash value of the key</returns>
-        private static int HashFunc(string key)
-        {
-            int result = 0;
-            int p = 31;
-            foreach (var ch in key)
-            {
-                result = (result * p) + (int)ch;
-            }
-
-            return result;
-        }
-
-        /// <summary>
         /// Get position of the value in the list in the hash table
         /// </summary>
         /// <param name="value">Value whose position is returned</param>
