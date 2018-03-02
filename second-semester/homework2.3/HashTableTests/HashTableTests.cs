@@ -6,12 +6,12 @@ namespace HashTable.Tests
     [TestClass()]
     public class HashTableTests
     {
-        private HashTable table;
+        private HashTable<string> table;
 
         [TestInitialize]
         public void Init()
         {
-            table = new HashTable();
+            table = new HashTable<string>();
         }
 
         [TestMethod]
@@ -38,6 +38,20 @@ namespace HashTable.Tests
             {
                 table.Add("one");
             }
+        }
+
+        [TestMethod]
+        public void HashTableDoNotStoreSameElements()
+        {
+            var numberOfElements = 10;
+            for (var i = 0; i < numberOfElements; ++i)
+            {
+                table.Add("one");
+            }
+
+            table.Erase("one");
+
+            Assert.IsFalse(table.Contains("one"));
         }
 
         [TestMethod]
@@ -73,7 +87,16 @@ namespace HashTable.Tests
         }
 
         [TestMethod]
-        public void ContainsWorksRight()
+        public void ContainsReturnsFalseForDeletedElement()
+        {
+            table.Add("one");
+            table.Erase("one");
+
+            Assert.IsFalse(table.Contains("one"));
+        }
+
+        [TestMethod]
+        public void ContainsReturnsTrueForAddedElements()
         {
             var numberOfElements = 10;
             for (var i = 0; i < numberOfElements; ++i)
@@ -83,12 +106,22 @@ namespace HashTable.Tests
 
             for (var i = 0; i < numberOfElements; ++i)
             {
-                Assert.AreEqual(true, table.Contains(i.ToString()));
+                Assert.IsTrue(table.Contains(i.ToString()));
+            }
+        }
+
+        [TestMethod]
+        public void ContainsReturnsFalseForElementsNotFromTable()
+        {
+            var numberOfElements = 10;
+            for (var i = 0; i < numberOfElements; ++i)
+            {
+                table.Add(i.ToString());
             }
 
-            for (var i = numberOfElements + 1; i < 3 * numberOfElements; ++i)
+            for (var i = numberOfElements; i < 2* numberOfElements; ++i)
             {
-                Assert.AreEqual(false, table.Contains(i.ToString()));
+                Assert.IsFalse(table.Contains(i.ToString()));
             }
         }
 
