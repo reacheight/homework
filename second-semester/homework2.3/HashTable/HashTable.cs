@@ -10,7 +10,7 @@ namespace HashTable
         /// <summary>
         /// Number of lists in the hash table
         /// </summary>
-        private readonly int size = 150;
+        private const int Size = 150;
 
         /// <summary>
         /// Array of the lists
@@ -19,8 +19,8 @@ namespace HashTable
 
         public HashTable()
         {
-            this.array = new List<string>[this.size];
-            for (int i = 0; i < this.size; ++i)
+            this.array = new List<string>[Size];
+            for (int i = 0; i < Size; ++i)
             {
                 this.array[i] = new List<string>();
             }
@@ -105,7 +105,7 @@ namespace HashTable
         private List<string> GetList(string value)
         {
             int hash = HashFunc(value);
-            return this.array[hash % this.size];
+            return this.array[hash % Size];
         }
     }
 }
