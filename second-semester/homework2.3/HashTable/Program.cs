@@ -30,9 +30,6 @@ namespace HashTable
             {
                 stringTable.Add("word" + i.ToString());
             }
-
-            Console.WriteLine("tralala");
-            Console.Read();
         }
     }
 }
