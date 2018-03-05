@@ -2,6 +2,10 @@
 
 namespace Calculator
 {
+    /// <summary>
+    /// Class implementing the reference-based stack
+    /// </summary>
+    /// <typeparam name="T">Type of the elements in the stack</typeparam>
     public class ReferenceStack<T> : IStack<T>
     {
         private StackElement head;
