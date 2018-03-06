@@ -18,8 +18,6 @@ namespace Calculator
                 calculator.Add();
                 Console.WriteLine(calculator.Top);
             }
-
-            Console.Read();
         }
     }
 }
