@@ -16,7 +16,7 @@ namespace Calculator
             while (calculator.Size >= 2)
             {
                 calculator.Add();
-                Console.WriteLine(calculator.Result);
+                Console.WriteLine(calculator.Top);
             }
 
             Console.Read();

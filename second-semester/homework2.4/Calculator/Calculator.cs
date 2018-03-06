@@ -35,7 +35,7 @@ namespace Calculator
         /// <summary>
         /// Gets top of the stack of the calculator
         /// </summary>
-        public double Result => this.stack.Top();
+        public double Top => this.stack.Top();
 
         /// <summary>
         /// Push value to the top of the stack of the calculator
