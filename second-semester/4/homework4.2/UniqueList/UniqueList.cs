@@ -2,6 +2,10 @@
 
 namespace UniqueList
 {
+    /// <summary>
+    /// Class that implements unique list - all values in the list are different
+    /// </summary>
+    /// <typeparam name="T">Type of the values in the list</typeparam>
     public class UniqueList<T> : List<T>
     {
         /// <summary>
