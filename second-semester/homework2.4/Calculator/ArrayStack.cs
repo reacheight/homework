@@ -3,7 +3,7 @@
 namespace Calculator
 {
     /// <summary>
-    /// Class implemennting array-based stack
+    /// Class implementing array-based stack
     /// </summary>
     /// <typeparam name="T">Type of the elements in the stack</typeparam>
     public class ArrayStack<T> : IStack<T>
@@ -36,7 +36,7 @@ namespace Calculator
         {
             if (this.Size == Capacity)
             {
-                throw new Exception();
+                throw new InvalidOperationException($"Размер стека не может превышать {Capacity}.");
             }
 
             this.array[this.Size] = value;
@@ -51,11 +51,14 @@ namespace Calculator
         {
             if (this.Size == 0)
             {
-                throw new InvalidOperationException("Попытка удалить элемент из пустого стэка.");
+                throw new InvalidOperationException("Попытка удалить элемент из пустого стека.");
             }
 
             --this.Size;
-            return this.array[this.Size];
+            var value = this.array[this.Size];
+            this.array[this.Size] = default(T);
+
+            return value;
         }
 
         /// <summary>
@@ -66,7 +69,7 @@ namespace Calculator
         {
             if (this.Size == 0)
             {
-                throw new InvalidOperationException("Попытка получить значение головы пустого стэка.");
+                throw new InvalidOperationException("Попытка получить значение вершины пустого стека.");
             }
 
             return this.array[this.Size - 1];
