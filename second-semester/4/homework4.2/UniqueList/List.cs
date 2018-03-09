@@ -29,7 +29,7 @@ namespace UniqueList
         /// </summary>
         /// <param name="value">Value of the element</param>
         /// <param name="position">Position in which the element is inserted</param>
-        public void Insert(T value, int position)
+        public virtual void Insert(T value, int position)
         {
             if (position > this.Size || position < 0)
             {
