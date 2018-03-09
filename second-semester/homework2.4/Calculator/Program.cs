@@ -7,16 +7,17 @@ namespace Calculator
 
         private static void Main(string[] args)
         {
-            var calculator = new Calculator(new ReferenceStack<double>());
+            var stack = new ReferenceStack<double>();
+            var calculator = new Calculator(stack);
             for (int i = 1; i < 11; ++i)
             {
-                calculator.Push(i);
+                stack.Push(i);
             }
 
-            while (calculator.Size >= 2)
+            while (stack.Size >= 2)
             {
                 calculator.Add();
-                Console.WriteLine(calculator.Top);
+                Console.WriteLine(stack.Top());
             }
         }
     }
