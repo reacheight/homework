@@ -13,7 +13,7 @@ namespace UniqueList
         /// </summary>
         /// <param name="value">Inserted value</param>
         /// <param name="position">Position of inserted value</param>
-        public new void Insert(T value, int position)
+        public override void Insert(T value, int position)
         {
             if (this.Position(value) != -1)
             {
