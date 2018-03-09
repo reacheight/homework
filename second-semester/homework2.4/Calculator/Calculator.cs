@@ -23,44 +23,11 @@ namespace Calculator
         }
 
         /// <summary>
-        /// Gets number of elements in the stack of the calculator
-        /// </summary>
-        public int Size => this.stack.Size;
-
-        /// <summary>
-        /// Gets a value indicating whether stack of the calculator is empty
-        /// </summary>
-        public bool Empty => this.stack.Empty;
-
-        /// <summary>
-        /// Gets top of the stack of the calculator
-        /// </summary>
-        public double Top => this.stack.Top();
-
-        /// <summary>
-        /// Push value to the top of the stack of the calculator
-        /// </summary>
-        /// <param name="value">Pushed value</param>
-        public void Push(double value)
-        {
-            this.stack.Push(value);
-        }
-
-        /// <summary>
-        /// Pop value from the top of the stack of the calculator
-        /// </summary>
-        /// <returns>Poped value</returns>
-        public double Pop()
-        {
-            return this.stack.Pop();
-        }
-
-        /// <summary>
         /// Adds two values on the top of the stack, push result on the top of the stack
         /// </summary>
         public void Add()
         {
-            if (this.Size < 2)
+            if (this.stack.Size < 2)
             {
                 throw new InvalidOperationException("При выполнении операции размер стека должен быть больше или равен двум.");
             }
@@ -76,7 +43,7 @@ namespace Calculator
         /// </summary>
         public void Subtract()
         {
-            if (this.Size < 2)
+            if (this.stack.Size < 2)
             {
                 throw new InvalidOperationException("При выполнении операции размер стека должен быть больше или равен двум.");
             }
@@ -92,7 +59,7 @@ namespace Calculator
         /// </summary>
         public void Multiply()
         {
-            if (this.Size < 2)
+            if (this.stack.Size < 2)
             {
                 throw new InvalidOperationException("При выполнении операции размер стека должен быть больше или равен двум.");
             }
@@ -108,7 +75,7 @@ namespace Calculator
         /// </summary>
         public void Divide()
         {
-            if (this.Size < 2)
+            if (this.stack.Size < 2)
             {
                 throw new InvalidOperationException("При выполнении операции размер стека должен быть больше или равен двум.");
             }
