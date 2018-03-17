@@ -4,16 +4,34 @@
 
     public class EventLoop
     {
+        /// <summary>
+        /// Left arrow event
+        /// </summary>
         public event EventHandler<EventArgs> LeftHandler = (sender, args) => { };
 
+        /// <summary>
+        /// Right arrow event
+        /// </summary>
         public event EventHandler<EventArgs> RightHandler = (sender, args) => { };
 
+        /// <summary>
+        /// Up arrow event
+        /// </summary>
         public event EventHandler<EventArgs> UpHandler = (sender, args) => { };
 
+        /// <summary>
+        /// Down arrow event
+        /// </summary>
         public event EventHandler<EventArgs> DownHandler = (sender, args) => { };
 
+        /// <summary>
+        /// Start event
+        /// </summary>
         public event EventHandler<EventArgs> StartHandler = (sender, args) => { };
 
+        /// <summary>
+        /// Main event loop
+        /// </summary>
         public void Run()
         {
             this.StartHandler(this, EventArgs.Empty);

@@ -26,31 +26,59 @@
             this.map = new Map(map);
         }
 
+        /// <summary>
+        /// Start event handler
+        /// </summary>
+        /// <param name="sender">Event's sender</param>
+        /// <param name="args">Event's arguments</param>
         public void OnStart(object sender, EventArgs args)
         {
             this.PrintStartState();
         }
 
+        /// <summary>
+        /// Left arrow event handler
+        /// </summary>
+        /// <param name="sender">Event's sender</param>
+        /// <param name="args">Event's arguments</param>
         public void OnLeft(object sender, EventArgs args)
         {
             this.character.Move(this.character.X - 1, this.character.Y, this.map);
         }
 
+        /// <summary>
+        /// Right arrow event handler
+        /// </summary>
+        /// <param name="sender">Event's sender</param>
+        /// <param name="args">Event's arguments</param>
         public void OnRight(object sender, EventArgs args)
         {
             this.character.Move(this.character.X + 1, this.character.Y, this.map);
         }
 
+        /// <summary>
+        /// Down arrow event handler
+        /// </summary>
+        /// <param name="sender">Event's sender</param>
+        /// <param name="args">Event's arguments</param>
         public void OnDown(object sender, EventArgs args)
         {
             this.character.Move(this.character.X, this.character.Y + 1, this.map);
         }
 
+        /// <summary>
+        /// Up arrow event handler
+        /// </summary>
+        /// <param name="sender">Event's sender</param>
+        /// <param name="args">Event's arguments</param>
         public void OnUp(object sender, EventArgs args)
         {
             this.character.Move(this.character.X, this.character.Y - 1, this.map);
         }
 
+        /// <summary>
+        /// Print current game state to the console 
+        /// </summary>
         private void PrintStartState()
         {
             this.map.Print();

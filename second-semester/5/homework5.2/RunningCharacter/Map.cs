@@ -1,8 +1,6 @@
 ﻿namespace RunningCharacter
 {
     using System;
-    using System.Collections.Generic;
-    using System.IO;
 
     /// <summary>
     /// Class that implements map
