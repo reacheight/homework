@@ -30,7 +30,12 @@
         /// </summary>
         public int Width => this.map.GetLength(1);
 
-        ///
+        /// <summary>
+        /// Gets point on a map by indexes
+        /// </summary>
+        /// <param name="i">Y-coordinate of point</param>
+        /// <param name="j">X-coordinate of point</param>
+        /// <returns>Character from the map</returns>
         public char this[int i, int j]
         {
             get
