@@ -15,9 +15,15 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Map"/> class.
         /// </summary>
+        /// <param name="map">2D array of chars, map[1, 1] should be equal to ' '"</param>
         public Map(char[,] map)
         {
             this.map = map;
+
+            if (map[1, 1] != ' ')
+            {
+                throw new WrongMapException("Второй символ второй строчки карты должен равняться ' '");
+            }
         }
 
         /// <summary>
