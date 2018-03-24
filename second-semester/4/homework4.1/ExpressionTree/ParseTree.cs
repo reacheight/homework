@@ -18,6 +18,7 @@
         /// <param name="expression">Parsed arithmetic expression</param>
         public ParseTree(string expression)
         {
+            expression = expression.Replace(".", ",");
             this.root = this.BuildTree(expression);
         }
 
