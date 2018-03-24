@@ -2,19 +2,40 @@
 {
     using System;
 
+    /// <summary>
+    /// Class that implements parse tree
+    /// </summary>
     public class ParseTree
     {
+        /// <summary>
+        /// Root of the tree
+        /// </summary>
         private Node root;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="ParseTree"/> class.
+        /// </summary>
+        /// <param name="expression">Parsed arithmetic expression</param>
         public ParseTree(string expression)
         {
             this.root = this.BuildTree(expression);
         }
 
+        /// <summary>
+        /// Gets value of the parsed arithmetic expression
+        /// </summary>
         public double Value => this.root.Value();
 
+        /// <summary>
+        /// Gets infix notation of the parsed arithmetic expression
+        /// </summary>
         public string InfixNotation => this.root.InfixNotation;
 
+        /// <summary>
+        /// Parse expression to operator and two operands
+        /// </summary>
+        /// <param name="expression">Parsed arithmetic expression</param>
+        /// <returns>Tuple of operator and two operands</returns>
         private static (char operatorChar, string leftOperand, string rightOperand) ParseExpression(string expression)
         {
             void Increment(bool flag, ref string onTrue, ref string onFalse, char value)
@@ -80,6 +101,11 @@
             return (operatorChar, leftOperand, rightOperand);
         }
 
+        /// <summary>
+        /// Gets operator by its character
+        /// </summary>
+        /// <param name="operatorChar">Character of operation</param>
+        /// <returns>Wanted operator</returns>
         private static Operator GetOperator(char operatorChar)
         {
             switch (operatorChar)
@@ -100,6 +126,11 @@
             throw new WrongCharacterException("В выражении присутствует недопустимый символ.");
         }
 
+        /// <summary>
+        /// Builds parse tree
+        /// </summary>
+        /// <param name="expression">Parsed arithmetic expression</param>
+        /// <returns>Root of the parse tree</returns>
         private Node BuildTree(string expression)
         {
             if (double.TryParse(expression, out double value))
