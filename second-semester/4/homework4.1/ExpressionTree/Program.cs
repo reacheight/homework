@@ -1,14 +1,18 @@
 ﻿namespace ExpressionTree
 {
     using System;
+    using System.IO;
 
     public class Program
     {
         private static void Main(string[] args)
         {
-            var tree = new ParseTree("(* (- (+ 4 5) 14) (/ 16 4)");
-            Console.WriteLine(tree.Value);
-        }
+            string expression = File.ReadAllText("input.txt");
 
+            var tree = new ParseTree(expression);
+            Console.WriteLine("Инфиксная форма выражения из дерева разбора: ");
+            Console.WriteLine(tree.InfixNotation);
+            Console.WriteLine($"Значение выражения: {tree.Value}");
+        }
     }
 }
