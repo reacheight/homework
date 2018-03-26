@@ -96,7 +96,6 @@
                 }
 
                 isLeft = false;
-
             }
 
             return (operatorChar, leftOperand, rightOperand);

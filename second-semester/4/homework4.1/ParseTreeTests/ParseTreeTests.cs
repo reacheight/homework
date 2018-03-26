@@ -18,6 +18,11 @@
             ["(- (/ 20 4) (+ 10.5 5))"] = (-10.5, "((20 / 4) - (10,5 + 5))"),
             ["(* (+ (- 15 (* 2 5)) 6) (+ (- (* 4 1) 3) (+ (/ 7 (+ 3 4)) 1)))"] =
             (33, "(((15 - (2 * 5)) + 6) * (((4 * 1) - 3) + ((7 / (3 + 4)) + 1)))"),
+            ["(* 5 (+ 8 4))"] = (60, "(5 * (8 + 4))"),
+            ["(/ 5 (/ 1 2))"] = (10, "(5 / (1 / 2))"),
+            ["(/ 0 125)"] = (0, "(0 / 125)"),
+            ["(* 3 (/ 1 2))"] = (1.5, "(3 * (1 / 2))"),
+            ["(* (* 2 (* 2 (* 2 (* 1 2)))) (+ 1 2))"] = (48, "((2 * (2 * (2 * (1 * 2)))) * (1 + 2))")
         };
 
         [TestMethod]
@@ -38,6 +43,14 @@
                 var tree = new ParseTree(key);
                 Assert.AreEqual(table[key].infixNotation, tree.InfixNotation);
             }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(DivideByZeroException))]
+        public void DivisionByZeroWillThrowExpectedException()
+        {
+            var tree = new ParseTree("(/ 123 0)");
+            var result = tree.Value;
         }
     }
 }
