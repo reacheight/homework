@@ -123,7 +123,7 @@
                     return new DivisionOperator();
             }
 
-            throw new WrongCharacterException("В выражении присутствует недопустимый символ.");
+            throw new InvalidCharacterException("В выражении присутствует недопустимый символ.");
         }
 
         /// <summary>
