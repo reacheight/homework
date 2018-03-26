@@ -1,7 +1,5 @@
 ﻿namespace ExpressionTree
 {
-    using System;
-
     /// <summary>
     /// Class that implements parse tree
     /// </summary>

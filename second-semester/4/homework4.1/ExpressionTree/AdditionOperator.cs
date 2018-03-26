@@ -1,7 +1,5 @@
 ﻿namespace ExpressionTree
 {
-    using System;
-
     /// <summary>
     /// Class that represent addition operator node of a tree
     /// </summary>
