@@ -54,7 +54,7 @@
                     return new DivisionOperator();
             }
 
-            throw new InvalidCharacterException("В выражении присутствует недопустимый символ.");
+            throw new InvalidExpressionException("В выражении присутствует недопустимый символ.");
         }
 
         /// <summary>
@@ -92,7 +92,7 @@
             {
                 if (!IsValidExpression(expression))
                 {
-                    throw new InvalidCharacterException();
+                    throw new InvalidExpressionException();
                 }
 
                 void Increment(bool flag, ref string onTrue, ref string onFalse, char value)
