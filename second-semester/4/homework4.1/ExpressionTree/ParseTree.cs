@@ -91,7 +91,7 @@
             /// <returns>True if expression is correct, false otherwise</returns>
             public static bool IsValidExpression(string expression)
             {
-                var match = Regex.Match(expression, @"\([\*\/\+\-] ((\(.*\))|(\d+(,\d+)?)) ((\(.*\))|(\d+(,\d+)?))\)");
+                var match = Regex.Match(expression, @"^\([\*\/\+\-] ((\(.*\))|(\d+(,\d+)?)) ((\(.*\))|(\d+(,\d+)?))\)$");
 
                 return match.Success;
             }

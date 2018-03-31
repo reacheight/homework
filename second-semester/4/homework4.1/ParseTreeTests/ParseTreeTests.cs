@@ -8,9 +8,10 @@
     public class ParseTreeTests
     {
         private const double Delta = 0.000001;
-        private Dictionary<string, (double value, string infixNotation)> table = new Dictionary<string, (double value, string infixNotation)>
+        private Dictionary<string, (double value, string infixNotation)> validExpressions = new Dictionary<string, (double value, string infixNotation)>
         {
             ["(+ 2 3)"] = (5, "(2 + 3)"),
+            ["(+ 2.5 0)"] = (2.5, "(2,5 + 0)"),
             ["(- 10 4)"] = (6, "(10 - 4)"),
             ["(* 3 4)"] = (12, "(3 * 4)"),
             ["(/ 10 4)"] = (2.5, "(10 / 4)"),
@@ -28,20 +29,20 @@
         [TestMethod]
         public void TestTreeValue()
         {
-            foreach(var key in this.table.Keys)
+            foreach(var key in this.validExpressions.Keys)
             {
                 var tree = new ParseTree(key);
-                Assert.AreEqual(table[key].value, tree.Value, Delta);
+                Assert.AreEqual(validExpressions[key].value, tree.Value, Delta);
             }
         }
 
         [TestMethod]
         public void TestTreeInfixNotation()
         {
-            foreach (var key in this.table.Keys)
+            foreach (var key in this.validExpressions.Keys)
             {
                 var tree = new ParseTree(key);
-                Assert.AreEqual(table[key].infixNotation, tree.InfixNotation);
+                Assert.AreEqual(validExpressions[key].infixNotation, tree.InfixNotation);
             }
         }
 
@@ -50,6 +51,30 @@
         public void DivisionByZeroWillThrowExpectedException()
         {
             var tree = new ParseTree("(/ 123 0)");
+            var result = tree.Value;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidExpressionException))]
+        public void FirstInvalidExpressionTest()
+        {
+            var tree = new ParseTree("(3 123 0)");
+            var result = tree.Value;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidExpressionException))]
+        public void SecondInvalidExpressionTest()
+        {
+            var tree = new ParseTree("(+ (- 1 3) 0 (/ 3 3)");
+            var result = tree.Value;
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(InvalidExpressionException))]
+        public void ThirdInvalidExpressionTest()
+        {
+            var tree = new ParseTree("+ (- 1 3) (/ 3 3");
             var result = tree.Value;
         }
     }
