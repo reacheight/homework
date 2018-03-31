@@ -79,8 +79,16 @@
             return node;
         }
 
+        /// <summary>
+        /// Class that implements static methods for expression parsing
+        /// </summary>
         private class ExpressionParser
         {
+            /// <summary>
+            /// Check whether expression is correct
+            /// </summary>
+            /// <param name="expression">Given expression</param>
+            /// <returns>True if expression is correct, false otherwise</returns>
             public static bool IsValidExpression(string expression)
             {
                 var match = Regex.Match(expression, @"\([\*\/\+\-] ((\(.*\))|(\d+(,\d+)?)) ((\(.*\))|(\d+(,\d+)?))\)");
@@ -88,6 +96,11 @@
                 return match.Success;
             }
 
+            /// <summary>
+            /// Parse expression into operator and two operands
+            /// </summary>
+            /// <param name="expression">Given expression</param>
+            /// <returns>Operator and two operands</returns>
             public static (char operatorChar, string leftOperand, string rightOperand) ParseExpression(string expression)
             {
                 if (!IsValidExpression(expression))
