@@ -1,5 +1,7 @@
 ﻿namespace ExpressionTree
 {
+    using System.Text.RegularExpressions;
+
     /// <summary>
     /// Class that implements parse tree
     /// </summary>
@@ -29,75 +31,6 @@
         /// Gets infix notation of the parsed arithmetic expression
         /// </summary>
         public string InfixNotation => this.root.InfixNotation;
-
-        /// <summary>
-        /// Parse expression to operator and two operands
-        /// </summary>
-        /// <param name="expression">Parsed arithmetic expression</param>
-        /// <returns>Tuple of operator and two operands</returns>
-        private static (char operatorChar, string leftOperand, string rightOperand) ParseExpression(string expression)
-        {
-            void Increment(bool flag, ref string onTrue, ref string onFalse, char value)
-            {
-                if (flag)
-                {
-                    onTrue += value;
-                }
-                else
-                {
-                    onFalse += value;
-                }
-            }
-
-            var operatorChar = expression[1];
-            var leftOperand = string.Empty;
-            var rightOperand = string.Empty;
-
-            bool isLeft = true;
-            for (var i = 3; i < expression.Length; ++i)
-            {
-                if (expression[i] == '(')
-                {
-                    var bracketCount = -1;
-                    while (expression[i] != ')' || bracketCount != 0)
-                    {
-                        if (expression[i] == '(')
-                        {
-                            ++bracketCount;
-                        }
-
-                        if (expression[i] == ')')
-                        {
-                            --bracketCount;
-                        }
-
-                        Increment(isLeft, ref leftOperand, ref rightOperand, expression[i]);
-
-                        ++i;
-                    }
-
-                    Increment(isLeft, ref leftOperand, ref rightOperand, expression[i]);
-                }
-                else
-                {
-                    if (expression[i] == ' ')
-                    {
-                        continue;
-                    }
-
-                    while (expression[i] != ' ' && expression[i] != ')')
-                    {
-                        Increment(isLeft, ref leftOperand, ref rightOperand, expression[i]);
-
-                        ++i;
-                    }
-                }
-
-                isLeft = false;
-            }
-
-            return (operatorChar, leftOperand, rightOperand);
-        }
 
         /// <summary>
         /// Gets operator by its character
@@ -138,12 +71,91 @@
                 return operand;
             }
 
-            var (operationChar, leftOperand, rightOperand) = ParseExpression(expression);
+            var (operationChar, leftOperand, rightOperand) = ExpressionParser.ParseExpression(expression);
             var node = GetOperator(operationChar);
             node.LeftChild = this.BuildTree(leftOperand);
             node.RightChild = this.BuildTree(rightOperand);
 
             return node;
+        }
+
+        private class ExpressionParser
+        {
+            public static bool IsValidExpression(string expression)
+            {
+                var match = Regex.Match(expression, @"\([\*\/\+\-] ((\(.*\))|(\d+(,\d+)?)) ((\(.*\))|(\d+(,\d+)?))\)");
+
+                return match.Success;
+            }
+
+            public static (char operatorChar, string leftOperand, string rightOperand) ParseExpression(string expression)
+            {
+                if (!IsValidExpression(expression))
+                {
+                    throw new InvalidCharacterException();
+                }
+
+                void Increment(bool flag, ref string onTrue, ref string onFalse, char value)
+                {
+                    if (flag)
+                    {
+                        onTrue += value;
+                    }
+                    else
+                    {
+                        onFalse += value;
+                    }
+                }
+
+                var operatorChar = expression[1];
+                var leftOperand = string.Empty;
+                var rightOperand = string.Empty;
+
+                bool isLeft = true;
+                for (var i = 3; i < expression.Length; ++i)
+                {
+                    if (expression[i] == '(')
+                    {
+                        var bracketCount = -1;
+                        while (expression[i] != ')' || bracketCount != 0)
+                        {
+                            if (expression[i] == '(')
+                            {
+                                ++bracketCount;
+                            }
+
+                            if (expression[i] == ')')
+                            {
+                                --bracketCount;
+                            }
+
+                            Increment(isLeft, ref leftOperand, ref rightOperand, expression[i]);
+
+                            ++i;
+                        }
+
+                        Increment(isLeft, ref leftOperand, ref rightOperand, expression[i]);
+                    }
+                    else
+                    {
+                        if (expression[i] == ' ')
+                        {
+                            continue;
+                        }
+
+                        while (expression[i] != ' ' && expression[i] != ')')
+                        {
+                            Increment(isLeft, ref leftOperand, ref rightOperand, expression[i]);
+
+                            ++i;
+                        }
+                    }
+
+                    isLeft = false;
+                }
+
+                return (operatorChar, leftOperand, rightOperand);
+            }
         }
     }
 }
