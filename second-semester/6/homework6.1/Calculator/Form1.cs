@@ -20,6 +20,11 @@ namespace Calculator
         private static bool LastCharIsInteger(string expression)
         {
             var length = expression.Length;
+            if (length == 0)
+            {
+                return false;
+            }
+
             var lastChar = expression.Substring(length - 1);
             return int.TryParse(lastChar, out int value);
         }
