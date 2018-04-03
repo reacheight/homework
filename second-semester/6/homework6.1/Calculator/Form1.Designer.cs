@@ -55,6 +55,7 @@
             // 
             this.textBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox.BackColor = System.Drawing.SystemColors.Window;
             this.textBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 16F);
             this.textBox.Location = new System.Drawing.Point(13, 27);
             this.textBox.Multiline = true;
@@ -63,6 +64,7 @@
             this.textBox.Size = new System.Drawing.Size(219, 50);
             this.textBox.TabIndex = 1;
             this.textBox.KeyDown += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
+            this.textBox.KeyUp += new System.Windows.Forms.KeyEventHandler(this.textBox_KeyDown);
             // 
             // tableLayoutPanel1
             // 
