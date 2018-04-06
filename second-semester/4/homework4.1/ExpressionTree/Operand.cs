@@ -10,7 +10,7 @@
         /// <summary>
         /// Real value of the operand
         /// </summary>
-        private double value;
+        private readonly double value;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Operand"/> class.
