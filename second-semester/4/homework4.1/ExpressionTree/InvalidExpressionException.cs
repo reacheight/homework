@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// Class that implements exception that throwing if parsing expression is invalid
+    /// </summary>
     [Serializable]
     public class InvalidExpressionException : Exception
     {
