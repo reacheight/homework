@@ -2,6 +2,9 @@
 {
     using System;
 
+    /// <summary>
+    /// Class that implements event loop
+    /// </summary>
     public class EventLoop
     {
         /// <summary>
