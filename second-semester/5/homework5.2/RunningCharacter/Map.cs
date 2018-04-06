@@ -2,6 +2,7 @@
 {
     using System;
     using System.Collections.Generic;
+    using System.IO;
 
     /// <summary>
     /// Class that implements map
@@ -16,10 +17,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Map"/> class.
         /// </summary>
-        /// <param name="map">Map as list of strings</param>
-        public Map(List<string> map)
+        /// <param name="filename">Name of the text file with map</param>
+        public Map(string filename)
         {
-            this.map = map;
+            this.map = this.ReadMap(filename);
 
             if (!this.IsValid())
             {
@@ -82,6 +83,22 @@
             }
 
             return this.map[1][1] == ' ';
+        }
+
+        /// <summary>
+        /// Reads map from the text file
+        /// </summary>
+        /// <param name="filename">Name of the text file</param>
+        /// <returns>Map as list of strings</returns>
+        private List<string> ReadMap(string filename)
+        {
+            var result = new List<string>();
+            foreach (string line in File.ReadLines(filename))
+            {
+                result.Add(line);
+            }
+
+            return result;
         }
     }
 }

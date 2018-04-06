@@ -21,10 +21,10 @@
         /// <summary>
         /// Initializes a new instance of the <see cref="Game"/> class.
         /// </summary>
-        /// <param name="map">Map, where character is placed</param>
-        public Game(List<string> map)
+        /// <param name="filename">Name of the text file with map</param>
+        public Game(string filename)
         {
-            this.map = new Map(map);
+            this.map = new Map(filename);
         }
 
         /// <summary>
