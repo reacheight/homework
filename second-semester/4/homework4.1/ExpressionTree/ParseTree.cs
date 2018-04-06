@@ -66,9 +66,7 @@
         {
             if (double.TryParse(expression, out double value))
             {
-                var operand = new Operand(value);
-
-                return operand;
+                return new Operand(value);
             }
 
             var (operationChar, leftOperand, rightOperand) = ExpressionParser.ParseExpression(expression);
