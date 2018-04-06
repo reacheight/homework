@@ -6,25 +6,12 @@
 
     public class Program
     {
-        private static char[,] ReadMap(string filename)
+        private static List<string> ReadMap(string filename)
         {
-            char[,] result;
-            var temp = new List<char[]>();
-
+            var result = new List<string>();
             foreach (string line in File.ReadLines(filename))
             {
-                var array = line.ToCharArray();
-
-                temp.Add(array);
-            }
-
-            result = new char[temp.Count, temp[0].Length];
-            for (var i = 0; i < temp.Count; ++i)
-            {
-                for (var j = 0; j < temp[0].Length; ++j)
-                {
-                    result[i, j] = temp[i][j];
-                }
+                result.Add(line);
             }
 
             return result;
@@ -32,7 +19,7 @@
 
         private static void Main(string[] args)
         {
-            char[,] map = ReadMap("map.txt");
+            var map = ReadMap("map.txt");
 
             var eventLoop = new EventLoop();
             var game = new Game(map);

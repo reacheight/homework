@@ -1,6 +1,7 @@
 ﻿namespace RunningCharacter
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Class that implements a game with a running character
@@ -21,7 +22,7 @@
         /// Initializes a new instance of the <see cref="Game"/> class.
         /// </summary>
         /// <param name="map">Map, where character is placed</param>
-        public Game(char[,] map)
+        public Game(List<string> map)
         {
             this.map = new Map(map);
         }

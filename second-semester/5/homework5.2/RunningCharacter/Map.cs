@@ -1,6 +1,7 @@
 ﻿namespace RunningCharacter
 {
     using System;
+    using System.Collections.Generic;
 
     /// <summary>
     /// Class that implements map
@@ -8,33 +9,33 @@
     public class Map
     {
         /// <summary>
-        /// Map represented as 2D array of chars
+        /// Map represented as list of strings
         /// </summary>
-        private char[,] map;
+        private List<string> map;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Map"/> class.
         /// </summary>
-        /// <param name="map">2D array of chars, map[1, 1] should be equal to ' '"</param>
-        public Map(char[,] map)
+        /// <param name="map">Map as list of strings</param>
+        public Map(List<string> map)
         {
             this.map = map;
 
-            if (map[1, 1] != ' ')
+            if (!this.IsValid())
             {
-                throw new WrongMapException("Второй символ второй строчки карты должен равняться ' '");
+                throw new WrongMapException();
             }
         }
 
         /// <summary>
-        /// Gets height of map
+        /// Gets height of a map
         /// </summary>
-        public int Height => this.map.GetLength(0);
+        public int Height => this.map.Count;
 
         /// <summary>
-        /// Gets width of map
+        /// Gets width of a map
         /// </summary>
-        public int Width => this.map.GetLength(1);
+        public int Width => this.map[0].Length;
 
         /// <summary>
         /// Gets point on a map by indexes
@@ -42,22 +43,45 @@
         /// <param name="i">Y-coordinate of point</param>
         /// <param name="j">X-coordinate of point</param>
         /// <returns>Character from the map</returns>
-        public char this[int i, int j] => this.map[i, j];
+        public char this[int i, int j] => this.map[i][j];
 
         /// <summary>
         /// Prints map to console
         /// </summary>
         public void Print()
         {
-            for (var i = 0; i < this.map.GetLength(0); ++i)
+            foreach (var line in this.map)
             {
-                for (var j = 0; j < this.map.GetLength(1); ++j)
-                {
-                    Console.Write(this.map[i, j]);
-                }
-
-                Console.WriteLine();
+                Console.WriteLine(line);
             }
+        }
+
+        /// <summary>
+        /// Checks whether map is valid
+        /// </summary>
+        /// <returns>True if map is valid, false otherwise</returns>
+        private bool IsValid()
+        {
+            if (this.map.Count == 0)
+            {
+                return false;
+            }
+
+            var width = this.map[0].Length;
+            if (width == 0)
+            {
+                return false;
+            }
+
+            foreach (var line in this.map)
+            {
+                if (line.Length != width)
+                {
+                    return false;
+                }
+            }
+
+            return this.map[1][1] == ' ';
         }
     }
 }
