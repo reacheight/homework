@@ -2,6 +2,10 @@
 {
     using System;
 
+    /// <summary>
+    /// Class that implements exception that throwing if
+    /// second character of second line of line of map isn't space character
+    /// </summary>
     [Serializable]
     public class WrongMapException : Exception
     {
