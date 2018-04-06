@@ -38,7 +38,7 @@
         /// <summary>
         /// Gets or sets operation character
         /// </summary>
-        public char OperatorChar { get; set; }
+        public char OperatorChar { get; protected set; }
 
         /// <summary>
         /// Gets infix notation of a parse tree with the root in that node
