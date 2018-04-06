@@ -29,7 +29,7 @@
         [TestMethod]
         public void TestTreeValue()
         {
-            foreach(var key in this.validExpressions.Keys)
+            foreach (var key in this.validExpressions.Keys)
             {
                 var tree = new ParseTree(key);
                 Assert.AreEqual(validExpressions[key].value, tree.Value, Delta);
