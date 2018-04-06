@@ -42,13 +42,7 @@
         /// <param name="i">Y-coordinate of point</param>
         /// <param name="j">X-coordinate of point</param>
         /// <returns>Character from the map</returns>
-        public char this[int i, int j]
-        {
-            get
-            {
-                return this.map[i, j];
-            }
-        }
+        public char this[int i, int j] => this.map[i, j];
 
         /// <summary>
         /// Prints map to console
