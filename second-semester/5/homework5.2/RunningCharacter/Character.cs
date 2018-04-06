@@ -10,7 +10,7 @@
         /// <summary>
         /// Character's avatar that will bew printed in the console
         /// </summary>
-        private readonly char symbol = '@';
+        private const char Symbol = '@';
 
         /// <summary>
         /// Initializes a new instance of the <see cref="Character"/> class.
@@ -26,19 +26,6 @@
         {
             this.X = x;
             this.Y = y;
-        }
-
-        /// <summary>
-        /// Initializes a new instance of the <see cref="Character"/> class.
-        /// </summary>
-        /// <param name="x">X-coordinate of the character's starting point</param>
-        /// <param name="y">Y-coordinate of the character's starting point</param>
-        /// <param name="symbol">Avatar of a character</param>
-        public Character(int x, int y, char symbol)
-        {
-            this.X = x;
-            this.Y = y;
-            this.symbol = symbol;
         }
 
         /// <summary>
@@ -83,7 +70,7 @@
         private void Print(int x, int y)
         {
             Console.SetCursorPosition(x, y);
-            Console.Write(this.symbol);
+            Console.Write(Symbol);
             Console.SetCursorPosition(x, y);
         }
 
