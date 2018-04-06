@@ -3,8 +3,7 @@
     using System;
 
     /// <summary>
-    /// Class that implements exception that throwing if
-    /// second character of second line of line of map isn't space character
+    /// Class that implements exception that throwing if map of the game isn't valid
     /// </summary>
     [Serializable]
     public class WrongMapException : Exception
