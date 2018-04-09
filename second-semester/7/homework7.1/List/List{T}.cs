@@ -23,7 +23,7 @@
         /// <summary>
         /// Gets a value indicating whether list is readonly
         /// </summary>
-        public bool IsReadOnly => true;
+        public bool IsReadOnly => false;
 
         /// <summary>
         /// Gets or sets a list element by the index
@@ -63,6 +63,7 @@
         public void Clear()
         {
             this.head = null;
+            this.Count = 0;
         }
 
         /// <summary>
@@ -89,10 +90,11 @@
                 throw new ArgumentOutOfRangeException(nameof(arrayIndex), "Аргумент должен быть не меньше нуля и оставшееся количество ячеек массива должно быть не меньше размера списка");
             }
 
-            var itemIndex = 1;
+            var itemIndex = 0;
             foreach (var item in this)
             {
                 array[arrayIndex + itemIndex] = item;
+                ++itemIndex;
             }
         }
 
