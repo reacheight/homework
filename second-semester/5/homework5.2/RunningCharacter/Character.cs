@@ -39,19 +39,74 @@
         public int Y { get; private set; }
 
         /// <summary>
+        /// Move right
+        /// </summary>
+        /// <param name="map">Map that character is placed at</param>
+        /// <returns>True if move has been done, false otherwise</returns>
+        public bool MoveRight(Map map)
+        {
+            return this.Move(this.X + 1, this.Y, map);
+        }
+
+        /// <summary>
+        /// Move left
+        /// </summary>
+        /// <param name="map">Map that character is placed at</param>
+        /// <returns>True if move has been done, false otherwise</returns>
+        public bool MoveLeft(Map map)
+        {
+            return this.Move(this.X - 1, this.Y, map);
+        }
+
+        /// <summary>
+        /// Move up
+        /// </summary>
+        /// <param name="map">Map that character is placed at</param>
+        /// <returns>True if move has been done, false otherwise</returns>
+        public bool MoveUp(Map map)
+        {
+            return this.Move(this.X, this.Y - 1, map);
+        }
+
+        /// <summary>
+        /// Move down
+        /// </summary>
+        /// <param name="map">Map that character is placed at</param>
+        /// <returns>True if move has been done, false otherwise</returns>
+        public bool MoveDown(Map map)
+        {
+            return this.Move(this.X, this.Y + 1, map);
+        }
+
+        /// <summary>
+        /// Print character at the map
+        /// </summary>
+        /// <param name="map">Map that character is placed at</param>
+        /// <returns>True if character was printed, false otherwise</returns>
+        public bool PrintOnMap(Map map)
+        {
+            return this.Move(this.X, this.Y, map);
+        }
+
+        /// <summary>
         /// Move character
         /// </summary>
         /// <param name="x">X-coordinate of new position</param>
         /// <param name="y">Y-coordinate of new position</param>
         /// <param name="map">Map, where character is placed</param>
-        public void Move(int x, int y, Map map)
+        /// <returns>True if move has been done, false otherwise</returns>
+        private bool Move(int x, int y, Map map)
         {
             if (this.CanReachPoint(x, y, map))
             {
                 this.Clear();
                 this.Print(x, y);
                 this.UpdateСoordinates();
+
+                return true;
             }
+
+            return false;
         }
 
         /// <summary>

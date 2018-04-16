@@ -44,7 +44,7 @@
         /// <param name="args">Event's arguments</param>
         public void OnLeft(object sender, EventArgs args)
         {
-            this.character.Move(this.character.X - 1, this.character.Y, this.map);
+            this.character.MoveLeft(this.map);
         }
 
         /// <summary>
@@ -54,7 +54,7 @@
         /// <param name="args">Event's arguments</param>
         public void OnRight(object sender, EventArgs args)
         {
-            this.character.Move(this.character.X + 1, this.character.Y, this.map);
+            this.character.MoveRight(this.map);
         }
 
         /// <summary>
@@ -64,7 +64,7 @@
         /// <param name="args">Event's arguments</param>
         public void OnDown(object sender, EventArgs args)
         {
-            this.character.Move(this.character.X, this.character.Y + 1, this.map);
+            this.character.MoveDown(this.map);
         }
 
         /// <summary>
@@ -74,7 +74,7 @@
         /// <param name="args">Event's arguments</param>
         public void OnUp(object sender, EventArgs args)
         {
-            this.character.Move(this.character.X, this.character.Y - 1, this.map);
+            this.character.MoveUp(this.map);
         }
 
         /// <summary>
@@ -83,7 +83,7 @@
         private void PrintStartState()
         {
             this.map.Print();
-            this.character.Move(this.character.X, this.character.Y, this.map);
+            this.character.PrintOnMap(this.map);
         }
     }
 }
