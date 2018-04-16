@@ -7,11 +7,13 @@ namespace List.Tests
     public class ListTests
     {
         List<int> list;
+        List<string> stringList;
 
         [TestInitialize]
         public void Init()
         {
             this.list = new List<int>();
+            this.stringList = new List<string>();
         }
 
         [TestMethod]
@@ -243,6 +245,36 @@ namespace List.Tests
             {
                 Assert.AreEqual(list[i], array[i]);
             }
+        }
+
+        [TestMethod]
+        public void StringListInsertionWorksRight()
+        {
+            Assert.AreEqual(0, this.stringList.Count);
+            this.stringList.Add("one");
+            Assert.AreEqual(1, this.stringList.Count);
+            this.stringList.Insert(1, "two");
+            Assert.AreEqual(2, this.stringList.Count);
+        }
+
+        [TestMethod]
+        public void StringListRemoveWorksRight()
+        {
+            this.stringList.Add("one");
+            this.stringList.Insert(1, "two");
+
+            this.stringList.Remove("one");
+            this.stringList.RemoveAt(0);
+        }
+
+        [TestMethod]
+        public void StringListContainsWorksRight()
+        {
+            this.stringList.Add("one");
+            this.stringList.Insert(1, "two");
+
+            Assert.IsTrue(this.stringList.Contains("one"));
+            Assert.IsFalse(this.stringList.Contains("three"));
         }
     }
 }
