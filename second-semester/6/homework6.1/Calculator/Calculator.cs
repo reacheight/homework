@@ -27,15 +27,15 @@
         /// <returns>result of evaluating</returns>
         public double Eval(string expression)
         {
-            if (double.TryParse(expression, out double result))
-            {
-                return result;
-            }
-
-            var match = Regex.Match(expression, @"^\-?\d+(,\d+)? [\+\-\*\/] \-?\d+(,\d+)?$");
+            var match = Regex.Match(expression, @"^((\-?\d+(,\d+)? [\+\-\*\/] \-?\d+(,\d+)?)|(\d+(,\d+)?))$");
             if (!match.Success)
             {
                 throw new InvalidExpressionException("Неверное выражение.");
+            }
+
+            if (double.TryParse(expression, out double result))
+            {
+                return result;
             }
 
             var tokens = expression.Split(' ');
