@@ -1,12 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text.RegularExpressions;
-
-namespace Calculator
+﻿namespace Calculator
 {
+    using System;
+    using System.Collections.Generic;
+    using System.Text.RegularExpressions;
+
+    /// <summary>
+    /// Class that implements simple binary calculator (operations with two real operand)
+    /// </summary>
     public class Calculator
     {
-        Dictionary<string, Func<double, double, double>> dict = new Dictionary<string, Func<double, double, double>>
+        /// <summary>
+        /// Easy way to choose right function
+        /// </summary>
+        private Dictionary<string, Func<double, double, double>> dict = new Dictionary<string, Func<double, double, double>>
         {
             ["+"] = (double x, double y) => x + y,
             ["-"] = (double x, double y) => x - y,
@@ -14,6 +20,11 @@ namespace Calculator
             ["/"] = (double x, double y) => x / y,
         };
 
+        /// <summary>
+        /// Evaluate given arithmetic expression
+        /// </summary>
+        /// <param name="expression">given arithmetic expression</param>
+        /// <returns>result of evaluating</returns>
         public double Eval(string expression)
         {
             if (double.TryParse(expression, out double result))
@@ -37,7 +48,7 @@ namespace Calculator
                 throw new DivideByZeroException("Деление на ноль.");
             }
 
-            return dict[operatorChar](first, second);
+            return this.dict[operatorChar](first, second);
         }
     }
 }
