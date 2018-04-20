@@ -1,8 +1,10 @@
-﻿using System;
-
-namespace Calculator
+﻿namespace Calculator
 {
+    using System;
 
+    /// <summary>
+    /// Class that implements exception that is thrown if an arithmetic expression can not be evaluated
+    /// </summary>
     [Serializable]
     public class InvalidExpressionException : Exception
     {
