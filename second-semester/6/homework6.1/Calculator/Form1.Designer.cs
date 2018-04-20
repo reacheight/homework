@@ -150,7 +150,7 @@
             this.buttonSubtraction.TabIndex = 14;
             this.buttonSubtraction.Text = "-";
             this.buttonSubtraction.UseVisualStyleBackColor = true;
-            this.buttonSubtraction.Click += new System.EventHandler(this.OperationClick);
+            this.buttonSubtraction.Click += new System.EventHandler(this.OperationButtonClick);
             // 
             // button9
             // 
@@ -198,7 +198,7 @@
             this.buttonAddition.TabIndex = 10;
             this.buttonAddition.Text = "+";
             this.buttonAddition.UseVisualStyleBackColor = true;
-            this.buttonAddition.Click += new System.EventHandler(this.OperationClick);
+            this.buttonAddition.Click += new System.EventHandler(this.OperationButtonClick);
             // 
             // button6
             // 
@@ -246,7 +246,7 @@
             this.buttonDivision.TabIndex = 6;
             this.buttonDivision.Text = "/";
             this.buttonDivision.UseVisualStyleBackColor = true;
-            this.buttonDivision.Click += new System.EventHandler(this.OperationClick);
+            this.buttonDivision.Click += new System.EventHandler(this.OperationButtonClick);
             // 
             // button3
             // 
@@ -270,7 +270,7 @@
             this.buttonMultiplication.TabIndex = 4;
             this.buttonMultiplication.Text = "*";
             this.buttonMultiplication.UseVisualStyleBackColor = true;
-            this.buttonMultiplication.Click += new System.EventHandler(this.OperationClick);
+            this.buttonMultiplication.Click += new System.EventHandler(this.OperationButtonClick);
             // 
             // buttonDelete
             // 

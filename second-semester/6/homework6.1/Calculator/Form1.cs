@@ -1,19 +1,54 @@
-﻿using System;
-using System.Windows.Forms;
-
-namespace Calculator
+﻿namespace Calculator
 {
+    using System;
+    using System.Windows.Forms;
+
+    /// <summary>
+    /// Class that implements calculator form
+    /// </summary>
     public partial class CalculatorForm : Form
     {
-        private const string commaString = ",";
+        /// <summary>
+        /// Comma string
+        /// </summary>
+        private const string CommaString = ",";
+
+        /// <summary>
+        /// Object that performs calculating
+        /// </summary>
         private Calculator calculator = new Calculator();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CalculatorForm"/> class.
+        /// </summary>
         public CalculatorForm()
         {
-            InitializeComponent();
+            this.InitializeComponent();
         }
 
-        private void OperationClick(object sender, EventArgs e)
+        /// <summary>
+        /// Indicates whether last character of the string is integer
+        /// </summary>
+        /// <param name="expression">given string</param>
+        /// <returns>True if last character of the string is integer, false otherwise</returns>
+        private static bool LastCharIsInteger(string expression)
+        {
+            var length = expression.Length;
+            if (length == 0)
+            {
+                return false;
+            }
+
+            var lastChar = expression.Substring(length - 1);
+            return int.TryParse(lastChar, out int value);
+        }
+
+        /// <summary>
+        /// Operation button click handler
+        /// </summary>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
+        private void OperationButtonClick(object sender, EventArgs e)
         {
             var button = sender as Button;
             if (LastCharIsInteger(this.textBox.Text))
@@ -23,20 +58,35 @@ namespace Calculator
             }
         }
 
+        /// <summary>
+        /// Digit button click handler
+        /// </summary>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
         private void DigitButtonClick(object sender, EventArgs e)
         {
             var button = sender as Button;
             this.textBox.Text += button.Text;
         }
 
+        /// <summary>
+        /// Comma button click handler
+        /// </summary>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
         private void CommaButtonClick(object sender, EventArgs e)
         {
             if (LastCharIsInteger(this.textBox.Text))
             {
-                this.textBox.Text += commaString;
+                this.textBox.Text += CommaString;
             }
         }
 
+        /// <summary>
+        /// Delete button click handler
+        /// </summary>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
         private void DeleteButtonClick(object sender, EventArgs e)
         {
             var length = this.textBox.Text.Length;
@@ -45,7 +95,7 @@ namespace Calculator
             {
                 return;
             }
-            
+
             var lastChar = this.textBox.Text[length - 1];
             if (LastCharIsInteger(this.textBox.Text) || lastChar == ',')
             {
@@ -57,6 +107,11 @@ namespace Calculator
             }
         }
 
+        /// <summary>
+        /// Clear button click hangler
+        /// </summary>
+        /// <param name="sender">event sender</param>
+        /// <param name="e">event args</param>
         private void ClearButtonClick(object sender, EventArgs e)
         {
             this.textBox.Text = string.Empty;
@@ -70,11 +125,15 @@ namespace Calculator
             }
         }
 
+        /// <summary>
+        /// Evaluates current calculator expression
+        /// </summary>
+        /// <returns>value of evaluating as string, boolean status code</returns>
         private (string value, bool success) Eval()
         {
             try
             {
-                return (calculator.Eval(this.textBox.Text).ToString(), true);
+                return (this.calculator.Eval(this.textBox.Text).ToString(), true);
             }
             catch (Exception ex)
             {
@@ -86,18 +145,6 @@ namespace Calculator
 
                 throw;
             }
-        }
-
-        private static bool LastCharIsInteger(string expression)
-        {
-            var length = expression.Length;
-            if (length == 0)
-            {
-                return false;
-            }
-
-            var lastChar = expression.Substring(length - 1);
-            return int.TryParse(lastChar, out int value);
         }
     }
 }
