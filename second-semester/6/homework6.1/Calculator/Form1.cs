@@ -1,18 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Calculator
 {
     public partial class CalculatorForm : Form
     {
-        Calculator calculator = new Calculator();
+        private const string commaString = ",";
+        private Calculator calculator = new Calculator();
 
         public CalculatorForm()
         {
@@ -24,8 +18,8 @@ namespace Calculator
             var button = sender as Button;
             if (LastCharIsInteger(this.textBox.Text))
             {
-                var result = calculator.Eval(this.textBox.Text);
-                this.textBox.Text = $"{result} {button.Text} ";
+                (var result, bool success) = this.Eval();
+                this.textBox.Text = success ? $"{result} {button.Text} " : string.Empty;
             }
         }
 
@@ -39,7 +33,7 @@ namespace Calculator
         {
             if (LastCharIsInteger(this.textBox.Text))
             {
-                this.textBox.Text += ",";
+                this.textBox.Text += commaString;
             }
         }
 
@@ -72,7 +66,25 @@ namespace Calculator
         {
             if (LastCharIsInteger(this.textBox.Text))
             {
-                this.textBox.Text = $"{calculator.Eval(this.textBox.Text)}";
+                this.textBox.Text = this.Eval().value;
+            }
+        }
+
+        private (string value, bool success) Eval()
+        {
+            try
+            {
+                return (calculator.Eval(this.textBox.Text).ToString(), true);
+            }
+            catch (Exception ex)
+            {
+                if (ex is InvalidExpressionException || ex is DivideByZeroException)
+                {
+                    MessageBox.Show(ex.Message, "Ошибка");
+                    return (string.Empty, false);
+                }
+
+                throw;
             }
         }
 
