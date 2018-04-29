@@ -9,9 +9,21 @@
     {
         private Node root;
 
+        public Set()
+        {
+        }
+
+        public Set(IEnumerable<T> collection)
+        {
+            foreach (var item in collection)
+            {
+                this.Add(item);
+            }
+        }
+
         public int Count { get; private set; }
 
-        public bool IsReadOnly => throw new NotImplementedException();
+        public bool IsReadOnly => false;
 
         public bool Add(T item)
         {
@@ -63,7 +75,10 @@
 
         public void ExceptWith(IEnumerable<T> other)
         {
-            throw new NotImplementedException();
+            foreach (var item in other)
+            {
+                this.Remove(item);
+            }
         }
 
         public IEnumerator<T> GetEnumerator()
@@ -85,27 +100,55 @@
 
         public void IntersectWith(IEnumerable<T> other)
         {
-            throw new NotImplementedException();
+            var intersection = new List<T>();
+            foreach (var item in other)
+            {
+                if (this.Contains(item))
+                {
+                    intersection.Add(item);
+                }
+            }
+
+            this.Clear();
+            foreach (var item in intersection)
+            {
+                this.Add(item);
+            }
         }
 
         public bool IsProperSubsetOf(IEnumerable<T> other)
         {
-            throw new NotImplementedException();
+            var set = new Set<T>(other);
+            return this.IsSubsetOf(other) && this.Count < set.Count;
         }
 
         public bool IsProperSupersetOf(IEnumerable<T> other)
         {
-            throw new NotImplementedException();
+            var set = new Set<T>(other);
+            return set.IsProperSubsetOf(this);
         }
 
         public bool IsSubsetOf(IEnumerable<T> other)
         {
-            throw new NotImplementedException();
+            var set = new Set<T>(other);
+
+            bool isSubset = true;
+            foreach (var item in this)
+            {
+                if (!set.Contains(item))
+                {
+                    isSubset = false;
+                    break;
+                }
+            }
+
+            return isSubset;
         }
 
         public bool IsSupersetOf(IEnumerable<T> other)
         {
-            throw new NotImplementedException();
+            var set = new Set<T>(other);
+            return set.IsSubsetOf(this);
         }
 
         public bool Overlaps(IEnumerable<T> other)
@@ -155,7 +198,10 @@
 
         public void UnionWith(IEnumerable<T> other)
         {
-            throw new NotImplementedException();
+            foreach (var item in other)
+            {
+                this.Add(item);
+            }
         }
 
         void ICollection<T>.Add(T item)
