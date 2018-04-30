@@ -19,6 +19,9 @@ namespace Set
                 Console.WriteLine(item);
             }
 
+            set.Remove(7);
+            set.Remove(3);
+
             foreach (var item in set)
             {
                 Console.WriteLine(item);
