@@ -70,7 +70,22 @@
 
         public void CopyTo(T[] array, int arrayIndex)
         {
-            throw new NotImplementedException();
+            if (array == null)
+            {
+                throw new ArgumentNullException($"Array {nameof(array)} is null");
+            }
+
+            if (arrayIndex < 0 || arrayIndex > array.Length - this.Count)
+            {
+                throw new ArgumentOutOfRangeException(nameof(arrayIndex), "Аргумент должен быть не меньше нуля и оставшееся количество ячеек массива должно быть не меньше размера множества");
+            }
+
+            var itemIndex = 0;
+            foreach (var item in this)
+            {
+                array[arrayIndex + itemIndex] = item;
+                ++itemIndex;
+            }
         }
 
         public void ExceptWith(IEnumerable<T> other)
@@ -132,17 +147,15 @@
         {
             var set = new Set<T>(other);
 
-            bool isSubset = true;
             foreach (var item in this)
             {
                 if (!set.Contains(item))
                 {
-                    isSubset = false;
-                    break;
+                    return false;
                 }
             }
 
-            return isSubset;
+            return true;
         }
 
         public bool IsSupersetOf(IEnumerable<T> other)
@@ -153,7 +166,15 @@
 
         public bool Overlaps(IEnumerable<T> other)
         {
-            throw new NotImplementedException();
+            foreach (var item in other)
+            {
+                if (this.Contains(item))
+                {
+                    return true;
+                }
+            }
+
+            return false;
         }
 
         public bool Remove(T item)
@@ -188,12 +209,23 @@
 
         public bool SetEquals(IEnumerable<T> other)
         {
-            throw new NotImplementedException();
+            var set = new Set<T>(other);
+            return this.IsSubsetOf(set) && set.IsSubsetOf(this);
         }
 
         public void SymmetricExceptWith(IEnumerable<T> other)
         {
-            throw new NotImplementedException();
+            foreach (var item in other)
+            {
+                if (this.Contains(item))
+                {
+                    this.Remove(item);
+                }
+                else
+                {
+                    this.Add(item);
+                }
+            }
         }
 
         public void UnionWith(IEnumerable<T> other)
@@ -270,8 +302,6 @@
             public Node RightChild { get; set; }
 
             public Node LeftChild { get; set; }
-
-            public bool HasNoChild => this.RightChild == null && this.LeftChild == null;
 
             public Node GetChild(T key)
             {
