@@ -29,6 +29,11 @@
         /// <param name="collection">collection of items that will be added to set</param>
         public Set(IEnumerable<T> collection)
         {
+            if (collection == null)
+            {
+                throw new ArgumentNullException(nameof(collection));
+            }
+
             foreach (var item in collection)
             {
                 this.Add(item);
@@ -132,6 +137,11 @@
         /// <param name="other">collection to be excepted with a set</param>
         public void ExceptWith(IEnumerable<T> other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             foreach (var item in other)
             {
                 this.Remove(item);
@@ -161,6 +171,11 @@
         /// <param name="other">collection to be intersected with a set</param>
         public void IntersectWith(IEnumerable<T> other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             var intersection = new List<T>();
             foreach (var item in other)
             {
@@ -184,6 +199,11 @@
         /// <returns>true if a set is a proper subset of given collection, false otherwise</returns>
         public bool IsProperSubsetOf(IEnumerable<T> other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             var set = new Set<T>(other);
             return this.IsSubsetOf(other) && this.Count < set.Count;
         }
@@ -195,6 +215,11 @@
         /// <returns>true if a set is a proper superset of given collection, false otherwise</returns>
         public bool IsProperSupersetOf(IEnumerable<T> other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             var set = new Set<T>(other);
             return set.IsProperSubsetOf(this);
         }
@@ -206,6 +231,11 @@
         /// <returns>true if a set is a subset of given collection, false otherwise</returns>
         public bool IsSubsetOf(IEnumerable<T> other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             var set = new Set<T>(other);
 
             foreach (var item in this)
@@ -226,6 +256,11 @@
         /// <returns>true if a set is a supersetof given collection, false otherwise</returns>
         public bool IsSupersetOf(IEnumerable<T> other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             var set = new Set<T>(other);
             return set.IsSubsetOf(this);
         }
@@ -237,6 +272,11 @@
         /// <returns>true if a set overlaps given collection, false otherwise</returns>
         public bool Overlaps(IEnumerable<T> other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             foreach (var item in other)
             {
                 if (this.Contains(item))
@@ -290,6 +330,11 @@
         /// <returns>true if a set equals to given collection, false otherwise</returns>
         public bool SetEquals(IEnumerable<T> other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             var set = new Set<T>(other);
             return this.IsSubsetOf(set) && set.IsSubsetOf(this);
         }
@@ -300,6 +345,11 @@
         /// <param name="other">given collections</param>
         public void SymmetricExceptWith(IEnumerable<T> other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             foreach (var item in other)
             {
                 if (this.Contains(item))
@@ -319,6 +369,11 @@
         /// <param name="other">given collection</param>
         public void UnionWith(IEnumerable<T> other)
         {
+            if (other == null)
+            {
+                throw new ArgumentNullException(nameof(other));
+            }
+
             foreach (var item in other)
             {
                 this.Add(item);
