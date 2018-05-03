@@ -320,5 +320,66 @@
             var array = new int[this.intSet.Count + 2];
             this.intSet.CopyTo(array, startingIndex);
         }
+
+        [TestMethod]
+        public void AdditionToStringSetWorksRight()
+        {
+            this.stringSet.Add("one");
+            Assert.AreEqual(1, this.stringSet.Count);
+            this.stringSet.Add("two");
+            Assert.AreEqual(2, this.stringSet.Count);
+
+            this.stringSet.Add("one");
+            Assert.AreEqual(2, this.stringSet.Count);
+        }
+
+        [TestMethod]
+        public void StringSetContainsWorksRight()
+        {
+            this.stringSet.Add("one");
+            this.stringSet.Add("two");
+
+            Assert.IsTrue(this.stringSet.Contains("one"));
+            Assert.IsTrue(this.stringSet.Contains("two"));
+            Assert.IsFalse(this.stringSet.Contains("three"));
+        }
+
+        [TestMethod]
+        public void StringSetRemoveWorksRight()
+        {
+            this.stringSet.Add("one");
+            this.stringSet.Add("two");
+
+            Assert.IsTrue(this.stringSet.Remove("one"));
+            Assert.IsTrue(this.stringSet.Remove("two"));
+            Assert.IsFalse(this.stringSet.Remove("three"));
+            Assert.IsFalse(this.stringSet.Remove("one"));
+        }
+
+        [TestMethod]
+        public void StringSetDoesNotContainItemsAfterRemoving()
+        {
+            this.stringSet.Add("one");
+            this.stringSet.Add("two");
+
+            this.stringSet.Remove("one");
+            this.stringSet.Remove("two");
+
+            Assert.IsFalse(this.stringSet.Contains("one"));
+            Assert.IsFalse(this.stringSet.Contains("two"));
+        }
+
+        [TestMethod]
+        public void StringSetClearWorksRight()
+        {
+            this.stringSet.Add("one");
+            this.stringSet.Add("two");
+
+            this.stringSet.Clear();
+
+            Assert.AreEqual(0, this.emptySet.Count);
+            Assert.IsFalse(this.stringSet.Contains("one"));
+            Assert.IsFalse(this.stringSet.Contains("two"));
+        }
     }
 }
