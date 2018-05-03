@@ -1,8 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
-
-namespace Set.Tests
+﻿namespace Set.Tests
 {
+    using Microsoft.VisualStudio.TestTools.UnitTesting;
+    using System;
+    using System.Collections.Generic;
+
     [TestClass]
     public class SetTests
     {
@@ -140,19 +141,55 @@ namespace Set.Tests
         }
 
         [TestMethod]
+        public void ClearWorksRight()
+        {
+            this.emptySet.Add(23);
+            this.emptySet.Add(103);
+
+            this.emptySet.Clear();
+
+            Assert.AreEqual(0, this.emptySet.Count);
+            Assert.IsFalse(this.emptySet.Contains(23));
+            Assert.IsFalse(this.emptySet.Contains(103));
+        }
+
+        [TestMethod]
         public void IsSubsetWorksRIght()
         {
-            Assert.IsTrue(set.IsSubsetOf(superset));
-            Assert.IsFalse(superset.IsSubsetOf(setList));
-            Assert.IsTrue(set.IsSubsetOf(setList));
+            Assert.IsTrue(this.set.IsSubsetOf(this.superset));
+            Assert.IsFalse(this.superset.IsSubsetOf(this.setList));
+            Assert.IsTrue(this.set.IsSubsetOf(this.setList));
         }
 
         [TestMethod]
         public void IsSupersetWorksRIght()
         {
-            Assert.IsTrue(superset.IsSupersetOf(set));
-            Assert.IsFalse(set.IsSupersetOf(superset));
-            Assert.IsTrue(superset.IsSubsetOf(supersetList));
+            Assert.IsTrue(this.superset.IsSupersetOf(this.set));
+            Assert.IsFalse(this.set.IsSupersetOf(this.superset));
+            Assert.IsTrue(this.superset.IsSubsetOf(this.supersetList));
+        }
+
+        [TestMethod]
+        public void IsProperSubsetWorksRight()
+        {
+            Assert.IsTrue(this.set.IsProperSubsetOf(this.supersetList));
+            Assert.IsFalse(this.superset.IsProperSubsetOf(this.setList));
+            Assert.IsFalse(this.set.IsProperSubsetOf(this.setList));
+        }
+
+        [TestMethod]
+        public void IsProperSupersetWorksRight()
+        {
+            Assert.IsTrue(this.superset.IsProperSupersetOf(this.setList));
+            Assert.IsFalse(this.set.IsProperSupersetOf(this.supersetList));
+            Assert.IsFalse(this.set.IsProperSubsetOf(this.setList));
+        }
+
+        [TestMethod]
+        public void SetEqualsWorksRight()
+        {
+            Assert.IsTrue(this.set.SetEquals(this.setList));
+            Assert.IsFalse(this.set.SetEquals(this.supersetList));
         }
 
         [TestMethod]
@@ -164,6 +201,124 @@ namespace Set.Tests
             {
                 Assert.IsFalse(this.intSet.Contains(item));
             }
+        }
+
+        [TestMethod]
+        public void IntersectWithWorksRight()
+        {
+            var intersection = new List<int>();
+
+            foreach (var item in list)
+            {
+                if (this.intSet.Contains(item))
+                {
+                    intersection.Add(item);
+                }
+            }
+
+            this.intSet.IntersectWith(this.list);
+            Assert.IsTrue(this.intSet.SetEquals(intersection));
+        }
+
+        [TestMethod]
+        public void OverlapsWorksRight()
+        {
+            this.emptySet.Add(54);
+            this.emptySet.Add(234);
+            this.emptySet.Add(99);
+
+            Assert.IsTrue(this.set.Overlaps(this.supersetList));
+            Assert.IsFalse(this.emptySet.Overlaps(this.setList));
+        }
+
+        [TestMethod]
+        public void SymmetricExceptWithWorksRight()
+        {
+            var result = new List<int>();
+            
+            foreach (var item in this.intSet)
+            {
+                result.Add(item);
+            }
+
+            foreach (var item in this.list)
+            {
+                if (result.Contains(item))
+                {
+                    result.Remove(item);
+                }
+                else
+                {
+                    result.Add(item);
+                }
+            }
+
+            this.intSet.SymmetricExceptWith(this.list);
+            Assert.IsTrue(this.intSet.SetEquals(result));
+        }
+
+        [TestMethod]
+        public void UnionWithWorksRight()
+        {
+            var union = new List<int>();
+
+            foreach (var item in this.intSet)
+            {
+                union.Add(item);
+            }
+
+            foreach (var item in this.list)
+            {
+                union.Add(item);
+            }
+
+            this.intSet.UnionWith(this.list);
+            Assert.IsTrue(this.intSet.SetEquals(union));
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void ExceptWithNullThrowsExcpectedException()
+        {
+            this.set.IntersectWith(null);
+        }
+
+        [TestMethod]
+        public void CopyToWorksWithZeroStartingIndex()
+        {
+            var array = new int[this.intSet.Count];
+            this.intSet.CopyTo(array, 0);
+
+            Assert.IsTrue(this.intSet.SetEquals(array));
+        }
+
+        [TestMethod]
+        public void CopyToWorksWithValidNonzeroStartingIndex()
+        {
+            var startingIndex = 2;
+            var array = new int[this.intSet.Count + startingIndex + 1];
+            this.intSet.CopyTo(array, startingIndex);
+            foreach (var item in this.intSet)
+            {
+                Assert.IsTrue(item == array[startingIndex]);
+                startingIndex++;
+            }
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentNullException))]
+        public void CopyToNullThrowsExcpectedException()
+        {
+            this.intSet.CopyTo(null, 3);
+        }
+
+        [TestMethod]
+        [ExpectedException(typeof(ArgumentOutOfRangeException))]
+        public void CopyToWithInvalidStartingIndexThrowsExcpectedException()
+        {
+            var startingIndex = 4;
+            var array = new int[this.intSet.Count + 2];
+            this.intSet.CopyTo(array, startingIndex);
         }
     }
 }
