@@ -1,0 +1,30 @@
+path\homework\second-semester\9>dotnet new console -o homework9-1
+Шаблон "Console Application" успешно создан.
+
+Обработка действий после создания...
+Выполнение команды dotnet restore для homework9-1\homework9-1.csproj...
+  Restoring packages for path\homework\second-semester\9\homework9-1\homework9-1.csproj...
+  Generating MSBuild file path\homework\second-semester\9\homework9-1\obj\homework9-1.csproj.nuget.g.props.
+  Generating MSBuild file path\homework\second-semester\9\homework9-1\obj\homework9-1.csproj.nuget.g.targets.
+  Restore completed in 1,46 sec for path\homework\second-semester\9\homework9-1\homework9-1.csproj.
+
+Восстановление выполнено.
+
+
+path\homework\second-semester\9>cd homework9-1
+
+path\homework\second-semester\9\homework9-1>ls
+Program.cs  homework9-1.csproj  obj
+
+path\homework\second-semester\9\homework9-1>notepad Program.cs
+
+path\homework\second-semester\9\homework9-1>dotnet run
+2
+3
+5
+7
+11
+13
+17
+...
+997
