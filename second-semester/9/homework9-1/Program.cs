@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Primes
 {
-    class Program
+    public class Program
     {
         public static IEnumerable<T> Filter<T>(IEnumerable<T> collection, Predicate<T> predicate)
         {
@@ -48,7 +48,7 @@ namespace Primes
             return Filter(Integers(), IsPrime);
         }
 
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             foreach (var prime in Primes())
             {
