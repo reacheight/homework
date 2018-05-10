@@ -1,0 +1,14 @@
+image: Visual Studio 2017
+
+enviroment:
+    matrix:
+        - solution_name: second-semester/Homework1-4/Homework1-4.sln
+        - solution_name: second-semester/Homework1-5/Homework1-5.sln
+        - solution_name: second-semester/Homework2-1/Homework2-1.sln
+        - solution_name: second-semester/homework2.2/homework2.2.sln
+        - solution_name: second-semester/homework2.3/homework2.3.sln
+        - solution_name: second-semester/homework2.4/homework2.4.sln
+        - solution_name: second-semester/homework3.2/homework3.2.sln
+        
+build_script:
+    - msbuild %solution_name%
