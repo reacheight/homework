@@ -1,6 +1,6 @@
 image: Visual Studio 2017
 
-enviroment:
+environment:
     matrix:
         - solution_name: second-semester/Homework1-4/Homework1-4.sln
         - solution_name: second-semester/Homework1-5/Homework1-5.sln
