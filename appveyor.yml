@@ -1,0 +1,4 @@
+image: Visual Studio 2017
+
+build_script:
+    - msbuild second-semester/4/homework4.1/homework4.1.sln
