@@ -1,0 +1,7 @@
+image: Visual Studio 2017
+
+before_build:
+    - nuget restore second-semester\test\test.sln
+
+build_script:
+    - msbuild second-semester\test\test.sln
