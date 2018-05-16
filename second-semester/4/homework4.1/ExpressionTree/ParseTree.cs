@@ -64,8 +64,6 @@
         /// <returns>Root of the parse tree</returns>
         private Node BuildTree(string expression)
         {
-            expression = expression.Replace('.', ',');
-
             if (double.TryParse(expression, out double value))
             {
                 return new Operand(value);
