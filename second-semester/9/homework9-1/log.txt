@@ -1,0 +1,86 @@
+﻿path\homework\second-semester\9\homework9-1>dotnet new sln -o Primes
+Шаблон "Solution File" успешно создан.
+
+
+path\homework\second-semester\9\homework9-1>cd Primes
+
+path\homework\second-semester\9\homework9-1\Primes>ls
+Primes.sln
+
+path\homework\second-semester\9\homework9-1\Primes>dotnet new console -o Primes
+Шаблон "Console Application" успешно создан.
+
+Обработка действий после создания...
+Выполнение команды dotnet restore для Primes\Primes.csproj...
+  Restoring packages for path\homework\second-semester\9\homework9-1\Primes\Primes\Primes.csproj...
+  Generating MSBuild file path\homework\second-semester\9\homework9-1\Primes\Primes\obj\Primes.csproj.nuget.g.props.
+  Generating MSBuild file path\homework\second-semester\9\homework9-1\Primes\Primes\obj\Primes.csproj.nuget.g.targets.
+  Restore completed in 688,84 ms for path\homework\second-semester\9\homework9-1\Primes\Primes\Primes.csproj.
+
+Восстановление выполнено.
+
+
+path\homework\second-semester\9\homework9-1\Primes>cd Primes
+
+path\homework\second-semester\9\homework9-1\Primes\Primes>ls
+Primes.csproj  Program.cs  obj
+
+path\homework\second-semester\9\homework9-1\Primes\Primes>notepad Program.cs     # копирование кода
+
+path\homework\second-semester\9\homework9-1\Primes\Primes>dotnet run
+2
+3
+5
+7
+11
+13
+17
+...
+997
+
+path\homework\second-semester\9\homework9-1\Primes\Primes>cd ..
+
+path\homework\second-semester\9\homework9-1\Primes>dotnet sln add Primes\Primes.csproj
+Проект "Primes\Primes.csproj" добавлен в решение.
+
+path\homework\second-semester\9\homework9-1\Primes>dotnet new mstest -o Primes.Tests
+Шаблон "Unit Test Project" успешно создан.
+
+Обработка действий после создания...
+Выполнение команды dotnet restore для Primes.Tests\Primes.Tests.csproj...
+  Restoring packages for path\homework\second-semester\9\homework9-1\Primes\Primes.Tests\Primes.Tests.csproj...
+  Generating MSBuild file path\homework\second-semester\9\homework9-1\Primes\Primes.Tests\obj\Primes.Tests.csproj.nuget.g.props.
+  Generating MSBuild file path\homework\second-semester\9\homework9-1\Primes\Primes.Tests\obj\Primes.Tests.csproj.nuget.g.targets.
+  Restore completed in 7,21 sec for path\homework\second-semester\9\homework9-1\Primes\Primes.Tests\Primes.Tests.csproj.
+
+Восстановление выполнено.
+
+
+path\homework\second-semester\9\homework9-1\Primes>cd Primes.Tests
+
+path\homework\second-semester\9\homework9-1\Primes\Primes.Tests>ls
+Primes.Tests.csproj  UnitTest1.cs  obj
+
+path\homework\second-semester\9\homework9-1\Primes\Primes.Tests>notepad UnitTest1.cs   # копирование кода
+
+path\homework\second-semester\9\homework9-1\Primes\Primes.Tests>dotnet add reference ..\Primes\Primes.csproj
+Ссылка "..\Primes\Primes.csproj" добавлена в проект.
+
+path\homework\second-semester\9\homework9-1\Primes\Primes.Tests>cd ..
+
+path\homework\second-semester\9\homework9-1\Primes>dotnet sln add Primes.Tests\Primes.Tests.csproj
+Проект "Primes.Tests\Primes.Tests.csproj" добавлен в решение.
+
+path\homework\second-semester\9\homework9-1\Primes>dotnet test Primes.Tests
+Сборка начата, подождите...
+Сборка выполнена.
+
+Тестовый запуск path\homework\second-semester\9\homework9-1\Primes\Primes.Tests\bin\Debug\netcoreapp2.0\Primes.Tests.dll(.NETCoreApp,Version=v2.0)
+Программа Microsoft (R) Test Execution Command Line Tool версии 15.6.0
+(с) Корпорация Майкрософт (Microsoft Corporation). Все права защищены.
+
+Запуск выполнения тестов; подождите...
+
+Всего тестов: 5. Пройдено: 5. Не пройдено: 0. Пропущено: 0.
+Тестовый запуск выполнен.
+Время выполнения теста: 4,2542 Секунды
