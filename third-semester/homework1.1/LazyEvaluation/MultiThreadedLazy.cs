@@ -5,9 +5,9 @@
 
     public class MultiThreadedLazy<T> : ILazy<T>
     {
+        private readonly Func<T> supplier;
         private bool isEvaluated;
         private T result;
-        private readonly Func<T> supplier;
 
         public MultiThreadedLazy(Func<T> supplier)
         {
