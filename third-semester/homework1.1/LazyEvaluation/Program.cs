@@ -10,8 +10,6 @@
 
             var lazyObject = LazyFactory<int>.CreateSingleThreadedLazy(integer);
             Console.WriteLine(lazyObject.Get());
-
-            Console.ReadKey();
         }
     }
 }
