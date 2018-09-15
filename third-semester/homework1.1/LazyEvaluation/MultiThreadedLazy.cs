@@ -5,13 +5,13 @@
 
     public class MultiThreadedLazy<T> : ILazy<T>
     {
+        private readonly Mutex mutex = new Mutex();
         private readonly Func<T> supplier;
-        private bool isEvaluated;
+        private volatile bool isEvaluated = false;
         private T result;
 
         public MultiThreadedLazy(Func<T> supplier)
         {
-            this.isEvaluated = false;
             this.supplier = supplier;
         }
 
@@ -19,10 +19,14 @@
         {
             if (!this.isEvaluated)
             {
-                var evaluation = new Thread(() => this.result = this.supplier());
-                evaluation.Start();
-                evaluation.Join();
-                this.isEvaluated = true;
+                this.mutex.WaitOne();
+                if (!this.isEvaluated)
+                {
+                    this.result = this.supplier();
+                    this.isEvaluated = true;
+                }
+
+                this.mutex.ReleaseMutex();
             }
 
             return this.result;

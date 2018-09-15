@@ -5,12 +5,11 @@
     public class SingleThreadedLazy<T> : ILazy<T>
     {
         private readonly Func<T> supplier;
-        private bool isEvaluated;
+        private bool isEvaluated = false;
         private T result;
 
         public SingleThreadedLazy(Func<T> supplier)
         {
-            this.isEvaluated = false;
             this.supplier = supplier;
         }
 
