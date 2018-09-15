@@ -9,7 +9,7 @@
     /// <typeparam name="T">type of evaluation result</typeparam>
     public class MultiThreadedLazy<T> : ILazy<T>
     {
-        private readonly Mutex mutex = new Mutex();
+        private readonly object lockObject = new object();
         private readonly Func<T> supplier;
         private bool isEvaluated = false;
         private T result;
@@ -29,14 +29,14 @@
         {
             if (!this.isEvaluated)
             {
-                this.mutex.WaitOne();
-                if (!this.isEvaluated)
+                lock (this.lockObject)
                 {
-                    this.result = this.supplier();
-                    this.isEvaluated = true;
+                    if (!this.isEvaluated)
+                    {
+                        this.result = this.supplier();
+                        this.isEvaluated = true;
+                    }
                 }
-
-                this.mutex.ReleaseMutex();
             }
 
             return this.result;
