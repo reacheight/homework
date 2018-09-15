@@ -6,9 +6,13 @@
     {
         public static void Main(string[] args)
         {
-            Func<int> integer = () => 3;
+            Func<int> createInteger = () => 3;
+            Func<string> createString = () => "string";
 
-            var lazyObject = LazyFactory<int>.CreateSingleThreadedLazy(integer);
+            var simpleLazyObject = LazyFactory.CreateSingleThreadedLazy(createInteger);
+            Console.WriteLine(simpleLazyObject.Get());
+
+            var lazyObject = LazyFactory.CreateMultiThreadedLazy(createString);
             Console.WriteLine(lazyObject.Get());
         }
     }
