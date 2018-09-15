@@ -11,7 +11,7 @@
     {
         private readonly Mutex mutex = new Mutex();
         private readonly Func<T> supplier;
-        private volatile bool isEvaluated = false;
+        private bool isEvaluated = false;
         private T result;
 
         /// <summary>
