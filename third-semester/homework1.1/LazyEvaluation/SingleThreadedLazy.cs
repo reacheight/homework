@@ -17,9 +17,7 @@
         /// </summary>
         /// <param name="supplier">function that represents evaluation</param>
         public SingleThreadedLazy(Func<T> supplier)
-        {
-            this.supplier = supplier;
-        }
+            => this.supplier = supplier;
 
         /// <summary>
         /// Gets evaluation result
