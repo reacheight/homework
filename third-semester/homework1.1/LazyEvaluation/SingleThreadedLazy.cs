@@ -8,8 +8,8 @@
     /// <typeparam name="T">type of evaluation result</typeparam>
     public class SingleThreadedLazy<T> : ILazy<T>
     {
-        private readonly Func<T> supplier;
         private bool isEvaluated = false;
+        private Func<T> supplier;
         private T result;
 
         /// <summary>
@@ -29,6 +29,8 @@
             {
                 this.result = this.supplier();
                 this.isEvaluated = true;
+                this.supplier = null;
+
             }
 
             return this.result;

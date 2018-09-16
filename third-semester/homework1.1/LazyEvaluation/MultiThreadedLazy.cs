@@ -1,7 +1,6 @@
 ﻿namespace LazyEvaluation
 {
     using System;
-    using System.Threading;
 
     /// <summary>
     /// Thread-safe lazy evaluation implementation
@@ -10,8 +9,8 @@
     public class MultiThreadedLazy<T> : ILazy<T>
     {
         private readonly object lockObject = new object();
-        private readonly Func<T> supplier;
         private volatile bool isEvaluated = false;
+        private Func<T> supplier;
         private T result;
 
         /// <summary>
@@ -35,6 +34,7 @@
                     {
                         this.result = this.supplier();
                         this.isEvaluated = true;
+                        this.supplier = null;
                     }
                 }
             }
