@@ -11,7 +11,7 @@
     {
         private readonly object lockObject = new object();
         private readonly Func<T> supplier;
-        private bool isEvaluated = false;
+        private volatile bool isEvaluated = false;
         private T result;
 
         /// <summary>
