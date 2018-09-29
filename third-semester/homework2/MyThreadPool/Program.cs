@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading;
 
 namespace MyThreadPool
 {
@@ -8,10 +9,18 @@ namespace MyThreadPool
         {
             var threadPool = new MyThreadPool(4);
 
-            Func<int> getInteger = () => 5;
-            var task = threadPool.QueueTask(getInteger);
+            var count = 0;
+
+            var task = threadPool.QueueTask(() =>
+            {
+                Thread.Sleep(2000);
+                count++;
+                return 5;
+            });
             
             Console.WriteLine(task.Result);
+            Console.WriteLine(count);
+            
             threadPool.Shutdown();
         }
     }

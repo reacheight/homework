@@ -6,7 +6,8 @@ namespace MyThreadPool
 {
     public class MyThreadPool
     {
-        private static readonly CancellationTokenSource CancellationTokenSource = new CancellationTokenSource();
+        private static readonly CancellationTokenSource CancellationSource = new CancellationTokenSource();
+        private static readonly ManualResetEvent BlockHandle = new ManualResetEvent(false);
         private ConcurrentQueue<Action> _taskQueue = new ConcurrentQueue<Action>();
         
         public int NumberOfThreads { get; }
@@ -19,15 +20,22 @@ namespace MyThreadPool
 
         public IMyTask<TResult> QueueTask<TResult>(Func<TResult> resultFunction)
         {
+            if (CancellationSource.Token.IsCancellationRequested)
+            {
+                throw new InvalidOperationException("Pool has been shutted down.");
+            }
+            
             var task = new MyTask<TResult>(resultFunction, this);
             _taskQueue.Enqueue(task.Evaluate);
+            BlockHandle.Set();
             return task;
         }
 
         public void Shutdown()
         {
-            CancellationTokenSource.Cancel();
+            CancellationSource.Cancel();
             _taskQueue = null;
+            BlockHandle.Set();
         }
 
         private void CreateThreads()
@@ -38,13 +46,21 @@ namespace MyThreadPool
                 {
                     while (true)
                     {
-                        if (CancellationTokenSource.Token.IsCancellationRequested)
+                        BlockHandle.WaitOne();
+                        
+                        if (CancellationSource.Token.IsCancellationRequested)
                         {
                             break;
                         }
 
                         Action task = null;
                         _taskQueue?.TryDequeue(out task);
+
+                        if (_taskQueue != null && _taskQueue.IsEmpty)
+                        {
+                            BlockHandle.Reset();
+                        }
+                        
                         task?.Invoke();
                     }
                 });
