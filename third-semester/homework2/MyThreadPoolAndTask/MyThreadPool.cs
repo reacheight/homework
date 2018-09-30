@@ -85,7 +85,7 @@ namespace MyThreadPoolAndTask
                         
                         task?.Invoke();
                     }
-                });
+                }) { Name = $"My Pool Thread Number {i}"};
 
                 thread.Start();
             }

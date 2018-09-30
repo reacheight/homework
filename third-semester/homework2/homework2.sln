@@ -5,6 +5,8 @@ VisualStudioVersion = 15.0.27703.2042
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MyThreadPoolAndTask", "MyThreadPoolAndTask\MyThreadPoolAndTask.csproj", "{84F93E60-2166-4EDC-BE10-610CD800F6E4}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyThreadPoolAndTask.Test", "MyThreadPoolAndTask.Test\MyThreadPoolAndTask.Test.csproj", "{7579369F-C2C8-4F91-822B-C0CFAEE18A1D}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{84F93E60-2166-4EDC-BE10-610CD800F6E4}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{84F93E60-2166-4EDC-BE10-610CD800F6E4}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{84F93E60-2166-4EDC-BE10-610CD800F6E4}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7579369F-C2C8-4F91-822B-C0CFAEE18A1D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7579369F-C2C8-4F91-822B-C0CFAEE18A1D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7579369F-C2C8-4F91-822B-C0CFAEE18A1D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7579369F-C2C8-4F91-822B-C0CFAEE18A1D}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
