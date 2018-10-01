@@ -9,8 +9,8 @@ namespace MyThreadPoolAndTask
     /// </summary>
     public class MyThreadPool
     {
-        private static readonly CancellationTokenSource CancellationSource = new CancellationTokenSource();
-        private static readonly ManualResetEvent BlockHandle = new ManualResetEvent(false);
+        private readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();
+        private readonly ManualResetEvent _blockHandle = new ManualResetEvent(false);
         private ConcurrentQueue<Action> _taskQueue = new ConcurrentQueue<Action>();
 
         /// <summary>
@@ -36,14 +36,14 @@ namespace MyThreadPoolAndTask
         /// <returns>IMyTask object based on given function</returns>
         public IMyTask<TResult> QueueTask<TResult>(Func<TResult> resultFunction)
         {
-            if (CancellationSource.Token.IsCancellationRequested)
+            if (_cancellationSource.Token.IsCancellationRequested)
             {
                 throw new InvalidOperationException("Pool has been shutted down.");
             }
             
             var task = new MyTask<TResult>(resultFunction, this);
             _taskQueue.Enqueue(task.Evaluate);
-            BlockHandle.Set();
+            _blockHandle.Set();
             return task;
         }
 
@@ -52,9 +52,9 @@ namespace MyThreadPoolAndTask
         /// </summary>
         public void Shutdown()
         {
-            CancellationSource.Cancel();
+            _cancellationSource.Cancel();
             _taskQueue = null;
-            BlockHandle.Set();
+            _blockHandle.Set();
         }
 
         /// <summary>
@@ -68,9 +68,9 @@ namespace MyThreadPoolAndTask
                 {
                     while (true)
                     {
-                        BlockHandle.WaitOne();
+                        _blockHandle.WaitOne();
                         
-                        if (CancellationSource.Token.IsCancellationRequested)
+                        if (_cancellationSource.Token.IsCancellationRequested)
                         {
                             break;
                         }
@@ -80,7 +80,7 @@ namespace MyThreadPoolAndTask
 
                         if (_taskQueue != null && _taskQueue.IsEmpty)
                         {
-                            BlockHandle.Reset();
+                            _blockHandle.Reset();
                         }
                         
                         task?.Invoke();
