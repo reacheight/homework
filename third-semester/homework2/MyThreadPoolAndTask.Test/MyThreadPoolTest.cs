@@ -26,12 +26,12 @@ namespace MyThreadPoolAndTask.Test
                 threadPool.QueueTask(() =>
                 {
                     set.Add(Thread.CurrentThread.Name);
-                    Thread.Sleep(300);
+                    Thread.Sleep(500);
                     return 5;
                 });
             }
 
-            Thread.Sleep(300);
+            Thread.Sleep(500);
             threadPool.Shutdown();
             
             Assert.AreEqual(threadPool.NumberOfThreads, set.Count);
