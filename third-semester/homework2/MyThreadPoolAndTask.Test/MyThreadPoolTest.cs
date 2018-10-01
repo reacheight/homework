@@ -26,15 +26,15 @@ namespace MyThreadPoolAndTask.Test
                 threadPool.QueueTask(() =>
                 {
                     set.Add(Thread.CurrentThread.Name);
-                    Thread.Sleep(2000);
+                    Thread.Sleep(200);
                     return 5;
                 });
             }
 
-            Thread.Sleep(2000);
+            Thread.Sleep(200);
             threadPool.Shutdown();
             
-            Assert.IsTrue(set.Count == threadPool.NumberOfThreads);
+            Assert.AreEqual(threadPool.NumberOfThreads, set.Count);
         }
 
         [TestMethod]
@@ -63,12 +63,12 @@ namespace MyThreadPoolAndTask.Test
                 threadPool.QueueTask(() =>
                 {
                     counts[j]++;
-                    Thread.Sleep(1000);
+                    Thread.Sleep(100);
                     return 5;
                 });
             }
 
-            Thread.Sleep(1000);
+            Thread.Sleep(100);
             foreach (var count in counts)
             {
                 Assert.AreEqual(1, count);
@@ -87,25 +87,47 @@ namespace MyThreadPoolAndTask.Test
         }
 
         [TestMethod]
-        public void ShutdownWorksRight()
+        public void ShutdownDoesNotStopEvaluatingTasks()
         {
-            var countOfEvaluatedTasks = 0;
+            var numberOfEvaluatedTasks = 0;
+
+            for (var i = 0; i < 4; ++i)
+            {
+                threadPool.QueueTask(() =>
+                {
+                    numberOfEvaluatedTasks++;
+                    Thread.Sleep(500);
+                    return 5;
+                });
+            }
+
+            Thread.Sleep(100);
+            threadPool.Shutdown();
+
+            Thread.Sleep(400);
+            Assert.AreEqual(threadPool.NumberOfThreads, numberOfEvaluatedTasks);
+        }
+        
+        [TestMethod]
+        public void AfterShutdownTasksFromQueueDoNotEvaluate()
+        {
+            var numberOfEvaluatedTasks = 0;
 
             for (var i = 0; i < 10; ++i)
             {
                 threadPool.QueueTask(() =>
                 {
-                    countOfEvaluatedTasks++;
-                    Thread.Sleep(5000);
+                    numberOfEvaluatedTasks++;
+                    Thread.Sleep(500);
                     return 5;
                 });
             }
 
-            Thread.Sleep(1000);
+            Thread.Sleep(100);
             threadPool.Shutdown();
 
-            Thread.Sleep(4000);
-            Assert.AreEqual(threadPool.NumberOfThreads, countOfEvaluatedTasks);
+            Thread.Sleep(400);
+            Assert.AreEqual(threadPool.NumberOfThreads, numberOfEvaluatedTasks);
         }
 
         [TestMethod]
@@ -113,12 +135,12 @@ namespace MyThreadPoolAndTask.Test
         {
             var task = threadPool.QueueTask(() =>
             {
-                Thread.Sleep(1000);
+                Thread.Sleep(100);
                 return 5;
             });
 
             Assert.IsFalse(task.IsCompleted);
-            Thread.Sleep(2000);
+            Thread.Sleep(200);
             Assert.IsTrue(task.IsCompleted);
             
             threadPool.Shutdown();
@@ -129,6 +151,97 @@ namespace MyThreadPoolAndTask.Test
         public void ResultThrowRightExceptionOnError()
         {
             var result = threadPool.QueueTask<object>(() => throw new NullReferenceException()).Result;
+        }
+
+        [TestMethod]
+        public void ContinueWithQueuesNewTasks()
+        {
+            var task = threadPool.QueueTask(() => 5);
+
+            var isEvaluated = new List<bool> {false, false, false, false};
+            for (var i = 0; i < isEvaluated.Count; ++i)
+            {
+                var j = i;
+                task.ContinueWith((x) =>
+                {
+                    isEvaluated[j] = true;
+                    return x;
+                });
+            }
+            
+
+            Thread.Sleep(200);
+            foreach (var flag in isEvaluated)
+            {
+                Assert.IsTrue(flag);
+            }
+            
+            threadPool.Shutdown();
+        }
+
+        [TestMethod]
+        public void ContinueWithDoesNotBlockThread()
+        {
+            var isThreadBlocked = true;
+            var task = threadPool.QueueTask(() =>
+            {
+                Thread.Sleep(500);
+                return 5;
+            });
+
+            task.ContinueWith((x) => 3);
+
+            if (!task.IsCompleted)
+            {
+                isThreadBlocked = false;
+            }
+            
+            Assert.IsFalse(isThreadBlocked);
+            
+            threadPool.Shutdown();
+        }
+
+        [TestMethod]
+        public void ContinueWithTaskEvaluatesAfterMainTask()
+        {
+            var task = threadPool.QueueTask(() =>
+            {
+                Thread.Sleep(200);
+                return 5;
+            });
+
+            var newTask = task.ContinueWith((x) => 6);
+
+            while (!task.IsCompleted)
+            {
+                Assert.IsFalse(newTask.IsCompleted);
+            }
+
+            Thread.Sleep(500);
+            Assert.IsTrue(newTask.IsCompleted);
+            
+            threadPool.Shutdown();
+        }
+
+        [TestMethod]
+        public void ContinueWithTasksDoesNotUseTheSameThread()
+        {
+            var task = threadPool.QueueTask(() => 4);
+            
+            var set = new HashSet<string>();
+            for (var i = 0; i < threadPool.NumberOfThreads; ++i)
+            {
+                task.ContinueWith((x) =>
+                {
+                    set.Add(Thread.CurrentThread.Name);
+                    Thread.Sleep(500);
+                    return x;
+                });
+            }
+
+            Assert.AreNotEqual(1, set.Count);
+            
+            threadPool.Shutdown();
         }
     }
 }
