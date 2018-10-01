@@ -2,10 +2,14 @@ image: Visual Studio 2017
 
 branches:
     only:
-        - hw7-1
+        - hw2
 
 before_build:
-    - nuget restore second-semester/7/homework7.1/homework7.1.sln
+    - dotnet restore
 
 build_script:
-    - msbuild second-semester/7/homework7.1/homework7.1.sln
+    - dotnet publish
+
+test_script:
+    - cd MyThreadPoolAndTask.Test
+    - dotnet test
