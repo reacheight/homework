@@ -5,11 +5,11 @@ branches:
         - hw2
 
 before_build:
-    - dotnet restore
+    - dotnet restore third-semester/homework2/
 
 build_script:
-    - dotnet publish
+    - dotnet publish third-semester/homework2/
 
 test_script:
-    - cd MyThreadPoolAndTask.Test
+    - cd third-semester/homework2/MyThreadPoolAndTask.Test
     - dotnet test
