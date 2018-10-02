@@ -8,7 +8,7 @@ before_build:
     - dotnet restore third-semester/homework2/
 
 build_script:
-    - dotnet publish third-semester/homework2/
+    - dotnet build third-semester/homework2/
 
 test_script:
     - cd third-semester/homework2/MyThreadPoolAndTask.Test
