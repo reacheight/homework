@@ -10,8 +10,7 @@ namespace MyThreadPoolAndTask
     public class MyThreadPool
     {
         private readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();
-        private readonly ManualResetEvent _blockHandle = new ManualResetEvent(false);
-        private ConcurrentQueue<Action> _taskQueue = new ConcurrentQueue<Action>();
+        private readonly BlockingCollection<Action> _taskQueue = new BlockingCollection<Action>();
 
         /// <summary>
         /// Initializes a new instance of the <see cref="MyThreadPool"/> class.
@@ -38,12 +37,20 @@ namespace MyThreadPoolAndTask
         {
             if (_cancellationSource.Token.IsCancellationRequested)
             {
-                throw new InvalidOperationException("Pool has been shutted down.");
+                throw new InvalidOperationException("Thread pool has been shutted down");
             }
             
             var task = new MyTask<TResult>(resultFunction, this);
-            _taskQueue.Enqueue(task.Evaluate);
-            _blockHandle.Set();
+
+            try
+            {
+                _taskQueue.Add(task.Evaluate, _cancellationSource.Token);
+            }
+            catch (OperationCanceledException)
+            {
+                throw new InvalidOperationException("Thread pool has been shutted down");
+            }
+
             return task;
         }
 
@@ -53,8 +60,7 @@ namespace MyThreadPoolAndTask
         public void Shutdown()
         {
             _cancellationSource.Cancel();
-            _taskQueue = null;
-            _blockHandle.Set();
+            _taskQueue.CompleteAdding();
         }
 
         /// <summary>
@@ -68,24 +74,18 @@ namespace MyThreadPoolAndTask
                 {
                     while (true)
                     {
-                        _blockHandle.WaitOne();
-                        
                         if (_cancellationSource.Token.IsCancellationRequested)
                         {
                             break;
                         }
 
-                        Action task = null;
-                        _taskQueue?.TryDequeue(out task);
-
-                        if (_taskQueue != null && _taskQueue.IsEmpty)
+                        try
                         {
-                            _blockHandle.Reset();
+                            _taskQueue.Take(_cancellationSource.Token).Invoke();
                         }
-                        
-                        task?.Invoke();
+                        catch (OperationCanceledException) { }
                     }
-                }) { Name = $"My Pool Thread Number {i}"};
+                }) { Name = $"My Pool Thread Number {i}" };
 
                 thread.Start();
             }
