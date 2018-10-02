@@ -21,7 +21,7 @@ namespace MyThreadPoolAndTask.Test
         {
             var set = new HashSet<string>();
 
-            for (var i = 0; i < threadPool.NumberOfThreads; ++i)
+            for (var i = 0; i < 10; ++i)
             {
                 threadPool.QueueTask(() =>
                 {
@@ -31,10 +31,10 @@ namespace MyThreadPoolAndTask.Test
                 });
             }
 
-            Thread.Sleep(1500);
+            Thread.Sleep(2000);
             threadPool.Shutdown();
-            
-            Assert.AreEqual(threadPool.NumberOfThreads, set.Count);
+
+            Assert.IsTrue(set.Count >= threadPool.NumberOfThreads);
         }
 
         [TestMethod]
