@@ -98,6 +98,7 @@ namespace MyThreadPoolAndTask
         private class MyTask<TResult> : IMyTask<TResult>
         {
             private readonly MyThreadPool _threadPool;
+            private readonly ManualResetEvent _resultHandle = new ManualResetEvent(false);
             private Func<TResult> _resultFunction;
             private TResult _result;
             private AggregateException _exception;
@@ -128,7 +129,7 @@ namespace MyThreadPoolAndTask
             {
                 get
                 {
-                    while (!IsCompleted) { }
+                    _resultHandle.WaitOne();
 
                     if (_exception != null)
                     {
@@ -157,6 +158,7 @@ namespace MyThreadPoolAndTask
                 
                 IsCompleted = true;
                 _resultFunction = null;
+                _resultHandle.Set();
             }
             
             /// <summary>
