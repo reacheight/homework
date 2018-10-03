@@ -7,7 +7,7 @@ namespace MyThreadPoolAndTask
     /// <summary>
     /// Class that implements simple thread pool
     /// </summary>
-    public class MyThreadPool
+    public class MyThreadPool : IDisposable
     {
         private readonly CancellationTokenSource _cancellationSource = new CancellationTokenSource();
         private readonly BlockingCollection<Action> _taskQueue = new BlockingCollection<Action>();
@@ -50,6 +50,10 @@ namespace MyThreadPoolAndTask
             {
                 throw new InvalidOperationException("Thread pool has been shutted down");
             }
+            catch (ObjectDisposedException)
+            {
+                throw new InvalidOperationException("Thread pool has been shutted down");
+            }
 
             return task;
         }
@@ -61,6 +65,12 @@ namespace MyThreadPoolAndTask
         {
             _cancellationSource.Cancel();
             _taskQueue.CompleteAdding();
+            _taskQueue.Dispose();
+        }
+
+        public void Dispose()
+        {
+            Shutdown();
         }
 
         /// <summary>
@@ -84,6 +94,7 @@ namespace MyThreadPoolAndTask
                             _taskQueue.Take(_cancellationSource.Token).Invoke();
                         }
                         catch (OperationCanceledException) { }
+                        catch (ObjectDisposedException) { }
                     }
                 }) { Name = $"My Pool Thread Number {i}" };
 
