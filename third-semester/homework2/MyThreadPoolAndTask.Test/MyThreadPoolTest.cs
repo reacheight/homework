@@ -204,21 +204,22 @@ namespace MyThreadPoolAndTask.Test
         [TestMethod]
         public void ContinueWithTaskEvaluatesAfterMainTask()
         {
+            var lastThreadFlag = false;
             var task = threadPool.QueueTask(() =>
             {
-                Thread.Sleep(200);
+                lastThreadFlag = false;
                 return 5;
             });
 
-            var newTask = task.ContinueWith((x) => 6);
-
-            while (!task.IsCompleted)
+            task.ContinueWith((x) =>
             {
-                Assert.IsFalse(newTask.IsCompleted);
-            }
+                Thread.Sleep(200);
+                lastThreadFlag = true;
+                return x;
+            });
 
-            Thread.Sleep(500);
-            Assert.IsTrue(newTask.IsCompleted);
+            Thread.Sleep(400);
+            Assert.IsTrue(lastThreadFlag);
             
             threadPool.Shutdown();
         }
