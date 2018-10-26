@@ -10,8 +10,10 @@ namespace FileSystemMD5
     {
         static void Main(string[] args)
         {
+            Console.WriteLine("Введите путь до файла или дириктории:");
             var path = Console.ReadLine();
             
+            Console.WriteLine("Checksum: ");
             Console.WriteLine(MyFileSystemMd5.GetChecksum(path));
         }
     }
