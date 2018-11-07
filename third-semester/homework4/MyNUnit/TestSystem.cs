@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Diagnostics;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -15,40 +14,31 @@ namespace MyNUnit
             var assemblies = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories)
                 .Select(Assembly.LoadFrom).ToList();
 
-            var tasks = new List<Task>();
+            var tasks = assemblies.SelectMany(a => a.ExportedTypes)
+                .Select(type => new Task(() => RunTestMethods(type)))
+                .ToList();
             
-            foreach (var assembly in assemblies)
-            {
-                foreach (var type in assembly.ExportedTypes)
-                {
-                    var task = new Task(() => RunTestMethods(type));
-                    task.Start();
-                    tasks.Add(task);
-                }
-            }
-
-            Task.WhenAll(tasks).Wait();
+            tasks.ForEach(task => task.Start());
+            Task.WaitAll(tasks.ToArray());
         }
 
         private static void RunTestMethods(Type type)
         {
             RunHelperMethods(type, typeof(BeforeClassAttribute));
             
-            var tasks = new List<Task>();
+            var tasks = type.GetTypeInfo().DeclaredMethods
+                .Where(IsTestMethod)
+                .Select(mi => new Task(() => RunTestMethod(mi)))
+                .ToList();
             
-            foreach (var methodInfo in type.GetTypeInfo().DeclaredMethods)
-            {
-                if (Attribute.GetCustomAttributes(methodInfo)
-                    .Any(attr => attr.GetType() == typeof(TestAttribute)))
-                {
-                    var task = new Task(() => RunTestMethod(methodInfo));
-                    task.Start();
-                    tasks.Add(task);
-                }
-            }
-
-            Task.WhenAll(tasks).Wait();
+            tasks.ForEach(task => task.Start());
+            Task.WaitAll(tasks.ToArray());
+            
             RunHelperMethods(type, typeof(AfterClassAttribute));
+
+            bool IsTestMethod(MethodInfo methodInfo)
+                => Attribute.GetCustomAttributes(methodInfo).
+                    Any(attr => attr.GetType() == typeof(TestAttribute));
         }
 
         private static void RunTestMethod(MethodInfo methodInfo)
@@ -77,20 +67,17 @@ namespace MyNUnit
 
         private static void RunHelperMethods(Type type, Type helperAttributeType)
         {
-            var tasks = new List<Task>();
-
-            foreach (var methodInfo in type.GetTypeInfo().DeclaredMethods)
-            {
-                if (Attribute.GetCustomAttributes(methodInfo)
-                    .Any(attr => attr.GetType() == helperAttributeType))
-                {
-                    var task = new Task(() => RunHelperMethod(methodInfo));
-                    task.Start();
-                    tasks.Add(task);
-                }
-            }
-
+            var tasks = type.GetTypeInfo().DeclaredMethods
+                .Where(IsNeededMethod)
+                .Select(mi => new Task(() => RunHelperMethod(mi)))
+                .ToList();
+            
+            tasks.ForEach(task => task.Start());
             Task.WaitAll(tasks.ToArray());
+
+            bool IsNeededMethod(MethodInfo methodInfo)
+                => Attribute.GetCustomAttributes(methodInfo)
+                    .Any(attr => attr.GetType() == helperAttributeType);
         }
 
         private static void RunHelperMethod(MethodInfo methodInfo)
