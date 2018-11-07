@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -39,21 +40,19 @@ namespace MyNUnit
         private static void RunTestMethod(MethodInfo methodInfo)
         {
             ValidateTestMethod(methodInfo);
+            var instance = CreateInstance(methodInfo);
 
-            var constructor = methodInfo.DeclaringType.GetConstructor(Type.EmptyTypes);
-            if (constructor == null)
-            {
-                throw new Exception("Test class should have parameterless constructor.");
-            }
-
+            var watch = Stopwatch.StartNew();
             try
             {
-                methodInfo.Invoke(constructor.Invoke(null), null);
-                TestLogger.LogSuccess(methodInfo);
+                methodInfo.Invoke(instance, null);
+                watch.Stop();
+                TestLogger.LogSuccess(methodInfo, watch.ElapsedMilliseconds);
             }
             catch (Exception exception)
             {
-                TestLogger.LogFail(methodInfo, exception);
+                watch.Stop();
+                TestLogger.LogFail(methodInfo, watch.ElapsedMilliseconds, exception);
             }
         }
 
@@ -68,6 +67,17 @@ namespace MyNUnit
             {
                 throw new Exception("Test method should be void.");
             }
+        }
+
+        private static object CreateInstance(MethodInfo methodInfo)
+        {
+            var constructor = methodInfo.DeclaringType.GetConstructor(Type.EmptyTypes);
+            if (constructor == null)
+            {
+                throw new Exception("Test class should have parameterless constructor.");
+            }
+
+            return constructor.Invoke(null);
         }
     }
 }
