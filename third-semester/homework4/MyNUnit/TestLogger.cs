@@ -9,6 +9,7 @@ namespace MyNUnit
         {
             return $"{methodInfo.DeclaringType}.{methodInfo.Name}";
         }
+        
         public static void LogSuccess(MethodInfo methodInfo, long ellapsedMilliseconds)
         {
             Console.WriteLine($"Test method {MethodString(methodInfo)} successed.");
@@ -20,6 +21,7 @@ namespace MyNUnit
         {
             Console.WriteLine($"Test method {MethodString(methodInfo)} failed with exception message: {exception.Message}");
             Console.WriteLine($"Execution time: {ellapsedMilliseconds} ms.");
+            Console.WriteLine();
         }
     }
 }

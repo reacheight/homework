@@ -21,25 +21,42 @@ namespace MyNUnit
             {
                 foreach (var type in assembly.ExportedTypes)
                 {
-                    foreach (var methodInfo in type.GetTypeInfo().DeclaredMethods)
-                    {
-                        if (Attribute.GetCustomAttributes(methodInfo)
-                            .Any(attr => attr.GetType() == typeof(TestAttribute)))
-                        {
-                            var task = new Task(() => RunTestMethod(methodInfo));
-                            task.Start();
-                            tasks.Add(task);
-                        }
-                    }
+                    var task = new Task(() => RunTestMethods(type));
+                    task.Start();
+                    tasks.Add(task);
                 }
             }
 
             Task.WhenAll(tasks).Wait();
         }
 
+        private static void RunTestMethods(Type type)
+        {
+            RunHelperMethods(type, typeof(BeforeClassAttribute));
+            
+            var tasks = new List<Task>();
+            
+            foreach (var methodInfo in type.GetTypeInfo().DeclaredMethods)
+            {
+                if (Attribute.GetCustomAttributes(methodInfo)
+                    .Any(attr => attr.GetType() == typeof(TestAttribute)))
+                {
+                    var task = new Task(() => RunTestMethod(methodInfo));
+                    task.Start();
+                    tasks.Add(task);
+                }
+            }
+
+            Task.WhenAll(tasks).Wait();
+            RunHelperMethods(type, typeof(AfterClassAttribute));
+        }
+
         private static void RunTestMethod(MethodInfo methodInfo)
         {
-            ValidateTestMethod(methodInfo);
+            ValidateMethod(methodInfo);
+
+            RunHelperMethods(methodInfo.DeclaringType, typeof(BeforeAttribute));
+            
             var instance = CreateInstance(methodInfo);
 
             var watch = Stopwatch.StartNew();
@@ -54,9 +71,36 @@ namespace MyNUnit
                 watch.Stop();
                 TestLogger.LogFail(methodInfo, watch.ElapsedMilliseconds, exception);
             }
+            
+            RunHelperMethods(methodInfo.DeclaringType, typeof(AfterAttribute));
         }
 
-        private static void ValidateTestMethod(MethodInfo methodInfo)
+        private static void RunHelperMethods(Type type, Type helperAttributeType)
+        {
+            var tasks = new List<Task>();
+
+            foreach (var methodInfo in type.GetTypeInfo().DeclaredMethods)
+            {
+                if (Attribute.GetCustomAttributes(methodInfo)
+                    .Any(attr => attr.GetType() == helperAttributeType))
+                {
+                    var task = new Task(() => RunHelperMethod(methodInfo));
+                    task.Start();
+                    tasks.Add(task);
+                }
+            }
+
+            Task.WaitAll(tasks.ToArray());
+        }
+
+        private static void RunHelperMethod(MethodInfo methodInfo)
+        {
+            ValidateMethod(methodInfo);
+            var instance = CreateInstance(methodInfo);
+            methodInfo.Invoke(instance, null);
+        }
+
+        private static void ValidateMethod(MethodInfo methodInfo)
         {
             if (methodInfo.GetParameters().Length != 0)
             {

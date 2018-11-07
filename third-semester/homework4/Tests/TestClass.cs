@@ -1,4 +1,5 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using MyNUnit;
 using Shouldly;
 
@@ -6,6 +7,29 @@ namespace Tests
 {
     public class TestClass
     {
+        [BeforeClass]
+        public void BeforeClass()
+        {
+            Console.WriteLine("before class");
+        }
+
+        [AfterClass]
+        public void AfterClass()
+        {
+            Console.WriteLine("after class");
+        }
+        [Before]
+        public void Before()
+        {
+            Console.WriteLine("before");
+        }
+        
+        [After]
+        public void After()
+        {
+            Console.WriteLine("after");
+        }
+        
         [Test]
         public void TestMethod()
         {
