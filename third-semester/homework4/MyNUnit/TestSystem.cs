@@ -13,7 +13,7 @@ namespace MyNUnit
     public static class TestSystem
     {
         /// <summary>
-        /// Executes tests in all classes of all assemblies stored by given path
+        /// Executes tests in all classes of all assemblies stored by the given path
         /// </summary>
         /// <param name="path">given path</param>
         public static void RunTests(string path)
@@ -30,9 +30,9 @@ namespace MyNUnit
         }
 
         /// <summary>
-        /// Executes tests in given class
+        /// Executes tests in the given class
         /// </summary>
-        /// <param name="type">type of given class</param>
+        /// <param name="type">type of the given class</param>
         private static void RunTestMethods(Type type)
         {
             RunAttributeMethods<BeforeClassAttribute>(type);
@@ -41,9 +41,9 @@ namespace MyNUnit
         }
         
         /// <summary>
-        /// Executes all methods of given class with given attribute in parallel
+        /// Executes all methods of the given class with the given attribute in parallel
         /// </summary>
-        /// <param name="type">type of class whose methods are going to be executed</param>
+        /// <param name="type">type of the class whose methods are going to be executed</param>
         /// <typeparam name="T">given attribute</typeparam>
         private static void RunAttributeMethods<T>(Type type)
             where T : Attribute
@@ -64,7 +64,7 @@ namespace MyNUnit
         /// <summary>
         /// Executes test method 
         /// </summary>
-        /// <param name="methodInfo">method info of test method to be executed</param>
+        /// <param name="methodInfo">method info of the test method to be executed</param>
         private static void RunTestMethod(MethodInfo methodInfo)
         {
             var attribute = Attribute.GetCustomAttribute(methodInfo, typeof(TestAttribute)) as TestAttribute;
@@ -98,7 +98,7 @@ namespace MyNUnit
         /// <summary>
         /// Executes simple method
         /// </summary>
-        /// <param name="methodInfo">method info of method to be executed</param>
+        /// <param name="methodInfo">method info of the method to be executed</param>
         private static void RunHelpMethod(MethodInfo methodInfo)
         {
             ValidateMethod(methodInfo);
@@ -107,10 +107,10 @@ namespace MyNUnit
         }
 
         /// <summary>
-        /// Validates that given method is executable
+        /// Validates that the given method is executable
         /// </summary>
-        /// <param name="methodInfo">method info of method to be validated</param>
-        /// <exception cref="Exception">throws exception if method has any parameters
+        /// <param name="methodInfo">method info of the method to be validated</param>
+        /// <exception cref="Exception">throws exception if the method has any parameters
         /// or is not void</exception>
         private static void ValidateMethod(MethodInfo methodInfo)
         {
@@ -126,11 +126,11 @@ namespace MyNUnit
         }
 
         /// <summary>
-        /// Creates instance of given type
+        /// Creates instance of the given type
         /// </summary>
         /// <param name="type">given type</param>
-        /// <returns>instance of given type</returns>
-        /// <exception cref="Exception">throws exception if given type
+        /// <returns>instance of the given type</returns>
+        /// <exception cref="Exception">throws exception if the given type
         /// has no parameterless constructor</exception>
         private static object CreateInstance(Type type)
         {

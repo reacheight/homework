@@ -21,6 +21,11 @@ namespace MyNUnit
             Console.WriteLine();
         }
         
+        /// <summary>
+        /// Logs about ignoration of test method
+        /// </summary>
+        /// <param name="methodInfo">given test method</param>
+        /// <param name="message">ignore message</param>
         public static void LogIgnore(MethodInfo methodInfo, string message)
         {
             Console.WriteLine($"Test method {MethodName(methodInfo)} ignored with message: {message}");
