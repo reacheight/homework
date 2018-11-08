@@ -6,12 +6,12 @@ namespace MyNUnit
     /// <summary>
     /// Class that implements command-line test application
     /// </summary>
-    class Program
+    public class Program
     {
         /// <summary>
         /// Main function
         /// </summary>
-        static void Main()
+        public static void Main()
         {
             Console.WriteLine("Enter full or relative path:");
             var path = Console.ReadLine();
