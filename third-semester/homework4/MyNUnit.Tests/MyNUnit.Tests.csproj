@@ -16,5 +16,6 @@
     <ProjectReference Include="..\TestProjects\TestProject3\TestProject3.csproj" />
     <ProjectReference Include="..\TestProjects\TestProject4\TestProject4.csproj" />
     <ProjectReference Include="..\TestProjects\TestProject5\TestProject5.csproj" />
+    <ProjectReference Include="..\TestProjects\TestProject6\TestProject6.csproj" />
   </ItemGroup>
 </Project>

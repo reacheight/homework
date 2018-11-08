@@ -18,9 +18,9 @@ namespace MyNUnit
         private static List<string> _failed;
         private static List<string> _ignored;
 
-        public static IEnumerable<string> Successed => _successed;
-        public static IEnumerable<string> Failed => _failed;
-        public static IEnumerable<string> Ignored => _ignored;        
+        public static IReadOnlyCollection<string> Successed => _successed;
+        public static IReadOnlyCollection<string> Failed => _failed;
+        public static IReadOnlyCollection<string> Ignored => _ignored;        
 
         /// <summary>
         /// Executes tests in all classes of all assemblies stored by the given path
