@@ -16,9 +16,8 @@ namespace MyNUnit
         /// <param name="successed">gets whether test successed or failed</param>
         public static void Log(MethodInfo methodInfo, long ellapsedMilliseconds, bool successed)
         {
-            Console.WriteLine($"Test method {MethodName(methodInfo)} {(successed ? "successed" : "failed")}.");
-            Console.WriteLine($"Execution time: {ellapsedMilliseconds} ms.");
-            Console.WriteLine();
+            Console.WriteLine($"Test method {MethodName(methodInfo)} {(successed ? "successed" : "failed")}.\n" +
+                              $"Execution time: {ellapsedMilliseconds} ms.\n");
         }
         
         /// <summary>
@@ -28,8 +27,7 @@ namespace MyNUnit
         /// <param name="message">ignore message</param>
         public static void LogIgnore(MethodInfo methodInfo, string message)
         {
-            Console.WriteLine($"Test method {MethodName(methodInfo)} ignored with message: {message}");
-            Console.WriteLine();
+            Console.WriteLine($"Test method {MethodName(methodInfo)} ignored with message: {message}.\n");
         }
         
         /// <summary>
