@@ -39,7 +39,8 @@ namespace Tests
         [Test]
         public void LongTestMethod()
         {
-            Thread.Sleep(3000);
+            Thread.Sleep(2000);
+            true.ShouldBe(false);
         }
         
         [Test]
