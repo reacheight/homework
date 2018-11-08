@@ -53,16 +53,12 @@ namespace MyNUnit
                 : RunHelpMethod;
 
             var tasks = type.GetTypeInfo().DeclaredMethods
-                .Where(IsAttributeMethod)
+                .Where(mi => Attribute.IsDefined(mi, typeof(T)))
                 .Select(mi => new Task(() => runMethod(mi)))
                 .ToList();
             
             tasks.ForEach(task => task.Start());
             Task.WaitAll(tasks.ToArray());
-
-            bool IsAttributeMethod(MethodInfo methodInfo)
-                => Attribute.GetCustomAttributes(methodInfo)
-                    .Any(attr => attr.GetType() == typeof(T));
         }
 
         /// <summary>
@@ -87,26 +83,13 @@ namespace MyNUnit
             {
                 methodInfo.Invoke(instance, null);
                 watch.Stop();
-                if (attribute.Excpected != null)
-                {
-                    TestLogger.LogFail(methodInfo, watch.ElapsedMilliseconds);
-                }
-                else
-                {
-                    TestLogger.LogSuccess(methodInfo, watch.ElapsedMilliseconds);
-                }
+                TestLogger.Log(methodInfo, watch.ElapsedMilliseconds, attribute.Excpected == null);
             }
             catch (Exception exception)
             {
                 watch.Stop();
-                if (attribute.Excpected != null && exception.InnerException.GetType() == attribute.Excpected)
-                {
-                    TestLogger.LogSuccess(methodInfo, watch.ElapsedMilliseconds);
-                }
-                else
-                {
-                    TestLogger.LogFail(methodInfo, watch.ElapsedMilliseconds);
-                }
+                TestLogger.Log(methodInfo, watch.ElapsedMilliseconds,
+                    attribute.Excpected != null && exception.InnerException.GetType() == attribute.Excpected);
             }
 
             RunAttributeMethods<AfterAttribute>(methodInfo.DeclaringType);
