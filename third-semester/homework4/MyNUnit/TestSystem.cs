@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
@@ -13,6 +14,14 @@ namespace MyNUnit
     /// </summary>
     public static class TestSystem
     {
+        private static List<string> _successed;
+        private static List<string> _failed;
+        private static List<string> _ignored;
+
+        public static IEnumerable<string> Successed => _successed;
+        public static IEnumerable<string> Failed => _failed;
+        public static IEnumerable<string> Ignored => _ignored;        
+
         /// <summary>
         /// Executes tests in all classes of all assemblies stored by the given path
         /// </summary>
@@ -21,7 +30,7 @@ namespace MyNUnit
         {
             var assemblies = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories)
                 .Select(Assembly.LoadFrom).ToList();
-            
+            InitStaticFields();
             var tasks = assemblies.SelectMany(a => a.ExportedTypes)
                 .Select(type => new Task(() => RunTestMethods(type)))
                 .ToList();
@@ -72,25 +81,36 @@ namespace MyNUnit
             if (attribute.Ignore != null)
             {
                 TestLogger.LogIgnore(methodInfo, attribute.Ignore);
+                _ignored.Add($"{methodInfo.DeclaringType}.{methodInfo.Name}");
                 return;
             }
             
             ValidateMethod(methodInfo);
             RunAttributeMethods<BeforeAttribute>(methodInfo.DeclaringType);
-            
+
+            bool successed;
             var instance = CreateInstance(methodInfo.DeclaringType);
             var watch = Stopwatch.StartNew();
             try
             {
                 methodInfo.Invoke(instance, null);
                 watch.Stop();
-                TestLogger.Log(methodInfo, watch.ElapsedMilliseconds, attribute.Excpected == null);
+                successed = attribute.Excpected == null;
             }
             catch (Exception exception)
             {
                 watch.Stop();
-                TestLogger.Log(methodInfo, watch.ElapsedMilliseconds,
-                    attribute.Excpected != null && exception.InnerException.GetType() == attribute.Excpected);
+                successed = attribute.Excpected != null && exception.InnerException.GetType() == attribute.Excpected;
+            }
+            
+            TestLogger.Log(methodInfo, watch.ElapsedMilliseconds, successed);
+            if (successed)
+            {
+                _successed.Add($"{methodInfo.DeclaringType}.{methodInfo.Name}");
+            }
+            else
+            {
+                _failed.Add($"{methodInfo.DeclaringType}.{methodInfo.Name}");
             }
 
             RunAttributeMethods<AfterAttribute>(methodInfo.DeclaringType);
@@ -145,6 +165,13 @@ namespace MyNUnit
             }
 
             return constructor.Invoke(null);
+        }
+        
+        private static void InitStaticFields()
+        {
+            _successed = new List<string>();
+            _failed = new List<string>();
+            _ignored = new List<string>();
         }
     }
 }
