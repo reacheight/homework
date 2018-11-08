@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading;
 using MyNUnit;
+using MyNUnit.Attributes;
 using Shouldly;
 
 namespace Tests

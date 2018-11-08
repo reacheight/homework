@@ -1,7 +1,6 @@
 ﻿using System;
-using System.Runtime.Serialization;
 
-namespace MyNUnit
+namespace MyNUnit.Attributes
 {
     /// <summary>
     /// Class that implements test attribute.

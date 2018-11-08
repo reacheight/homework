@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace MyNUnit
+namespace MyNUnit.Attributes
 {
     /// <summary>
     /// Class that implements after attribute.
