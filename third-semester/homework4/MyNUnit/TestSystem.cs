@@ -24,31 +24,37 @@ namespace MyNUnit
 
         private static void RunTestMethods(Type type)
         {
-            RunHelperMethods(type, typeof(BeforeClassAttribute));
-            
+            RunAttributeMethods<BeforeClassAttribute>(type);
+            RunAttributeMethods<TestAttribute>(type);
+            RunAttributeMethods<AfterClassAttribute>(type);
+        }
+        
+        private static void RunAttributeMethods<T>(Type type)
+            where T : Attribute
+        {
+            var runMethod = typeof(T) == typeof(TestAttribute)
+                ? (Action<MethodInfo>) RunTestMethod
+                : RunHelpMethod;
+
             var tasks = type.GetTypeInfo().DeclaredMethods
-                .Where(IsTestMethod)
-                .Select(mi => new Task(() => RunTestMethod(mi)))
+                .Where(IsAttributeMethod)
+                .Select(mi => new Task(() => runMethod(mi)))
                 .ToList();
             
             tasks.ForEach(task => task.Start());
             Task.WaitAll(tasks.ToArray());
-            
-            RunHelperMethods(type, typeof(AfterClassAttribute));
 
-            bool IsTestMethod(MethodInfo methodInfo)
-                => Attribute.GetCustomAttributes(methodInfo).
-                    Any(attr => attr.GetType() == typeof(TestAttribute));
+            bool IsAttributeMethod(MethodInfo methodInfo)
+                => Attribute.GetCustomAttributes(methodInfo)
+                    .Any(attr => attr.GetType() == typeof(T));
         }
 
         private static void RunTestMethod(MethodInfo methodInfo)
         {
             ValidateMethod(methodInfo);
-
-            RunHelperMethods(methodInfo.DeclaringType, typeof(BeforeAttribute));
+            RunAttributeMethods<BeforeAttribute>(methodInfo.DeclaringType);
             
-            var instance = CreateInstance(methodInfo);
-
+            var instance = CreateInstance(methodInfo.DeclaringType);
             var watch = Stopwatch.StartNew();
             try
             {
@@ -62,28 +68,13 @@ namespace MyNUnit
                 TestLogger.LogFail(methodInfo, watch.ElapsedMilliseconds, exception);
             }
             
-            RunHelperMethods(methodInfo.DeclaringType, typeof(AfterAttribute));
+            RunAttributeMethods<AfterAttribute>(methodInfo.DeclaringType);
         }
 
-        private static void RunHelperMethods(Type type, Type helperAttributeType)
-        {
-            var tasks = type.GetTypeInfo().DeclaredMethods
-                .Where(IsNeededMethod)
-                .Select(mi => new Task(() => RunHelperMethod(mi)))
-                .ToList();
-            
-            tasks.ForEach(task => task.Start());
-            Task.WaitAll(tasks.ToArray());
-
-            bool IsNeededMethod(MethodInfo methodInfo)
-                => Attribute.GetCustomAttributes(methodInfo)
-                    .Any(attr => attr.GetType() == helperAttributeType);
-        }
-
-        private static void RunHelperMethod(MethodInfo methodInfo)
+        private static void RunHelpMethod(MethodInfo methodInfo)
         {
             ValidateMethod(methodInfo);
-            var instance = CreateInstance(methodInfo);
+            var instance = CreateInstance(methodInfo.DeclaringType);
             methodInfo.Invoke(instance, null);
         }
 
@@ -100,9 +91,9 @@ namespace MyNUnit
             }
         }
 
-        private static object CreateInstance(MethodInfo methodInfo)
+        private static object CreateInstance(Type type)
         {
-            var constructor = methodInfo.DeclaringType.GetConstructor(Type.EmptyTypes);
+            var constructor = type.GetConstructor(Type.EmptyTypes);
             if (constructor == null)
             {
                 throw new Exception("Test class should have parameterless constructor.");
