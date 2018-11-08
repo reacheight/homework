@@ -29,6 +29,7 @@ namespace MyNUnit
         public static void LogIgnore(MethodInfo methodInfo, string message)
         {
             Console.WriteLine($"Test method {MethodName(methodInfo)} ignored with message: {message}");
+            Console.WriteLine();
         }
         
         /// <summary>

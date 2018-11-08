@@ -21,7 +21,7 @@ namespace MyNUnit
         {
             var assemblies = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories)
                 .Select(Assembly.LoadFrom).ToList();
-
+            
             var tasks = assemblies.SelectMany(a => a.ExportedTypes)
                 .Select(type => new Task(() => RunTestMethods(type)))
                 .ToList();
