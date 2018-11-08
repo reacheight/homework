@@ -7,8 +7,12 @@
     <PackageReference Include="nunit" Version="3.10.1" />
     <PackageReference Include="NUnit3TestAdapter" Version="3.10.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.7.2" />
+    <PackageReference Include="Shouldly" Version="3.0.2" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\MyNUnit\MyNUnit.csproj" />
+    <ProjectReference Include="..\TestProjects\TestProject1\TestProject1.csproj" />
+    <ProjectReference Include="..\TestProjects\TestProject2\TestProject2.csproj" />
+    <ProjectReference Include="..\TestProjects\TestProject3\TestProject3.csproj" />
   </ItemGroup>
 </Project>
