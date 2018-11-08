@@ -48,5 +48,17 @@ namespace Tests
         {
             Thread.Sleep(3000);
         }
+
+        [Test(Excpected = typeof(ArgumentException))]
+        public void ExceptionTestMethod()
+        {
+            throw new ArgumentException();
+        }
+
+        [Test(Ignore = "just ignore")]
+        public void IgnoreTest()
+        {
+            Console.WriteLine("ignore me");
+        }
     }
 }

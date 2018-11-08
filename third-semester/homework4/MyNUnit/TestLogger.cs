@@ -15,6 +15,11 @@ namespace MyNUnit
         /// <returns>full name of given method</returns>
         private static string MethodString(MethodInfo methodInfo)
             => $"{methodInfo.DeclaringType}.{methodInfo.Name}";
+
+        public static void LogIgnore(MethodInfo methodInfo, string message)
+        {
+            Console.WriteLine($"Test method {MethodString(methodInfo)} ignored with message: {message}");
+        }
         
         /// <summary>
         /// Logs result of successful test execution
@@ -29,10 +34,8 @@ namespace MyNUnit
         /// </summary>
         /// <param name="methodInfo">method info of executed test</param>
         /// <param name="ellapsedMilliseconds">test method execution time in milliseconds</param>
-        /// <param name="exception">exception thrown by test method</param>
-        public static void LogFail(MethodInfo methodInfo, long ellapsedMilliseconds, Exception exception)
-            => Log($"Test method {MethodString(methodInfo)} failed with exception message: {exception.Message}",
-                ellapsedMilliseconds);
+        public static void LogFail(MethodInfo methodInfo, long ellapsedMilliseconds)
+            => Log($"Test method {MethodString(methodInfo)} failed.", ellapsedMilliseconds);
 
         /// <summary>
         /// Prints given message and execution time

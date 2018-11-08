@@ -71,6 +71,13 @@ namespace MyNUnit
         /// <param name="methodInfo">method info of test method to be executed</param>
         private static void RunTestMethod(MethodInfo methodInfo)
         {
+            var attribute = Attribute.GetCustomAttribute(methodInfo, typeof(TestAttribute)) as TestAttribute;
+            if (attribute.Ignore != null)
+            {
+                TestLogger.LogIgnore(methodInfo, attribute.Ignore);
+                return;
+            }
+            
             ValidateMethod(methodInfo);
             RunAttributeMethods<BeforeAttribute>(methodInfo.DeclaringType);
             
@@ -80,14 +87,28 @@ namespace MyNUnit
             {
                 methodInfo.Invoke(instance, null);
                 watch.Stop();
-                TestLogger.LogSuccess(methodInfo, watch.ElapsedMilliseconds);
+                if (attribute.Excpected != null)
+                {
+                    TestLogger.LogFail(methodInfo, watch.ElapsedMilliseconds);
+                }
+                else
+                {
+                    TestLogger.LogSuccess(methodInfo, watch.ElapsedMilliseconds);
+                }
             }
             catch (Exception exception)
             {
                 watch.Stop();
-                TestLogger.LogFail(methodInfo, watch.ElapsedMilliseconds, exception);
+                if (attribute.Excpected != null && exception.InnerException.GetType() == attribute.Excpected)
+                {
+                    TestLogger.LogSuccess(methodInfo, watch.ElapsedMilliseconds);
+                }
+                else
+                {
+                    TestLogger.LogFail(methodInfo, watch.ElapsedMilliseconds);
+                }
             }
-            
+
             RunAttributeMethods<AfterAttribute>(methodInfo.DeclaringType);
         }
 
