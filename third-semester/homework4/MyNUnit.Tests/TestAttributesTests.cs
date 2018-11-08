@@ -5,10 +5,12 @@ using Shouldly;
 using TestProject1;
 using TestProject2;
 using TestProject3;
+using TestProject4;
+using TestProject5;
 
 namespace MyNUnit.Tests
 {
-    public class TestSystemTests
+    public class TestAttributesTests
     {
         [Test]
         public void TestMethodsRun()
@@ -35,6 +37,30 @@ namespace MyNUnit.Tests
             Thread.Sleep(1300);
             
             TestClass3.Executed.ShouldAllBe(flag => flag);
+        }
+
+        [Test]
+        public void BeforeAndAfterMethodsRunProperly()
+        {
+            TestClass4.BeforeExecuted.ShouldBe(new[] {0, 0});
+            TestClass4.AfterExectured.ShouldBe(new[] {0});
+            
+            TestSystem.RunTests("../../../../TestProjects/TestProject4/bin");
+            
+            TestClass4.BeforeExecuted.ShouldBe(new[] {2, 2});
+            TestClass4.AfterExectured.ShouldBe(new[] {2});
+        }
+
+        [Test]
+        public void BeforeClassAndAfterClassMethodsRunProperly()
+        {
+            TestClass5.BeforeClassExecuted.ShouldBe(new[] {0, 0});
+            TestClass5.AfterClassExectured.ShouldBe(new[] {0});
+            
+            TestSystem.RunTests("../../../../TestProjects/TestProject5/bin");
+            
+            TestClass5.BeforeClassExecuted.ShouldBe(new[] {1, 1});
+            TestClass5.AfterClassExectured.ShouldBe(new[] {1});
         }
     }
 }
