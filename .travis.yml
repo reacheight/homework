@@ -1,0 +1,10 @@
+language: csharp
+sudo: required 
+dist: trusty
+mono: none
+dotnet: 2.1.402
+install:
+- dotnet restore third-semester/homework4/
+script:
+- dotnet build third-semester/homework4/homework4.sln
+- dotnet test third-semester/homework4/MyNUnit.Tests/MyNUnit.Tests.csproj
