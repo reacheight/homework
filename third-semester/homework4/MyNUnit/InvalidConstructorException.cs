@@ -3,6 +3,10 @@ using System.Runtime.Serialization;
 
 namespace MyNUnit
 {
+    /// <summary>
+    /// Class that implements invalid constructor exception.
+    /// Thrown if test class has no parameterless constructor.
+    /// </summary>
     [Serializable]
     public class InvalidConstructorException : Exception
     {

@@ -111,7 +111,7 @@ namespace MyNUnit
         /// Validates that the given method is executable
         /// </summary>
         /// <param name="methodInfo">method info of the method to be validated</param>
-        /// <exception cref="Exception">throws exception if the method has any parameters
+        /// <exception cref="InvalidTestMethodException">throws exception if the method has any parameters
         /// or is not void</exception>
         private static void ValidateMethod(MethodInfo methodInfo)
         {
@@ -133,7 +133,7 @@ namespace MyNUnit
         /// </summary>
         /// <param name="type">given type</param>
         /// <returns>instance of the given type</returns>
-        /// <exception cref="Exception">throws exception if the given type
+        /// <exception cref="InvalidConstructorException">throws exception if the given type
         /// has no parameterless constructor</exception>
         private static object CreateInstance(Type type)
         {

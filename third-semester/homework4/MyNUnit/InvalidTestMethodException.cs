@@ -3,6 +3,10 @@ using System.Runtime.Serialization;
 
 namespace MyNUnit
 {
+    /// <summary>
+    /// Class that implements invalid test method exception.
+    /// Thrown if method has any parameters and is not void.
+    /// </summary>
     [Serializable]
     public class InvalidTestMethodException : Exception
     {
