@@ -15,7 +15,7 @@ namespace MyNUnit.Tests
         [Test]
         public void TestMethodsRun()
         {
-            TestClass1.Executed.ShouldAllBe(flag => !flag);
+            TestClass1.Executed = new[] {false, false, false};
             TestSystem.RunTests("../../../../TestProjects/TestProject1/bin");
             TestClass1.Executed.ShouldAllBe(flag => flag);
         }
@@ -23,7 +23,7 @@ namespace MyNUnit.Tests
         [Test]
         public void TestMethodRunOnce()
         {
-            TestClass2.Executed.ShouldAllBe(count => count == 0);
+            TestClass2.Executed = new[] {0, 0, 0};
             TestSystem.RunTests("../../../../TestProjects/TestProject2/bin");
             TestClass2.Executed.ShouldAllBe(count => count == 1);
         }
@@ -31,7 +31,7 @@ namespace MyNUnit.Tests
         [Test]
         public void TestMethodsRunInParallel()
         {
-            TestClass3.Executed.ShouldAllBe(flag => !flag);
+            TestClass3.Executed = new[] {false, false, false};
             
             TestSystem.RunTests("../../../../TestProjects/TestProject3/bin");
             Thread.Sleep(1300);
@@ -42,8 +42,8 @@ namespace MyNUnit.Tests
         [Test]
         public void BeforeAndAfterMethodsRunProperly()
         {
-            TestClass4.BeforeExecuted.ShouldBe(new[] {0, 0});
-            TestClass4.AfterExectured.ShouldBe(new[] {0});
+            TestClass4.BeforeExecuted = new[] {0, 0};
+            TestClass4.AfterExectured = new[] {0};
             
             TestSystem.RunTests("../../../../TestProjects/TestProject4/bin");
             
@@ -54,8 +54,8 @@ namespace MyNUnit.Tests
         [Test]
         public void BeforeClassAndAfterClassMethodsRunProperly()
         {
-            TestClass5.BeforeClassExecuted.ShouldBe(new[] {0, 0});
-            TestClass5.AfterClassExectured.ShouldBe(new[] {0});
+            TestClass5.BeforeClassExecuted = new[] {0, 0};
+            TestClass5.AfterClassExectured = new[] {0};
             
             TestSystem.RunTests("../../../../TestProjects/TestProject5/bin");
             
