@@ -117,12 +117,14 @@ namespace MyNUnit
         {
             if (methodInfo.GetParameters().Length != 0)
             {
-                throw new Exception("Test method should not have any parameters.");
+                throw new InvalidTestMethodException("Test method should not have any parameters:" +
+                                                     $"{methodInfo.DeclaringType}.{methodInfo.Name}");
             }
 
             if (methodInfo.ReturnType != typeof(void))
             {
-                throw new Exception("Test method should be void.");
+                throw new InvalidTestMethodException("Test method should be void:" +
+                                                     $"{methodInfo.DeclaringType}.{methodInfo.Name}");
             }
         }
 
@@ -138,7 +140,8 @@ namespace MyNUnit
             var constructor = type.GetConstructor(Type.EmptyTypes);
             if (constructor == null)
             {
-                throw new Exception("Test class should have parameterless constructor.");
+                throw new InvalidConstructorException("Test class should have parameterless constructor:" +
+                                                      type.Name);
             }
 
             return constructor.Invoke(null);

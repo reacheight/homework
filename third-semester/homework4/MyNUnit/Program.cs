@@ -46,6 +46,14 @@ namespace MyNUnit
             {
                 Console.WriteLine("Error occured: Path is a file name or network error has occured.");
             }
+            catch (InvalidConstructorException exception)
+            {
+                Console.WriteLine($"Error occured: {exception.Message}");
+            }
+            catch (InvalidTestMethodException exception)
+            {
+                Console.WriteLine($"Error occured: {exception.Message}");
+            }
         }
     }
 }
