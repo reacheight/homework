@@ -96,7 +96,7 @@ namespace MyNUnit
             if (attribute.Ignore != null)
             {
                 TestLogger.LogIgnore(methodInfo, attribute.Ignore);
-                _ignored.Add($"{methodInfo.DeclaringType}.{methodInfo.Name}");
+                _ignored.Add(MethodName(methodInfo));
                 return;
             }
             
@@ -122,14 +122,16 @@ namespace MyNUnit
             
             if (successed)
             {
-                _successed.Add($"{methodInfo.DeclaringType}.{methodInfo.Name}");
+                _successed.Add(MethodName(methodInfo));
             }
             else
             {
-                _failed.Add($"{methodInfo.DeclaringType}.{methodInfo.Name}");
+                _failed.Add(MethodName(methodInfo));
             }
 
             RunAttributeMethods<AfterAttribute>(methodInfo.DeclaringType);
+
+            string MethodName(MethodInfo mi) => $"{mi.DeclaringType}.{mi.Name}";
         }
 
         /// <summary>
@@ -183,6 +185,9 @@ namespace MyNUnit
             return constructor.Invoke(null);
         }
         
+        /// <summary>
+        /// Initialises static fields
+        /// </summary>
         private static void InitStaticFields()
         {
             _successed = new ConcurrentBag<string>();
