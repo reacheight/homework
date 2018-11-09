@@ -26,10 +26,6 @@ namespace MyNUnit
                 TestSystem.RunTests(path);
                 Console.WriteLine("Test execution finished.\n");
             }
-            catch (ArgumentException)
-            {
-                Console.WriteLine("Error occured: Path contains invalid characters.");
-            }
             catch (UnauthorizedAccessException)
             {
                 Console.WriteLine("Error occured: You don't have required permission.");
@@ -46,13 +42,18 @@ namespace MyNUnit
             {
                 Console.WriteLine("Error occured: Path is a file name or network error has occured.");
             }
-            catch (InvalidConstructorException exception)
+            catch (AggregateException exception)
             {
-                Console.WriteLine($"Error occured: {exception.Message}");
-            }
-            catch (InvalidTestMethodException exception)
-            {
-                Console.WriteLine($"Error occured: {exception.Message}");
+                var innermost = exception.InnerException.InnerException;
+                if (innermost != null &&
+                    (innermost is InvalidConstructorException || innermost is InvalidTestMethodException))
+                {
+                    Console.WriteLine($"Error occured: {innermost.Message}");
+                }
+                else
+                {
+                    throw;
+                }
             }
         }
     }

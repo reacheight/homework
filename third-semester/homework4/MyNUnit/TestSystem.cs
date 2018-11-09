@@ -19,8 +19,19 @@ namespace MyNUnit
         private static ConcurrentBag<string> _failed;
         private static ConcurrentBag<string> _ignored;
 
+        /// <summary>
+        /// Gets list of names of all successed tests from last run
+        /// </summary>
         public static IReadOnlyCollection<string> Successed => _successed;
+        
+        /// <summary>
+        /// Gets list of names of all failed tests from last run
+        /// </summary>
         public static IReadOnlyCollection<string> Failed => _failed;
+        
+        /// <summary>
+        /// Gets list of names of all ignored tests from last run
+        /// </summary>
         public static IReadOnlyCollection<string> Ignored => _ignored;        
 
         /// <summary>
@@ -30,7 +41,10 @@ namespace MyNUnit
         public static void RunTests(string path)
         {
             var assemblies = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories)
-                .Select(Assembly.LoadFrom).ToList();
+                .Select(Assembly.LoadFrom)
+                .ToHashSet()
+                .ToList();
+            
             InitStaticFields();
             var tasks = assemblies.SelectMany(a => a.ExportedTypes)
                 .Select(type => new Task(() => RunTestMethods(type)))
@@ -105,6 +119,7 @@ namespace MyNUnit
             }
             
             TestLogger.Log(methodInfo, watch.ElapsedMilliseconds, successed);
+            
             if (successed)
             {
                 _successed.Add($"{methodInfo.DeclaringType}.{methodInfo.Name}");
