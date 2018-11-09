@@ -7,6 +7,7 @@ using TestProject2;
 using TestProject3;
 using TestProject4;
 using TestProject5;
+using TestProject6;
 
 namespace MyNUnit.Tests
 {
