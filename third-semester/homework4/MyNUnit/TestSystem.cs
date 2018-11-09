@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
@@ -14,9 +15,9 @@ namespace MyNUnit
     /// </summary>
     public static class TestSystem
     {
-        private static List<string> _successed;
-        private static List<string> _failed;
-        private static List<string> _ignored;
+        private static ConcurrentBag<string> _successed;
+        private static ConcurrentBag<string> _failed;
+        private static ConcurrentBag<string> _ignored;
 
         public static IReadOnlyCollection<string> Successed => _successed;
         public static IReadOnlyCollection<string> Failed => _failed;
@@ -169,9 +170,9 @@ namespace MyNUnit
         
         private static void InitStaticFields()
         {
-            _successed = new List<string>();
-            _failed = new List<string>();
-            _ignored = new List<string>();
+            _successed = new ConcurrentBag<string>();
+            _failed = new ConcurrentBag<string>();
+            _ignored = new ConcurrentBag<string>();
         }
     }
 }
