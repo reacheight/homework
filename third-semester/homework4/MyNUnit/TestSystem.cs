@@ -103,32 +103,26 @@ namespace MyNUnit
             ValidateMethod(methodInfo);
             RunAttributeMethods<BeforeAttribute>(methodInfo.DeclaringType);
 
-            bool successed;
+            var successed = false;
             var instance = CreateInstance(methodInfo.DeclaringType);
             var watch = Stopwatch.StartNew();
             try
             {
                 methodInfo.Invoke(instance, null);
-                watch.Stop();
                 successed = attribute.Excpected == null;
             }
             catch (Exception exception)
             {
-                watch.Stop();
                 successed = attribute.Excpected != null && exception.InnerException.GetType() == attribute.Excpected;
             }
-            
-            TestLogger.Log(methodInfo, watch.ElapsedMilliseconds, successed);
-            
-            if (successed)
+            finally
             {
-                _successed.Add(MethodName(methodInfo));
+                watch.Stop();
+                TestLogger.Log(methodInfo, watch.ElapsedMilliseconds, successed);
+                (successed ? _successed : _failed)
+                    .Add(MethodName(methodInfo));
             }
-            else
-            {
-                _failed.Add(MethodName(methodInfo));
-            }
-
+            
             RunAttributeMethods<AfterAttribute>(methodInfo.DeclaringType);
 
             string MethodName(MethodInfo mi) => $"{mi.DeclaringType}.{mi.Name}";
