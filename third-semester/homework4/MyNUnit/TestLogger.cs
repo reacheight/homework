@@ -12,12 +12,12 @@ namespace MyNUnit
         /// Logs result of test method execution
         /// </summary>
         /// <param name="methodInfo">executed test method</param>
-        /// <param name="ellapsedMilliseconds">test method execution time in milliseconds</param>
-        /// <param name="successed">gets whether test successed or failed</param>
-        public static void Log(MethodInfo methodInfo, long ellapsedMilliseconds, bool successed)
+        /// <param name="elapsedMilliseconds">test method execution time in milliseconds</param>
+        /// <param name="succeeded">gets whether test succeeded or failed</param>
+        public static void Log(MethodInfo methodInfo, long elapsedMilliseconds, bool succeeded)
         {
-            Console.WriteLine($"Test method {MethodName(methodInfo)} {(successed ? "successed" : "failed")}.\n" +
-                              $"Execution time: {ellapsedMilliseconds} ms.\n");
+            Console.WriteLine($"Test method {MethodName(methodInfo)} {(succeeded ? "succeeded" : "failed")}.\n" +
+                              $"Execution time: {elapsedMilliseconds} ms.\n");
         }
         
         /// <summary>

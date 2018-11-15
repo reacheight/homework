@@ -7,13 +7,13 @@ namespace TestProject7
     {
         public static bool Ignored { get; set; } = true;
         
-        [Test(Excpected = typeof(InvalidOperationException))]
+        [Test(Expected = typeof(InvalidOperationException))]
         public void ExceptionTest()
         {
             throw new InvalidOperationException();
         }
         
-        [Test(Excpected = typeof(InvalidOperationException))]
+        [Test(Expected = typeof(InvalidOperationException))]
         public void FailedExceptionTest()
         {
             throw new NullReferenceException();

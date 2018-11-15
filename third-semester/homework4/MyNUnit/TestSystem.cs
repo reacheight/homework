@@ -15,14 +15,14 @@ namespace MyNUnit
     /// </summary>
     public static class TestSystem
     {
-        private static ConcurrentBag<string> _successed;
+        private static ConcurrentBag<string> _succeeded;
         private static ConcurrentBag<string> _failed;
         private static ConcurrentBag<string> _ignored;
 
         /// <summary>
-        /// Gets list of names of all successed tests from last run
+        /// Gets list of names of all succeeded tests from last run
         /// </summary>
-        public static IReadOnlyCollection<string> Successed => _successed;
+        public static IReadOnlyCollection<string> Succeeded => _succeeded;
         
         /// <summary>
         /// Gets list of names of all failed tests from last run
@@ -99,22 +99,22 @@ namespace MyNUnit
             var instance = CreateInstance(methodInfo.DeclaringType);
             RunAttributeMethods<BeforeAttribute>(methodInfo.DeclaringType, instance);
 
-            var successed = false;
+            var succeeded = false;
             var watch = Stopwatch.StartNew();
             try
             {
                 methodInfo.Invoke(instance, null);
-                successed = attribute.Excpected == null;
+                succeeded = attribute.Expected == null;
             }
             catch (Exception exception)
             {
-                successed = attribute.Excpected != null && exception.InnerException.GetType() == attribute.Excpected;
+                succeeded = attribute.Expected != null && exception.InnerException.GetType() == attribute.Expected;
             }
             finally
             {
                 watch.Stop();
-                TestLogger.Log(methodInfo, watch.ElapsedMilliseconds, successed);
-                (successed ? _successed : _failed)
+                TestLogger.Log(methodInfo, watch.ElapsedMilliseconds, succeeded);
+                (succeeded ? _succeeded : _failed)
                     .Add(MethodName(methodInfo));
             }
             
@@ -180,7 +180,7 @@ namespace MyNUnit
         /// </summary>
         private static void InitStaticFields()
         {
-            _successed = new ConcurrentBag<string>();
+            _succeeded = new ConcurrentBag<string>();
             _failed = new ConcurrentBag<string>();
             _ignored = new ConcurrentBag<string>();
         }

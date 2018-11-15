@@ -9,7 +9,7 @@ namespace MyNUnit.Attributes
     [AttributeUsage(AttributeTargets.Method)]
     public class TestAttribute : Attribute
     {
-        public Type Excpected { get; set; } 
+        public Type Expected { get; set; } 
         public string Ignore { get; set; }
     }
 }

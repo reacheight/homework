@@ -20,7 +20,7 @@ namespace MyNUnit.Tests
         }
 
         [Test]
-        public void TestMethodRunOnce()
+        public void TestMethodsRunOnce()
         {
             TestClass2.Executed = new[] {0, 0, 0};
             TestSystem.RunTests("../../../../TestProjects/TestProject2/bin");
@@ -45,19 +45,7 @@ namespace MyNUnit.Tests
             TestClass4.BeforeExecuted.ShouldBe(new[] {2, 2});
             TestClass4.AfterExectured.ShouldBe(new[] {2});
         }
-
-        [Test]
-        public void BeforeClassAndAfterClassMethodsRunProperly()
-        {
-            TestClass5.BeforeClassExecuted = new[] {0, 0};
-            TestClass5.AfterClassExectured = new[] {0};
-            
-            TestSystem.RunTests("../../../../TestProjects/TestProject5/bin");
-            
-            TestClass5.BeforeClassExecuted.ShouldBe(new[] {1, 1});
-            TestClass5.AfterClassExectured.ShouldBe(new[] {1});
-        }
-
+        
         [Test]
         public void BeforeAndTestMethodsRunOnTheSameInstance()
         {
@@ -69,16 +57,28 @@ namespace MyNUnit.Tests
             
             TestClass10.BeforeHash.ShouldBe(TestClass10.TestHash);
         }
-        
+
         [Test]
         public void AfterAndTestMethodsRunOnTheSameInstance()
         {
             var instance1 = new TestClass10();
             var instance2 = new TestClass10();
             instance1.GetHashCode().ShouldNotBe(instance2.GetHashCode());
-            
+
             TestSystem.RunTests("../../../../TestProjects/TestProject10/bin");
             TestClass10.AfterHash.ShouldBe(TestClass10.TestHash);
+        }
+
+        [Test]
+        public void BeforeClassAndAfterClassMethodsRunProperly()
+        {
+            TestClass5.BeforeClassExecuted = new[] {0, 0};
+            TestClass5.AfterClassExectured = new[] {0};
+            
+            TestSystem.RunTests("../../../../TestProjects/TestProject5/bin");
+            
+            TestClass5.BeforeClassExecuted.ShouldBe(new[] {1, 1});
+            TestClass5.AfterClassExectured.ShouldBe(new[] {1});
         }
     }
 }
