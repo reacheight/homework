@@ -9,15 +9,23 @@ namespace MyNUnit
     public class Program
     {
         /// <summary>
-        /// Main function
+        /// Main function, takes directory path as command line argument
         /// </summary>
-        public static void Main()
+        /// <param name="args">command line arguments,
+        /// should contains exactly one argument - directory path</param>
+        public static void Main(string[] args)
         {
-            Console.WriteLine("Enter full or relative path:");
-            var path = Console.ReadLine();
+            if (args.Length != 1)
+            {
+                Console.WriteLine("Program takes exactly one argument - directory path.");
+                return;
+            }
+            
+            var path = args[0];
             if (string.IsNullOrEmpty(path))
             {
-                Console.WriteLine(" Error occured: Entered path is empty");
+                Console.WriteLine("Error occured: Entered path is empty");
+                return;
             }
 
             try
@@ -44,7 +52,7 @@ namespace MyNUnit
             }
             catch (AggregateException exception)
             {
-                var innermost = exception.InnerException.InnerException;
+                var innermost = exception.InnerException?.InnerException;
                 if (innermost != null &&
                     (innermost is InvalidConstructorException || innermost is InvalidTestMethodException))
                 {
