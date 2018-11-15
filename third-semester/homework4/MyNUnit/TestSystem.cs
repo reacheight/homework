@@ -46,12 +46,8 @@ namespace MyNUnit
                 .ToList();
             
             InitStaticFields();
-            var tasks = assemblies.SelectMany(a => a.ExportedTypes)
-                .Select(type => new Task(() => RunTestMethods(type)))
-                .ToList();
-            
-            tasks.ForEach(task => task.Start());
-            Task.WaitAll(tasks.ToArray());
+            var types = assemblies.SelectMany(a => a.ExportedTypes);
+            Parallel.ForEach(types, RunTestMethods);
         }
 
         /// <summary>
@@ -77,13 +73,10 @@ namespace MyNUnit
                 ? (Action<MethodInfo>) RunTestMethod
                 : RunHelpMethod;
 
-            var tasks = type.GetTypeInfo().DeclaredMethods
-                .Where(mi => Attribute.IsDefined(mi, typeof(T)))
-                .Select(mi => new Task(() => runMethod(mi)))
-                .ToList();
-            
-            tasks.ForEach(task => task.Start());
-            Task.WaitAll(tasks.ToArray());
+            var attributeMethods = type.GetTypeInfo().DeclaredMethods
+                .Where(mi => Attribute.IsDefined(mi, typeof(T)));
+
+            Parallel.ForEach(attributeMethods, runMethod);
         }
 
         /// <summary>
