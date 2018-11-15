@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Threading;
+﻿using System.Threading;
 using NUnit.Framework;
 using Shouldly;
 using TestProject1;
@@ -7,7 +6,6 @@ using TestProject2;
 using TestProject3;
 using TestProject4;
 using TestProject5;
-using TestProject6;
 
 namespace MyNUnit.Tests
 {

@@ -1,8 +1,5 @@
-﻿using System.Linq;
-using NUnit.Framework;
-using NUnit.Framework.Api;
+﻿using NUnit.Framework;
 using Shouldly;
-using TestProject6;
 using TestProject7;
 
 namespace MyNUnit.Tests

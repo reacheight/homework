@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using MyNUnit.Attributes;
+﻿using MyNUnit.Attributes;
 
 namespace TestProject1
 {
