@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using MyNUnit.Attributes;
 
@@ -40,13 +41,13 @@ namespace MyNUnit
         /// <param name="path">given path</param>
         public static void RunTests(string path)
         {
-            var assemblies = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories)
+            InitStaticFields();
+            
+            var types = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories)
                 .Select(Assembly.LoadFrom)
                 .ToHashSet()
-                .ToList();
-            
-            InitStaticFields();
-            var types = assemblies.SelectMany(a => a.ExportedTypes);
+                .SelectMany(a => a.ExportedTypes);
+
             Parallel.ForEach(types, RunTestMethods);
         }
 
@@ -60,18 +61,19 @@ namespace MyNUnit
             RunAttributeMethods<TestAttribute>(type);
             RunAttributeMethods<AfterClassAttribute>(type);
         }
-        
+
         /// <summary>
         /// Executes all methods of the given class with the given attribute in parallel
         /// </summary>
         /// <param name="type">type of the class whose methods are going to be executed</param>
+        /// <param name="instance">instance on which methods are going to be executed</param>
         /// <typeparam name="T">given attribute</typeparam>
-        private static void RunAttributeMethods<T>(Type type)
+        private static void RunAttributeMethods<T>(Type type, object instance = null)
             where T : Attribute
         {
             var runMethod = typeof(T) == typeof(TestAttribute)
                 ? (Action<MethodInfo>) RunTestMethod
-                : RunHelpMethod;
+                : mi => RunHelpMethod(mi, instance);
 
             var attributeMethods = type.GetTypeInfo().DeclaredMethods
                 .Where(mi => Attribute.IsDefined(mi, typeof(T)));
@@ -94,10 +96,11 @@ namespace MyNUnit
             }
             
             ValidateMethod(methodInfo);
-            RunAttributeMethods<BeforeAttribute>(methodInfo.DeclaringType);
+            
+            var instance = CreateInstance(methodInfo.DeclaringType);
+            RunAttributeMethods<BeforeAttribute>(methodInfo.DeclaringType, instance);
 
             var successed = false;
-            var instance = CreateInstance(methodInfo.DeclaringType);
             var watch = Stopwatch.StartNew();
             try
             {
@@ -116,7 +119,7 @@ namespace MyNUnit
                     .Add(MethodName(methodInfo));
             }
             
-            RunAttributeMethods<AfterAttribute>(methodInfo.DeclaringType);
+            RunAttributeMethods<AfterAttribute>(methodInfo.DeclaringType, instance);
 
             string MethodName(MethodInfo mi) => $"{mi.DeclaringType}.{mi.Name}";
         }
@@ -125,10 +128,11 @@ namespace MyNUnit
         /// Executes simple method
         /// </summary>
         /// <param name="methodInfo">method info of the method to be executed</param>
-        private static void RunHelpMethod(MethodInfo methodInfo)
+        /// <param name="instance">instance on which method is going to be executed</param>
+        private static void RunHelpMethod(MethodInfo methodInfo, object instance = null)
         {
             ValidateMethod(methodInfo);
-            var instance = CreateInstance(methodInfo.DeclaringType);
+            instance = instance ?? CreateInstance(methodInfo.DeclaringType);
             methodInfo.Invoke(instance, null);
         }
 
