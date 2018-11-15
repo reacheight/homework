@@ -1,5 +1,4 @@
-﻿using System.Threading;
-using NUnit.Framework;
+﻿using NUnit.Framework;
 using Shouldly;
 using TestProject1;
 using TestProject10;
@@ -31,12 +30,8 @@ namespace MyNUnit.Tests
         [Test]
         public void TestMethodsRunInParallel()
         {
-            TestClass3.Executed = new[] {false, false, false};
-            
             TestSystem.RunTests("../../../../TestProjects/TestProject3/bin");
-            Thread.Sleep(1300);
-            
-            TestClass3.Executed.ShouldAllBe(flag => flag);
+            TestClass3.Threads.ShouldBeUnique();
         }
 
         [Test]
