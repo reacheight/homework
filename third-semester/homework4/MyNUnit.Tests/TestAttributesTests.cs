@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using Shouldly;
 using TestProject1;
+using TestProject10;
 using TestProject2;
 using TestProject3;
 using TestProject4;
@@ -60,6 +61,29 @@ namespace MyNUnit.Tests
             
             TestClass5.BeforeClassExecuted.ShouldBe(new[] {1, 1});
             TestClass5.AfterClassExectured.ShouldBe(new[] {1});
+        }
+
+        [Test]
+        public void BeforeAndTestMethodsRunOnTheSameInstance()
+        {
+            var instance1 = new TestClass10();
+            var instance2 = new TestClass10();
+            instance1.GetHashCode().ShouldNotBe(instance2.GetHashCode());
+            
+            TestSystem.RunTests("../../../../TestProjects/TestProject10/bin");
+            
+            TestClass10.BeforeHash.ShouldBe(TestClass10.TestHash);
+        }
+        
+        [Test]
+        public void AfterAndTestMethodsRunOnTheSameInstance()
+        {
+            var instance1 = new TestClass10();
+            var instance2 = new TestClass10();
+            instance1.GetHashCode().ShouldNotBe(instance2.GetHashCode());
+            
+            TestSystem.RunTests("../../../../TestProjects/TestProject10/bin");
+            TestClass10.AfterHash.ShouldBe(TestClass10.TestHash);
         }
     }
 }
