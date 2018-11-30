@@ -60,12 +60,16 @@ namespace SimpleFtp
             var writer = new StreamWriter(client.GetStream()) {AutoFlush = true};
 
             var query = await reader.ReadLineAsync();
-            while (query != "dc")
+            while (query != "dc" && !_cancellationTokenSource.IsCancellationRequested)
             {
                 var (command, path) = ParseQuery(query);
-                if (command == "1")
+                switch (command)
                 {
-                    await writer.WriteLineAsync(ListCommandResult(path));
+                    case "1":
+                        await writer.WriteLineAsync(ListCommandResult(path));
+                        break;
+                    case "2":
+                        break;
                 }
                 
                 query = await reader.ReadLineAsync();
@@ -84,10 +88,10 @@ namespace SimpleFtp
             {
                 var files = Directory.GetFiles(path);
                 var dirictories = Directory.GetDirectories(path);
-                
+
                 return files.Length + dirictories.Length + " "
-                       + string.Join(" false ", files) + " false "
-                       + string.Join(" true ", dirictories) + " true";
+                       + string.Join("", files.Select(name => $"'{name}' false "))
+                       + string.Join("", files.Select(name => $"'{name}' true "));
             }
             catch (Exception)
             {
