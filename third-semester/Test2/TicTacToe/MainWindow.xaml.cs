@@ -34,6 +34,7 @@ namespace TicTacToe
             var tokens = button.Name.Split('_');
 
             button.Content = game.CurrentTurn;
+            button.IsEnabled = false;
             var gameOver = game.MakeTurn(int.Parse(tokens[1]), int.Parse(tokens[2]));
 
             if (gameOver)
@@ -48,6 +49,7 @@ namespace TicTacToe
             foreach (Button button in grid.Children)
             {
                 button.Content = String.Empty;
+                button.IsEnabled = true;
             }
         }
     }
