@@ -71,18 +71,21 @@ namespace SimpleFtp
                             break;
 
                         case "2":
-                            var (size, stream) = GetCommandResult(path);
+                            var (size, content) = GetCommandResult(path);
 
                             await writer.WriteLineAsync(size.ToString());
-                            if (stream != null)
+                            if (content != null)
                             {
-                                await stream.CopyToAsync(writer.BaseStream);
+                                using (var stream = new MemoryStream(content))
+                                {
+                                    stream.CopyTo(writer.BaseStream);
+                                }
                             }
 
                             break;
     
                         default:
-                            await writer.WriteAsync("Command not found.");
+                            await writer.WriteAsync("Command is not found.");
                             break;
                     }
 
@@ -113,12 +116,12 @@ namespace SimpleFtp
             }
         }
 
-        private (long, Stream) GetCommandResult(string path)
+        private (long, byte[]) GetCommandResult(string path)
         {
             try
             {
-                var contentStream = File.OpenRead(path);
-                return (contentStream.Length, contentStream);
+                var content = File.ReadAllBytes(path);
+                return (content.Length, content);
             }
             catch (Exception)
             {
