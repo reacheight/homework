@@ -36,22 +36,17 @@ namespace SimpleFtp
 
             while (!_cancellationTokenSource.IsCancellationRequested)
             {
-                using (var client = await listener.AcceptTcpClientAsync())
+                var client = await listener.AcceptTcpClientAsync();
+                if (Interlocked.CompareExchange(ref _currentConnectionNumber, 0, 0) == _maxConnectionNumber)
                 {
-                    if (Interlocked.CompareExchange(ref _currentConnectionNumber, 0, 0) == _maxConnectionNumber)
-                    {
-                        client.Close();
-                        continue;
-                    }
-
-                    Interlocked.Increment(ref _currentConnectionNumber);
-                    Console.WriteLine("New client connected.");
-
-                    await Interact(client);
+                    client.Close();
+                    continue;
                 }
 
-                Interlocked.Decrement(ref _currentConnectionNumber);
-                Console.WriteLine("Client disconnected.");
+                Interlocked.Increment(ref _currentConnectionNumber);
+                Console.WriteLine("New client connected.");
+
+                Task.Run(async () => await Interact(client));
             }
         }
 
@@ -92,6 +87,10 @@ namespace SimpleFtp
                     query = await reader.ReadLineAsync();
                 }
             }
+
+            client.Close();
+            Interlocked.Decrement(ref _currentConnectionNumber);
+            Console.WriteLine("Client disconnected.");
         }
         
         public void Stop()
