@@ -19,6 +19,7 @@ namespace SimpleFtp
         {
             if (port < IPEndPoint.MinPort || port > IPEndPoint.MaxPort)
             {
+                //TODO add comment for exception
                 throw new ArgumentOutOfRangeException();
             }
             
@@ -56,30 +57,43 @@ namespace SimpleFtp
 
         private async Task Interact(TcpClient client)
         {
-            var reader = new StreamReader(client.GetStream());
-            var writer = new StreamWriter(client.GetStream()) {AutoFlush = true};
-
-            var query = await reader.ReadLineAsync();
-            while (query != "dc" && !_cancellationTokenSource.IsCancellationRequested)
+            using (var reader = new StreamReader(client.GetStream()))
+            using (var writer = new StreamWriter(client.GetStream()) {AutoFlush = true})
             {
-                var (command, path) = ParseQuery(query);
-                switch (command)
+                var query = await reader.ReadLineAsync();
+                while (query != "dc" && !_cancellationTokenSource.IsCancellationRequested)
                 {
-                    case "1":
-                        await writer.WriteLineAsync(ListCommandResult(path));
-                        break;
-                    case "2":
-                        break;
+                    var (command, path) = ParseQuery(query);
+                    switch (command)
+                    {
+                        case "1":
+                            await writer.WriteLineAsync(ListCommandResult(path));
+                            break;
+
+                        case "2":
+                            var (size, stream) = GetCommandResult(path);
+
+                            await writer.WriteLineAsync(size.ToString());
+                            if (stream != null)
+                            {
+                                await stream.CopyToAsync(writer.BaseStream);
+                            }
+
+                            break;
+    
+                        default:
+                            await writer.WriteAsync("Command not found.");
+                            break;
+                    }
+
+                    query = await reader.ReadLineAsync();
                 }
-                
-                query = await reader.ReadLineAsync();
             }
         }
         
         public void Stop()
         {
             _cancellationTokenSource.Cancel();
-            _currentConnectionNumber = 0;
         }
 
         private string ListCommandResult(string path)
@@ -91,11 +105,24 @@ namespace SimpleFtp
 
                 return files.Length + dirictories.Length + " "
                        + string.Join("", files.Select(name => $"'{name}' false "))
-                       + string.Join("", files.Select(name => $"'{name}' true "));
+                       + string.Join("", dirictories.Select(name => $"'{name}' true "));
             }
             catch (Exception)
             {
                 return "-1";
+            }
+        }
+
+        private (long, Stream) GetCommandResult(string path)
+        {
+            try
+            {
+                var contentStream = File.OpenRead(path);
+                return (contentStream.Length, contentStream);
+            }
+            catch (Exception)
+            {
+                return (-1, null);
             }
         }
         
