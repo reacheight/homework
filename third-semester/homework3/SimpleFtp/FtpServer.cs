@@ -66,17 +66,12 @@ namespace SimpleFtp
                             break;
 
                         case "2":
-                            var (size, content) = GetCommandResult(path);
+                            var (size, stream) = GetCommandResult(path);
 
                             await writer.WriteLineAsync(size.ToString());
-                            if (content != null)
-                            {
-                                using (var stream = new MemoryStream(content))
-                                {
-                                    stream.CopyTo(writer.BaseStream);
-                                }
-                            }
-
+                            stream?.CopyTo(writer.BaseStream);
+                            stream?.Close();
+                            
                             break;
     
                         default:
@@ -115,12 +110,12 @@ namespace SimpleFtp
             }
         }
 
-        private (long, byte[]) GetCommandResult(string path)
+        private (long, Stream) GetCommandResult(string path)
         {
             try
             {
-                var content = File.ReadAllBytes(path);
-                return (content.Length, content);
+                var contentStream = File.OpenRead(path);
+                return (contentStream.Length, contentStream);
             }
             catch (Exception)
             {
