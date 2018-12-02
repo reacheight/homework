@@ -41,10 +41,10 @@ namespace SimpleFtp
             }
             
             var content = new byte[size];
-            _reader.BaseStream.Read(content);
+            await _reader.BaseStream.ReadAsync(content);
             try
             {
-                File.WriteAllBytes(downloadPath, content);
+                await File.WriteAllBytesAsync(downloadPath, content);
             }
             catch (Exception e)
             {
