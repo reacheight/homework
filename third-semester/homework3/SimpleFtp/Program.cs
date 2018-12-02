@@ -16,30 +16,12 @@ namespace SimpleFtp
             var server = new FtpServer(12345, 5);
             server.Start();
 
-            var client = new TcpClient("localhost", 12345);
-            var reader = new StreamReader(client.GetStream());
-            var writer = new StreamWriter(client.GetStream()) {AutoFlush = true};
-
-            var query = "1 .";
-            writer.WriteLine(query);
-            
-            var data = reader.ReadLine();
-            Console.WriteLine($"Server: {data}");
-            
-            query = "2 file.jpg";
-            writer.WriteLine(query);
-
-            var size = reader.ReadLine();
-            Console.WriteLine($"Server: {size}");
-            /*var content = new byte[long.Parse(size)];
-            reader.BaseStream.Read(content);
-            File.WriteAllBytes("new.jpg", content);*/
-            using (var file = File.OpenWrite("new.jpg"))
-            {
-                reader.BaseStream.CopyTo(file);
-            }
-
-            Console.Read();
+            var client = new FtpClient("localhost", 12345);
+            Console.WriteLine(client.ListCommand("files").Result);
+            Console.WriteLine(client.GetCommand("files/file.png", "new.png").Result);
+            client.Close();
+        
+            Console.ReadLine();
         }
     }
 }
