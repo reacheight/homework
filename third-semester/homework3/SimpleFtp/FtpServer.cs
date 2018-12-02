@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net;
@@ -19,8 +20,7 @@ namespace SimpleFtp
         {
             if (port < IPEndPoint.MinPort || port > IPEndPoint.MaxPort)
             {
-                //TODO add comment for exception
-                throw new ArgumentOutOfRangeException();
+                throw new ArgumentOutOfRangeException(nameof(port), "Port number should be from 0 to 65535");
             }
             
             _port = port;
@@ -133,13 +133,9 @@ namespace SimpleFtp
         private (string, string) ParseQuery(string query)
         {
             var tokens = query.Split(' ');
-            if (tokens.Length != 2)
-            {
-                //TODO proper exception
-                throw new Exception();
-            }
-
-            return(tokens[0], tokens[1]);
+            return tokens.Length != 2
+                ? (null, null)
+                : (tokens[0], tokens[1]);
         }
     }
 }
