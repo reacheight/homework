@@ -34,19 +34,26 @@ namespace SimpleFtp
             
             Console.WriteLine($"Server started to listen to port {_port}...");
 
-            while (!_cancellationTokenSource.IsCancellationRequested)
+            try
             {
-                var client = await listener.AcceptTcpClientAsync();
-                if (Interlocked.CompareExchange(ref _currentConnectionNumber, 0, 0) == _maxConnectionNumber)
+                while (!_cancellationTokenSource.IsCancellationRequested)
                 {
-                    client.Close();
-                    continue;
+                    var client = await listener.AcceptTcpClientAsync();
+                    if (Interlocked.CompareExchange(ref _currentConnectionNumber, 0, 0) == _maxConnectionNumber)
+                    {
+                        client.Close();
+                        continue;
+                    }
+
+                    Interlocked.Increment(ref _currentConnectionNumber);
+                    Console.WriteLine("New client connected.");
+
+                    Task.Run(async () => await Interact(client));
                 }
-
-                Interlocked.Increment(ref _currentConnectionNumber);
-                Console.WriteLine("New client connected.");
-
-                Task.Run(async () => await Interact(client));
+            }
+            finally
+            {
+                listener.Stop();
             }
         }
 
