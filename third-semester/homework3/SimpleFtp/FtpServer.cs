@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace SimpleFtp
 {
-    public class FtpServer
+    public class FtpServer : IDisposable
     {
         private readonly CancellationTokenSource _cancellationTokenSource = new CancellationTokenSource();
         private readonly int _port;
@@ -98,6 +98,11 @@ namespace SimpleFtp
         public void Stop()
         {
             _cancellationTokenSource.Cancel();
+        }
+
+        public void Dispose()
+        {
+            Stop();
         }
 
         private string ListCommandResult(string path)
