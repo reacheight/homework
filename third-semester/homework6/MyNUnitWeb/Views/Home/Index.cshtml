@@ -1,0 +1,16 @@
+﻿@model MyNUnitWeb.Models.UploadAssembliesModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<form asp-action="Upload" enctype="multipart/form-data" method="post">   
+    <input type="file" asp-for="Assymblies" multiple>
+    <input type="submit">
+</form>
+</body>
+</html>

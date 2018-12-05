@@ -1,0 +1,35 @@
+﻿@model MyNUnitWeb.Models.TestResultModel
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title>title</title>
+</head>
+<body>
+<div>
+    @foreach (var assemblyTestResult in @Model.AssemblyTestResults)
+    {
+        <p>Assembly: @assemblyTestResult.Name</p>
+        <p>Succeeded:</p>
+        
+        foreach (var test in assemblyTestResult.Succeeded)
+         {
+             <p>@test.Name, execution time: @test.ExecutionTime ms</p>
+         }
+
+        <p>Failed:</p>
+        foreach (var test in assemblyTestResult.Failed)
+         {
+             <p>@test.Name, execution time: @test.ExecutionTime ms</p>
+         }
+
+        <p>Ignored:</p>
+        foreach (var test in assemblyTestResult.Ignored)
+         {
+             <p>@test.Name, ignore message: @test.IgnoreMessage</p>
+         }
+    }
+</div>
+</body>
+</html>
