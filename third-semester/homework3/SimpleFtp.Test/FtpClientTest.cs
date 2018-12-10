@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Linq;
 using System.Security.Cryptography;
 using System.Threading.Tasks;
 using NUnit.Framework;
@@ -35,7 +36,7 @@ namespace SimpleFtp.Test
             using (var client = new FtpClient(Hostname, Port))
             {
                 var result = await client.ListCommand("../../../files");
-                result.ShouldBe("3 'file.png' false 'file.txt' false 'directory' true ");
+                result.ShouldBe(CorrectListCommandResult("../../../files")); // не захардкодить, так как ос-зависимо
             }
         }
 
@@ -133,6 +134,24 @@ namespace SimpleFtp.Test
             }
 
             return firstPathSum == secondPathSum;
+        }
+
+        private string CorrectListCommandResult(string path)
+        {
+            try
+            {
+                var di = new DirectoryInfo(path);
+                var files = di.GetFiles();
+                var dirictories = di.GetDirectories();
+
+                return files.Length + dirictories.Length + " "
+                       + string.Join("", files.Select(name => $"'{name.Name}' false "))
+                       + string.Join("", dirictories.Select(name => $"'{name.Name}' true "));
+            }
+            catch (Exception)
+            {
+                return "-1";
+            }
         }
     }
 }
