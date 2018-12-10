@@ -14,6 +14,9 @@ namespace SimpleFtp
         private readonly int _port;
         private readonly int _maxConnectionNumber;
         private int _currentConnectionNumber;
+        
+        public int CurrentConnectionNumber =>
+            Interlocked.CompareExchange(ref _currentConnectionNumber, 0, 0);
 
         public FtpServer(int port, int maxConnectionNumber)
         {
@@ -38,7 +41,7 @@ namespace SimpleFtp
                 while (!_cancellationTokenSource.IsCancellationRequested)
                 {
                     var client = await listener.AcceptTcpClientAsync();
-                    if (Interlocked.CompareExchange(ref _currentConnectionNumber, 0, 0) == _maxConnectionNumber)
+                    if (CurrentConnectionNumber == _maxConnectionNumber)
                     {
                         client.Close();
                         continue;
@@ -61,9 +64,14 @@ namespace SimpleFtp
             using (var reader = new StreamReader(client.GetStream()))
             using (var writer = new StreamWriter(client.GetStream()) {AutoFlush = true})
             {
-                var query = await reader.ReadLineAsync();
-                while (query != "dc" && !_cancellationTokenSource.IsCancellationRequested)
+                while (!_cancellationTokenSource.IsCancellationRequested)
                 {
+                    var query = await reader.ReadLineAsync();
+                    if (query == "dc")
+                    {
+                        break;
+                    }
+                    
                     var (command, path) = ParseQuery(query);
                     switch (command)
                     {
@@ -81,11 +89,9 @@ namespace SimpleFtp
                             break;
     
                         default:
-                            await writer.WriteAsync("Command is not found.");
+                            await writer.WriteLineAsync("Command is not found.");
                             break;
                     }
-
-                    query = await reader.ReadLineAsync();
                 }
             }
 
