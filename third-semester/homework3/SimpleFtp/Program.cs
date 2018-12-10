@@ -2,8 +2,14 @@
 
 namespace SimpleFtp
 {
+    /// <summary>
+    /// Class that implements example of the simple ftp client and server usage
+    /// </summary>
     public class Program
     {
+        /// <summary>
+        /// Prints allowed commands
+        /// </summary>
         public static void PrintMenu()
         {
             Console.WriteLine("Commands:\n" +
@@ -12,6 +18,10 @@ namespace SimpleFtp
                               "help - list of commands\n" +
                               "exit - close application");
         }
+        
+        /// <summary>
+        /// Main method
+        /// </summary>
         public static void Main(string[] args)
         {
             using (var server = new FtpServer(12345, 5))
