@@ -108,12 +108,13 @@ namespace SimpleFtp
         {
             try
             {
-                var files = Directory.GetFiles(path);
-                var dirictories = Directory.GetDirectories(path);
+                var di = new DirectoryInfo(path);
+                var files = di.GetFiles();
+                var dirictories = di.GetDirectories();
 
                 return files.Length + dirictories.Length + " "
-                       + string.Join("", files.Select(name => $"'{name}' false "))
-                       + string.Join("", dirictories.Select(name => $"'{name}' true "));
+                       + string.Join("", files.Select(name => $"'{name.Name}' false "))
+                       + string.Join("", dirictories.Select(name => $"'{name.Name}' true "));
             }
             catch (Exception)
             {

@@ -8,8 +8,8 @@ namespace SimpleFtp
         {
             Console.WriteLine("Commands:\n" +
                               "1 <directory_path> - list content of directory\n" +
-                              "2 <file_path> <new_file_name> - download <file_path> to <new_file_name>" +
-                              "help - list of commands" +
+                              "2 <file_path> <new_file_name> - download <file_path> to <new_file_name>\n" +
+                              "help - list of commands\n" +
                               "exit - close application");
         }
         public static void Main(string[] args)
@@ -32,8 +32,8 @@ namespace SimpleFtp
                             continue;
                         }
 
-                        var tokens = command.Split();
-                        switch (tokens.Length)
+                        var tokens = command?.Split();
+                        switch (tokens?.Length)
                         {
                             case 2 when tokens[0] == "1":
                                 Console.WriteLine(client.ListCommand(tokens[1]).Result);
