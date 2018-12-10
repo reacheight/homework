@@ -7,4 +7,4 @@ install:
 - dotnet restore third-semester/homework3/
 script:
 - dotnet build third-semester/homework3/homework3.sln
-- dotnet test third-semester/homework3/SimpleFtp.Tests/SimpleFtp.Tests.csproj
+- dotnet test third-semester/homework3/SimpleFtp.Test/SimpleFtp.Test.csproj
