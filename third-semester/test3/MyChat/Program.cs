@@ -31,7 +31,7 @@ namespace MyChat
         /// <summary>
         /// Runs server or client
         /// </summary>
-        /// <param name="args">given command line args</param>
+        /// <param name="args">given command line args (first - port, second - adress</param>
         static async Task Main(string[] args)
         {
             var (port, hostname) = ParseArgs(args);
