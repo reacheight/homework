@@ -8,18 +8,26 @@ using MyNUnit;
 using MyNUnitWeb.Models;
 using System.IO;
 using System.Reflection;
+using Microsoft.EntityFrameworkCore;
 
 namespace MyNUnitWeb.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly TestResultContext _context;
+
+        public HomeController(TestResultContext context)
+        {
+            _context = context;
+        }
+
         public IActionResult Index()
         {
             return View();
         }
 
         [HttpPost]
-        public IActionResult Upload(UploadAssembliesModel model)
+        public async Task<IActionResult> Upload(UploadAssembliesModel model)
         {
             var assemlbyFiles = model.Assymblies.Where(x => x.FileName.EndsWith(".dll"));
             var assemblies = assemlbyFiles.Select(a =>
@@ -35,6 +43,8 @@ namespace MyNUnitWeb.Controllers
             }).ToList();
 
             var result = new TestResultModel();
+            await _context.TestResults.AddAsync(result);
+            await _context.SaveChangesAsync();
 
             foreach (var assembly in assemblies)
             {
@@ -42,15 +52,32 @@ namespace MyNUnitWeb.Controllers
                 var assemblyTestResult = new AssemblyTestResultModel()
                 {
                     Name = assembly.GetName().Name,
-                    Failed = TestSystem.Failed.ToList(),
-                    Succeeded = TestSystem.Succeeded.ToList(),
-                    Ignored = TestSystem.Ignored.ToList()
+                    Failed = TestSystem.Failed.Select(t => new TestMethodResultModel(t)).ToList(),
+                    Succeeded = TestSystem.Succeeded.Select(t => new TestMethodResultModel(t)).ToList(),
+                    Ignored = TestSystem.Ignored.Select(t => new TestMethodResultModel(t)).ToList()
                 };
 
-                result.AssemblyTestResults.Add(assemblyTestResult);
+                assemblyTestResult.TestResult = result;
+                await _context.AssemblyTestResults.AddAsync(assemblyTestResult);
+                await _context.SaveChangesAsync();
             }
 
             return View("Show", result);
+        }
+        
+        [HttpGet]
+        public async Task<IActionResult> GetHistory()
+        {
+            var testResults = await _context.TestResults
+                .Include(t => t.AssemblyTestResults)
+                    .ThenInclude(a => a.Succeeded)
+                .Include(t => t.AssemblyTestResults)
+                    .ThenInclude(a => a.Failed)
+                .Include(t => t.AssemblyTestResults)
+                    .ThenInclude(a => a.Ignored)
+                 .AsNoTracking().ToListAsync();
+
+            return View("History", testResults);
         }
     }
 }

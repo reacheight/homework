@@ -5,12 +5,16 @@
 
 <html>
 <head>
-    <title>title</title>
+    <title>Testing</title>
 </head>
 <body>
-<form asp-action="Upload" enctype="multipart/form-data" method="post">   
-    <input type="file" asp-for="Assymblies" multiple>
-    <input type="submit" value="Начать тестирование">
-</form>
+
+    <form asp-action="Upload" enctype="multipart/form-data" method="post">
+        <input type="file" asp-for="Assymblies" multiple>
+        <input type="submit" value="Начать тестирование">
+        <div>
+            <a asp-action="GetHistory">See history of testing</a>
+        </div>
+    </form>
 </body>
 </html>
