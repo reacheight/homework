@@ -14,10 +14,12 @@
 <body>
     <div>
         <h2>Результаты тестирования</h2>
+        @{var anyTest = false;}
         @foreach (var assemblyTestResult in @Model.AssemblyTestResults)
         {
             @if (assemblyTestResult.Ignored.Any() || assemblyTestResult.Failed.Any() || assemblyTestResult.Succeeded.Any())
             {
+                anyTest = true;
                 <h3>Assembly: @assemblyTestResult.Name</h3>
                 <table class="pure-table">
                     <thead>
@@ -57,6 +59,11 @@
                     </tbody>
                 </table>
             }
+        }
+
+        @if (!anyTest)
+        {
+            <h3>Не найдено сборок с тестами.</h3>
         }
     </div>
 </body>

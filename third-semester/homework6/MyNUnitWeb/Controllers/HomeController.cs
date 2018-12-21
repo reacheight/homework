@@ -62,6 +62,7 @@ namespace MyNUnitWeb.Controllers
                 await _context.SaveChangesAsync();
             }
 
+            ViewBag.AnyTest = false;
             return View("Show", result);
         }
         
