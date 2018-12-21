@@ -5,16 +5,17 @@
 
 <html>
 <head>
+    <meta name="viewport" content="width=device-width" />
     <title>Testing</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
 </head>
 <body>
-
     <form asp-action="Upload" enctype="multipart/form-data" method="post">
-        <input type="file" asp-for="Assymblies" multiple>
-        <input type="submit" value="Начать тестирование">
-        <div>
-            <a asp-action="GetHistory">See history of testing</a>
-        </div>
+        <input type="file" asp-for="Assymblies" multiple value="Выберите файлы сборок">
+        <input type="submit" value="Начать тестирование" class="pure-button pure-button-primary">
     </form>
+    <p>
+        <a class="pure-button" asp-action="GetHistory">Посмотреть историю запусков тестов</a>
+    </p>
 </body>
 </html>

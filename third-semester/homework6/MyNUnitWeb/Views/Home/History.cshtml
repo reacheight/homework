@@ -4,46 +4,60 @@
 
 <html>
 <head>
+    <meta name="viewport" content="width=device-width" />
     <title>title</title>
+    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
 </head>
 <body>
     <div>
+        <h2>История тестирования.</h2>
         @foreach (var testResult in @Model)
         {
             @foreach (var assemblyTestResult in testResult.AssemblyTestResults)
             {
-                <p>
+            <p>
                 @if (assemblyTestResult.Ignored.Any() || assemblyTestResult.Failed.Any() || assemblyTestResult.Succeeded.Any())
                 {
-                    <div>Assembly: @assemblyTestResult.Name</div>
-
-                    @if (assemblyTestResult.Succeeded.Any())
-                    {
-                        <div>Succeeded:</div>
-                        foreach (var test in assemblyTestResult.Succeeded)
-                        {
-                            <div>@test.Name, execution time: @test.ExecutionTime ms</div>
-                        }
-                    }
-
-                    @if (assemblyTestResult.Failed.Any())
-                    {
-                        <div>Failed:</div>
-                        foreach (var test in assemblyTestResult.Failed)
-                        {
-                            <div>@test.Name, execution time: @test.ExecutionTime ms</div>
-                        }
-                    }
-                    @if (assemblyTestResult.Ignored.Any())
-                    {
-                        <div>Ignored:</div>
-                        foreach (var test in assemblyTestResult.Ignored)
-                        {
-                            <div>@test.Name, ignore message: @test.IgnoreMessage</div>
-                        }
-                    }
+                    <h3>Assembly: @assemblyTestResult.Name</h3>
+                    <table class="pure-table">
+                        <thead>
+                            <tr>
+                                <th>Succeed</th>
+                                <th>Failed</th>
+                                <th>Ignored</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <ul>
+                                        @foreach (var test in assemblyTestResult.Succeeded)
+                                        {
+                                            <li>@test.Name, execution time: @test.ExecutionTime ms</li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        @foreach (var test in assemblyTestResult.Failed)
+                                        {
+                                            <li>@test.Name, execution time: @test.ExecutionTime ms</li>
+                                        }
+                                    </ul>
+                                </td>
+                                <td>
+                                    <ul>
+                                        @foreach (var test in assemblyTestResult.Ignored)
+                                        {
+                                            <li>@test.Name, ignore message: @test.IgnoreMessage</li>
+                                        }
+                                    </ul>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
                 }
-                </p>
+            </p>
             }
         }
     </div>

@@ -88,7 +88,7 @@ namespace MyNUnit
             var attribute = Attribute.GetCustomAttribute(methodInfo, typeof(TestAttribute)) as TestAttribute;
             if (attribute.Ignore != null)
             {
-                _ignored.Add(new TestMethodResult(MethodName(methodInfo), 0, TestMethodStatus.Ignored, attribute.Ignore));
+                _ignored.Add(new TestMethodResult(methodInfo.Name, 0, TestMethodStatus.Ignored, attribute.Ignore));
                 return;
             }
             
@@ -115,11 +115,11 @@ namespace MyNUnit
             
             if (succeeded)
             {
-                _succeeded.Add(new TestMethodResult(MethodName(methodInfo), watch.ElapsedMilliseconds, TestMethodStatus.Succeeded));
+                _succeeded.Add(new TestMethodResult(methodInfo.Name, watch.ElapsedMilliseconds, TestMethodStatus.Succeeded));
             }
             else
             {
-                _failed.Add(new TestMethodResult(MethodName(methodInfo), watch.ElapsedMilliseconds, TestMethodStatus.Failed));
+                _failed.Add(new TestMethodResult(methodInfo.Name, watch.ElapsedMilliseconds, TestMethodStatus.Failed));
             }
             
             RunAttributeMethods<AfterAttribute>(methodInfo.DeclaringType, instance);
