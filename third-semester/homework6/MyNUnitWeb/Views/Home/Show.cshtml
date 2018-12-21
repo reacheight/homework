@@ -10,10 +10,11 @@
     <meta name="viewport" content="width=device-width" />
     <title>Test result</title>
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
     <div>
-        <h2>Результаты тестирования</h2>
+        <h2 class="text-center">Результаты тестирования</h2>
         @{var anyTest = false;}
         @foreach (var assemblyTestResult in @Model.AssemblyTestResults)
         {
@@ -24,37 +25,59 @@
                 <table class="pure-table">
                     <thead>
                         <tr>
-                            <th>Succeed</th>
-                            <th>Failed</th>
-                            <th>Ignored</th>
+                            @if (assemblyTestResult.Succeeded.Any())
+                            {
+                                <th>Succeed</th>
+                            }
+
+                            @if (assemblyTestResult.Failed.Any())
+                            {
+                                <th>Failed</th>
+                            }
+
+                            @if (assemblyTestResult.Ignored.Any())
+                            {
+                                <th>Ignored</th>
+                            }
                         </tr>
                     </thead>
                     <tbody>
                         <tr>
-                            <td>
-                                <ul>
-                                    @foreach (var test in assemblyTestResult.Succeeded)
-                                    {
-                                        <li>@test.Name, execution time: @test.ExecutionTime ms</li>
-                                    }
-                                </ul>
-                            </td>
-                            <td>
-                                <ul>
-                                    @foreach (var test in assemblyTestResult.Failed)
-                                    {
-                                        <li>@test.Name, execution time: @test.ExecutionTime ms</li>
-                                    }
-                                </ul>
-                            </td>
-                            <td>
-                                <ul>
-                                    @foreach (var test in assemblyTestResult.Ignored)
-                                    {
-                                        <li>@test.Name, ignore message: @test.IgnoreMessage</li>
-                                    }
-                                </ul>
-                            </td>
+                            @if (assemblyTestResult.Succeeded.Any())
+                            {
+                                <td>
+                                    <ul>
+                                        @foreach (var test in assemblyTestResult.Succeeded)
+                                        {
+                                            <li>@test.Name, execution time: @test.ExecutionTime ms</li>
+                                        }
+                                    </ul>
+                                </td>
+                            }
+
+                            @if (assemblyTestResult.Failed.Any())
+                            {
+                                <td>
+                                    <ul>
+                                        @foreach (var test in assemblyTestResult.Failed)
+                                        {
+                                            <li>@test.Name, execution time: @test.ExecutionTime ms</li>
+                                        }
+                                    </ul>
+                                </td>
+                            }
+
+                            @if (assemblyTestResult.Ignored.Any())
+                            {
+                                <td>
+                                    <ul>
+                                        @foreach (var test in assemblyTestResult.Ignored)
+                                        {
+                                            <li>@test.Name, ignore message: @test.IgnoreMessage</li>
+                                        }
+                                    </ul>
+                                </td>
+                            }
                         </tr>
                     </tbody>
                 </table>
@@ -63,7 +86,7 @@
 
         @if (!anyTest)
         {
-            <h3>Не найдено сборок с тестами.</h3>
+            <h3 class="text-center">Не найдено сборок с тестами.</h3>
         }
     </div>
 </body>

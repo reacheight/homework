@@ -8,14 +8,21 @@
     <meta name="viewport" content="width=device-width" />
     <title>Testing</title>
     <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css" integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
+    <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-    <form asp-action="Upload" enctype="multipart/form-data" method="post">
-        <input type="file" asp-for="Assymblies" multiple value="Выберите файлы сборок">
-        <input type="submit" value="Начать тестирование" class="pure-button pure-button-primary">
-    </form>
-    <p>
-        <a class="pure-button" asp-action="GetHistory">Посмотреть историю запусков тестов</a>
-    </p>
+    <div class="center">
+        <div class="form">
+            <form asp-action="Upload" enctype="multipart/form-data" method="post">
+                    <input type="file" asp-for="Assymblies" multiple">
+                    <input type="submit" value="Начать тестирование" class="pure-button pure-button-primary">
+            </form>
+        </div>
+        <br />
+        <br />
+        <div class="center">
+            <a class="pure-button" asp-action="GetHistory">Посмотреть историю запусков тестов</a>
+        </div>
+    </div>
 </body>
 </html>

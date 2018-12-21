@@ -29,8 +29,8 @@ namespace MyNUnitWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload(UploadAssembliesModel model)
         {
-            var assemlbyFiles = model.Assymblies.Where(x => x.FileName.EndsWith(".dll"));
-            var assemblies = assemlbyFiles.Select(a =>
+            var assemblyFiles = model.Assymblies.Where(x => x.FileName.EndsWith(".dll"));
+            var assemblies = assemblyFiles.Select(a =>
             {
                 Assembly assembly;
                 using (var ms = new MemoryStream())
@@ -62,9 +62,8 @@ namespace MyNUnitWeb.Controllers
                 await _context.SaveChangesAsync();
             }
 
-            ViewBag.AnyTest = false;
             return View("Show", result);
-        }
+    }
         
         [HttpGet]
         public async Task<IActionResult> GetHistory()
