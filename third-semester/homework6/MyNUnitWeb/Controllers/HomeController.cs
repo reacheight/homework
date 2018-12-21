@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using MyNUnit;
 using MyNUnitWeb.Models;
 using System.IO;
+using System.Reflection;
 
 namespace MyNUnitWeb.Controllers
 {
@@ -20,31 +21,34 @@ namespace MyNUnitWeb.Controllers
         [HttpPost]
         public IActionResult Upload(UploadAssembliesModel model)
         {
-            var assemblies = model.Assymblies.Where(x => x.FileName.EndsWith(".dll"));
-            Directory.CreateDirectory("tmp");
+            var assemlbyFiles = model.Assymblies.Where(x => x.FileName.EndsWith(".dll"));
+            var assemblies = assemlbyFiles.Select(a =>
+            {
+                Assembly assembly;
+                using (var ms = new MemoryStream())
+                {
+                    a.CopyTo(ms);
+                    assembly = Assembly.Load(ms.ToArray());
+                }
+
+                return assembly;
+            }).ToList();
+
             var result = new TestResultModel();
+
             foreach (var assembly in assemblies)
             {
-                using (var file = System.IO.File.Create("tmp/" + assembly.FileName))
-                {
-                    assembly.CopyTo(file);
-                }
-                
-                TestSystem.RunTests("tmp");
-                new DirectoryInfo("tmp").GetFiles().ToList().ForEach(x => x.Delete());
-                
+                TestSystem.RunTests(new List<Assembly> { assembly });
                 var assemblyTestResult = new AssemblyTestResultModel()
                 {
-                    Name = assembly.FileName,
-                    Succeeded = TestSystem.Succeeded.ToList(),
+                    Name = assembly.GetName().Name,
                     Failed = TestSystem.Failed.ToList(),
+                    Succeeded = TestSystem.Succeeded.ToList(),
                     Ignored = TestSystem.Ignored.ToList()
                 };
 
                 result.AssemblyTestResults.Add(assemblyTestResult);
             }
-            
-            new DirectoryInfo("tmp").Delete(true);
 
             return View("Show", result);
         }

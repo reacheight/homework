@@ -32,18 +32,17 @@ namespace MyNUnit
         /// <summary>
         /// Gets list of names of all ignored tests from last run
         /// </summary>
-        public static IReadOnlyCollection<TestMethodResult> Ignored => _ignored;        
+        public static IReadOnlyCollection<TestMethodResult> Ignored => _ignored;
 
         /// <summary>
-        /// Executes tests in all classes of all assemblies stored by the given path
+        /// Executes tests in all classes of all assemblies
         /// </summary>
-        /// <param name="path">given path</param>
-        public static void RunTests(string path)
+        /// <param name="assemblies">given assemblies</param>
+        public static void RunTests(List<Assembly> assemblies)
         {
             InitStaticFields();
             
-            var types = Directory.GetFiles(path, "*.dll", SearchOption.AllDirectories)
-                .Select(Assembly.LoadFrom)
+            var types = assemblies
                 .ToHashSet()
                 .SelectMany(a => a.ExportedTypes);
 
