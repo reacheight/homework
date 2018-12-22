@@ -1,0 +1,10 @@
+language: csharp
+sudo: required 
+os: linux
+dist: trusty
+mono: none
+dotnet: 2.1.402
+install:
+- dotnet restore third-semester/homework6/
+script:
+- dotnet build third-semester/homework6/homework6.sln
