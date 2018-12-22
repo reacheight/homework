@@ -10,20 +10,32 @@ using Microsoft.EntityFrameworkCore;
 
 namespace MyNUnitWeb.Controllers
 {
+    /// <summary>
+    /// Main application controller
+    /// </summary>
     public class HomeController : Controller
     {
         private readonly TestResultContext _context;
 
+        /// <summary>
+        /// Initializes new instance of <see cref="HomeController"/>
+        /// </summary>
+        /// <param name="context">app DbContext object</param>
         public HomeController(TestResultContext context)
-        {
-            _context = context;
-        }
+            => _context = context;
 
+        /// <summary>
+        /// Action for main page view
+        /// </summary>
+        /// <returns>main page view</returns>
         public IActionResult Index()
-        {
-            return View();
-        }
+            => View();
 
+        /// <summary>
+        /// Action for handling uploading and testing assemblies
+        /// </summary>
+        /// <param name="model">files upload model</param>
+        /// <returns>test result view</returns>
         [HttpPost]
         public async Task<IActionResult> Upload(UploadAssembliesModel model)
         {
@@ -63,6 +75,10 @@ namespace MyNUnitWeb.Controllers
             return View("Show", assemblyTestResults);
     }
         
+        /// <summary>
+        /// Action for test history
+        /// </summary>
+        /// <returns>test history view</returns>
         [HttpGet]
         public async Task<IActionResult> GetHistory()
         {
