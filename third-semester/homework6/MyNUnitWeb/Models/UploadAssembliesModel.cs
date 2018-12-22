@@ -6,6 +6,6 @@ namespace MyNUnitWeb.Models
 {
     public class UploadAssembliesModel
     {
-        public List<IFormFile> Assymblies { get; set; } = new List<IFormFile>();
+        public List<IFormFile> Assemblies { get; set; } = new List<IFormFile>();
     }
 }

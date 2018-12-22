@@ -29,24 +29,26 @@ namespace MyNUnitWeb.Controllers
         [HttpPost]
         public async Task<IActionResult> Upload(UploadAssembliesModel model)
         {
-            var assemblyFiles = model.Assymblies.Where(x => x.FileName.EndsWith(".dll"));
-            var assemblies = assemblyFiles.Select(a =>
-            {
-                Assembly assembly;
-                using (var ms = new MemoryStream())
+            var assemblies = model.Assemblies
+                .Where(file => file.FileName.EndsWith(".dll"))
+                .Select(assemblyFile =>
                 {
-                    a.CopyTo(ms);
-                    assembly = Assembly.Load(ms.ToArray());
-                }
+                    Assembly assembly;
+                    using (var memoryStream = new MemoryStream())
+                    {
+                        assemblyFile.CopyTo(memoryStream);
+                        assembly = Assembly.Load(memoryStream.ToArray());
+                    }
 
-                return assembly;
-            }).ToList();
+                    return assembly;
+                })
+                .ToList();
 
             var result = new TestResultModel();
             await _context.TestResults.AddAsync(result);
             await _context.SaveChangesAsync();
 
-            foreach (var assembly in assemblies)
+            var assemblyTestResults = assemblies.Select(assembly =>
             {
                 TestSystem.RunTests(new List<Assembly> { assembly });
                 var assemblyTestResult = new AssemblyTestResultModel()
@@ -54,13 +56,15 @@ namespace MyNUnitWeb.Controllers
                     Name = assembly.GetName().Name,
                     Failed = TestSystem.Failed.Select(t => new TestMethodResultModel(t)).ToList(),
                     Succeeded = TestSystem.Succeeded.Select(t => new TestMethodResultModel(t)).ToList(),
-                    Ignored = TestSystem.Ignored.Select(t => new TestMethodResultModel(t)).ToList()
+                    Ignored = TestSystem.Ignored.Select(t => new TestMethodResultModel(t)).ToList(),
+                    TestResult = result
                 };
 
-                assemblyTestResult.TestResult = result;
-                await _context.AssemblyTestResults.AddAsync(assemblyTestResult);
-                await _context.SaveChangesAsync();
-            }
+                return assemblyTestResult;
+            });
+
+            await _context.AssemblyTestResults.AddRangeAsync(assemblyTestResults);
+            await _context.SaveChangesAsync();
 
             return View("Show", result);
     }
