@@ -1,4 +1,4 @@
-﻿@model MyNUnitWeb.Models.TestResultModel
+﻿@model List<MyNUnitWeb.Models.AssemblyTestResultModel>
 @{
     Layout = null;
 }
@@ -16,7 +16,7 @@
     <div>
         <h2 class="text-center">Результаты тестирования</h2>
         @{var anyTest = false;}
-        @foreach (var assemblyTestResult in @Model.AssemblyTestResults)
+        @foreach (var assemblyTestResult in Model)
         {
             @if (assemblyTestResult.Ignored.Any() || assemblyTestResult.Failed.Any() || assemblyTestResult.Succeeded.Any())
             {
