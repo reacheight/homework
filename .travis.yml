@@ -5,7 +5,6 @@ dist: trusty
 mono: none
 dotnet: 2.1.402
 install:
-- dotnet restore third-semester/homework3/
+- dotnet restore third-semester/homework6/
 script:
-- dotnet build third-semester/homework3/homework3.sln
-- dotnet test third-semester/homework3/SimpleFtp.Test/SimpleFtp.Test.csproj
+- dotnet build third-semester/homework6/homework6.sln
