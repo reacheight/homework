@@ -14,4 +14,4 @@ Console.WriteLine("Enter an integer: ")
 let input : int = Console.ReadLine() |> int
 Console.WriteLine(if input < 0
     then "You entered a negative integer"
-    else "Fibonacci: " + (fibonacci input |> string))
+    else "Fibonacci: " + (input |> fibonacci |> string))

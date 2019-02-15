@@ -15,7 +15,7 @@ Console.WriteLine("Enter an integer: ")
 let input : int = Console.ReadLine() |> int
 Console.WriteLine(if input < 0
     then "You entered a negative integer"
-    else "Factorial: " + (factorial input |> string))
+    else "Factorial: " + (input |> factorial |> string))
         
     
     
