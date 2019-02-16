@@ -1,0 +1,10 @@
+/home/reacheight/prg/homework/4th-semester/Homework1/Task2/bin/Debug/netcoreapp2.2/Task2.deps.json
+/home/reacheight/prg/homework/4th-semester/Homework1/Task2/bin/Debug/netcoreapp2.2/Task2.runtimeconfig.json
+/home/reacheight/prg/homework/4th-semester/Homework1/Task2/bin/Debug/netcoreapp2.2/Task2.runtimeconfig.dev.json
+/home/reacheight/prg/homework/4th-semester/Homework1/Task2/bin/Debug/netcoreapp2.2/Task2.dll
+/home/reacheight/prg/homework/4th-semester/Homework1/Task2/bin/Debug/netcoreapp2.2/Task2.pdb
+/home/reacheight/prg/homework/4th-semester/Homework1/Task2/obj/Debug/netcoreapp2.2/Task2.fsprojAssemblyReference.cache
+/home/reacheight/prg/homework/4th-semester/Homework1/Task2/obj/Debug/netcoreapp2.2/Task2.AssemblyInfoInputs.cache
+/home/reacheight/prg/homework/4th-semester/Homework1/Task2/obj/Debug/netcoreapp2.2/Task2.AssemblyInfo.fs
+/home/reacheight/prg/homework/4th-semester/Homework1/Task2/obj/Debug/netcoreapp2.2/Task2.dll
+/home/reacheight/prg/homework/4th-semester/Homework1/Task2/obj/Debug/netcoreapp2.2/Task2.pdb
