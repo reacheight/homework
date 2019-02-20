@@ -1,7 +1,7 @@
 ﻿open System
 
 module Factorial = 
-    let rec factorial x = 
+    let factorial x = 
         let rec accFactorial n acc = 
             match n with 
             | 0 | 1 -> acc

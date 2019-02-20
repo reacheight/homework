@@ -2,7 +2,7 @@
 open System
 
 module Reversion =
-    let rec reverse ls = 
+    let reverse ls = 
         let rec accReverse ls acc = 
             match List.length ls with 
             | 0 -> acc

@@ -1,7 +1,7 @@
 ﻿open System
 
 module Fibonacci = 
-    let rec fibonacci n = 
+    let fibonacci n = 
         let rec accFibonacci n cur prev = 
             match n with 
             | 0 | 1 -> cur
