@@ -10,6 +10,7 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.13.0" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IsPalindromeTests.fs" />
     <Compile Include="ListSearchTests.fs" />
   </ItemGroup>
   <ItemGroup>
