@@ -11,7 +11,7 @@ module IsPalindromeTests =
         isPalindrome String.Empty |> should be True
     
     [<Test>]
-    let ``isPalindrome should return true on one character string`` () =
+    let ``isPalindrome should return true on one-length string`` () =
         isPalindrome "a" |> should be True
     
     [<Test>]
@@ -19,5 +19,9 @@ module IsPalindromeTests =
         isPalindrome "abracarba" |> should be True
         
     [<Test>]
-    let ``isPalindrome should return false on not-palindrome`` () =
+    let ``isPalindrome should return false on not palindrome`` () =
         isPalindrome "string" |> should be False
+        
+    [<Test>]
+    let ``isPalindrome should return true on one-character string`` () =
+        isPalindrome "bbbbbbbbbb" |> should be True
