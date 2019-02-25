@@ -1,4 +1,4 @@
-language: fsharp
+language: csharp
 sudo: required 
 os: linux
 dist: trusty
