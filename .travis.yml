@@ -1,10 +1,10 @@
-language: csharp
+language: fsharp
 sudo: required 
 dist: trusty
 mono: none
-dotnet: 2.1.402
+dotnet: 2.2
 install:
-- dotnet restore third-semester/homework4/
+- dotnet restore 4th-semester/Homework2/
 script:
-- dotnet build third-semester/homework4/homework4.sln
-- dotnet test third-semester/homework4/MyNUnit.Tests/MyNUnit.Tests.csproj
+- dotnet build 4th-semester/Homework2/Homework2.sln
+- dotnet test 4th-semester/Homework2/Homework.Tests/Homework.Tests.fsproj
