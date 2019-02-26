@@ -19,4 +19,4 @@ module MergeSortTests =
     [<Test>]
     let ``sort should sort random list`` () =
         let sortWorksRight (ls : list<int>) = sort ls = List.sort ls
-        Check.Quick sortWorksRight
+        Check.QuickThrowOnFailure sortWorksRight

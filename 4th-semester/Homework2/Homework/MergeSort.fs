@@ -2,13 +2,15 @@ namespace Homework
 
 module MergeSort =
     let rec sort ls =
-        let rec merge left right =
-            match left, right with 
-            | l, [] -> l
-            | [], r -> r
-            | lHead :: lTail, rHead :: rTail -> if (lHead < rHead)
-                                                    then lHead :: (merge lTail right)
-                                                    else rHead :: (merge left rTail)
+        let merge left right =
+            let rec accMerge left right acc =
+                match left, right with 
+                | l, [] -> acc @ l
+                | [], r -> acc @ r
+                | lHead :: lTail, rHead :: rTail -> if (lHead < rHead)
+                                                        then accMerge lTail right (acc @ [lHead])
+                                                        else accMerge left rTail (acc @ [rHead])
+            accMerge left right []
         
         let divide ls =
             let rec divide left right =
