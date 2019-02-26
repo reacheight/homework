@@ -6,25 +6,25 @@ module ListSearchTests =
     open Homework.ListSearch
     
     [<Test>]
-    let ``tryFindFirst should return None on empty list`` () =
+    let ``tryFind should return None on empty list`` () =
         tryFind [] 3 |> should equal None
     
     [<Test>]
-    let ``tryFindFirst should return Some if list contains number`` () =
+    let ``tryFind should return Some if list contains number`` () =
         tryFind [3; 5; 3; 1; 5; 123; 543; 42] 1 |> should not' (equal None)
     
     [<Test>]
-    let ``tryFindFirst should return None if list does not contain number`` () =
+    let ``tryFind should return None if list does not contain number`` () =
         tryFind [5; 3; 1; 6; 7; 2; 1; 5; 2] 124 |> should equal None
     
     [<Test>]
-    let ``tryFindFirst should return first occurrence position if list contains number`` () =
+    let ``tryFind should return first occurrence position if list contains number`` () =
         tryFind [3; 5; 3; 1; 5; 123; 543; 42] 5 |> should equal (Some 1)
     
     [<Test>]
-    let ``tryFindFirst should work right if number is the last list item`` () =
+    let ``tryFind should work right if number is the last list item`` () =
         tryFind [5; 1; 6; 123; 342; 65; 123; 6; 2; 1408] 1408 |> should equal (Some 9)
     
     [<Test>]
-    let ``tryFindFirst should work right if number is the first list item`` () =
+    let ``tryFind should work right if number is the first list item`` () =
         tryFind [5; 1; 6; 123; 342; 65; 123; 6; 2; 1408] 5 |> should equal (Some 0)
