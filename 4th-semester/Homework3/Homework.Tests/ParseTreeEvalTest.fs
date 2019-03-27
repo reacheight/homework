@@ -18,4 +18,9 @@ module ParseTreeEvalTest =
                                    Addition(Value(2.), Substraction(Multiplication(Value(5.), Value(5.)), Value(4.5))),
                                    Division(Value(10.), Value(5.))))
         let result = (2. + (5. * 5. - 4.5)) + (10. / 5.)
-        eval expression |> should equal result
+        eval expression |> should (equalWithin tolerance) result
+    
+    [<Test>]
+    let ``division by zero should throw exception`` () =
+        let expression = Division(Value(5.), Value(0.))
+        (fun () -> eval expression |> ignore) |> should throw typeof<DivideByZeroException>

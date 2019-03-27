@@ -2,6 +2,8 @@ namespace Homework
 
 /// Module for implementing parse tree and function of parse tree evaluation
 module ParseTree =
+    open System
+
     /// Represents a parse tree of arithmetic expression
     type ParseTree =
         | Value of double
@@ -17,4 +19,6 @@ module ParseTree =
         | Addition(left, right) -> eval left + eval right
         | Substraction(left, right) -> eval left - eval right
         | Multiplication(left, right) -> eval left * eval right
-        | Division(left, right) -> eval left / eval right
+        | Division(left, right) -> if abs(eval right) < 0.0001
+                                        then raise (DivideByZeroException())
+                                        else eval left / eval right
