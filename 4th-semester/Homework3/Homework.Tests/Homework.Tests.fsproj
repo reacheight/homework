@@ -5,6 +5,7 @@
   <ItemGroup>
     <Compile Include="BinaryTreeMapTest.fs" />
     <Compile Include="EvenCountTests.fs" />
+    <Compile Include="ParseTreeEvalTest.fs" />
     <Compile Include="PrimeNumbersTest.fs" />
   </ItemGroup>
   <ItemGroup>
