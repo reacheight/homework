@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FibonacciSum", "FibonacciSum\FibonacciSum.fsproj", "{768C88F6-B990-492C-AF33-5CFAD902946A}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "FibonacciSum.Tests", "FibonacciSum.Tests\FibonacciSum.Tests.fsproj", "{51EEAE83-EFDB-4824-85CB-6416EB01FFDD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{768C88F6-B990-492C-AF33-5CFAD902946A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{768C88F6-B990-492C-AF33-5CFAD902946A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{768C88F6-B990-492C-AF33-5CFAD902946A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{768C88F6-B990-492C-AF33-5CFAD902946A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{51EEAE83-EFDB-4824-85CB-6416EB01FFDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{51EEAE83-EFDB-4824-85CB-6416EB01FFDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{51EEAE83-EFDB-4824-85CB-6416EB01FFDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{51EEAE83-EFDB-4824-85CB-6416EB01FFDD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
