@@ -1,6 +1,4 @@
-﻿// Learn more about F# at http://fsharp.org
-
-open System
+﻿open System
 
 let printHelp () =
     printfn "Доступные команды: "
@@ -8,7 +6,7 @@ let printHelp () =
     printfn "1 - выход"
     printfn "2 - добавить новую запись"
     printfn "3 - найти телефон по имени"
-    printfn "4 - найти имя по телефону"
+    printfn "4 - найти имена по телефону"
     printfn "5 - напечатать всё текущее содержимое справочника"
     printfn "6 - сохранить текущие данные в файл"
     printfn "7 - считать данные из файла"
@@ -32,15 +30,11 @@ let addPhonebookRecord (phonebook : Map<string, string>) =
     addOrUpdateRecord name number
     
 let printPhonebook (phonebook : Map<string, string>) =
-    let rec printPairList ls =
-        match ls with
-        | [] -> ()
-        | (key, value) :: tail -> printfn "\t%s : %s" key value; printPairList tail
-    
     printfn "%s" <| if Map.isEmpty phonebook
                         then "Справочник пуст."
                         else "Все записи справочника:\n\tимя : номер"
-    printPairList (Map.toList phonebook)
+                        
+    phonebook |> Map.iter (fun key value -> printfn "\t%s : %s" key value)
     phonebook
     
 let printPhoneByName (phonebook : Map<string, string>) =
@@ -53,6 +47,18 @@ let printPhoneByName (phonebook : Map<string, string>) =
     
     phonebook
     
+let printNameByPhone (phonebook : Map<string, string>) =
+    printf "Введите номер: "
+    let number = Console.ReadLine()
+    
+    let numberRecords = Map.filter (fun key value -> value = number) phonebook
+    if Map.isEmpty numberRecords
+        then printfn "Не удалось найти записей с номером %s" number
+        else printfn "Имена с номером %s: " number
+             numberRecords |> Map.iter (fun key value -> printfn "\t%s" key)
+    
+    phonebook
+    
 let rec programLoop (phonebook : Map<string, string>) =
     printf "Введите команду: "
     let input = Console.ReadLine()
@@ -61,6 +67,7 @@ let rec programLoop (phonebook : Map<string, string>) =
     | "1" -> ()
     | "2" -> addPhonebookRecord phonebook |> programLoop
     | "3" -> printPhoneByName phonebook |> programLoop
+    | "4" -> printNameByPhone phonebook |> programLoop
     | "5" -> printPhonebook phonebook |> programLoop
     | _ -> printfn "not implemented"; programLoop phonebook
 
