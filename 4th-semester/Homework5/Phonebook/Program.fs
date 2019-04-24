@@ -14,14 +14,14 @@ let printHelp () =
     
 let addPhonebookRecord (phonebook : Map<string, string>) =
     let addOrUpdateRecord name phone =
-        if Map.containsKey name phonebook
+        if phonebook |> Map.containsKey name
         then printf "Найдена запись с именем %s. Перезаписать её? (1 -- перезаписать, всё остальное -- не переписывать): " name
              let answer = Console.ReadLine()
              match answer with
-             | "1" -> Map.add name phone phonebook
+             | "1" -> phonebook |> Map.add name phone
              | _ -> phonebook
              
-        else Map.add name phone phonebook
+        else phonebook |> Map.add name phone
         
     printf "Введите имя: "
     let name = Console.ReadLine()
@@ -30,20 +30,12 @@ let addPhonebookRecord (phonebook : Map<string, string>) =
     
     addOrUpdateRecord name phone
     
-let printPhonebook (phonebook : Map<string, string>) =
-    printfn "%s" <| if Map.isEmpty phonebook
-                        then "Справочник пуст."
-                        else "Все записи справочника:\n\tимя : номер"
-                        
-    phonebook |> Map.iter (fun key value -> printfn "\t%s : %s" key value)
-    phonebook
-    
 let printPhoneByName (phonebook : Map<string, string>) =
     printf "Введите имя: "
     let name = Console.ReadLine()
     
-    if Map.containsKey name phonebook
-        then printfn "Телефон в записи с именем %s: %s" name (Map.find name phonebook)
+    if phonebook |> Map.containsKey name
+        then printfn "Телефон в записи с именем %s: %s" name (phonebook |> Map.find name)
         else printfn "Не удалось найти запись с именем %s." name
     
     phonebook
@@ -52,12 +44,20 @@ let printNameByPhone (phonebook : Map<string, string>) =
     printf "Введите номер: "
     let phone = Console.ReadLine()
     
-    let numberRecords = Map.filter (fun key value -> value = phone) phonebook
+    let numberRecords = phonebook |> Map.filter (fun key value -> value = phone)
     if Map.isEmpty numberRecords
         then printfn "Не удалось найти записей с номером %s." phone
         else printfn "Имена с номером %s: " phone
              numberRecords |> Map.iter (fun key value -> printfn "\t%s" key)
     
+    phonebook
+
+let printPhonebook (phonebook : Map<string, string>) =
+    printfn "%s" <| if phonebook |> Map.isEmpty 
+                        then "Справочник пуст."
+                        else "Все записи справочника:\n\tимя : номер"
+                        
+    phonebook |> Map.iter (fun key value -> printfn "\t%s : %s" key value)
     phonebook
 
 let savePhonebookToFile (phonebook : Map<string, string>) =
