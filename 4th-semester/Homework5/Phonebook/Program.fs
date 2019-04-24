@@ -1,6 +1,7 @@
 ﻿open System
 open System.IO
 
+/// Prints command list
 let printHelp () =
     printfn "Доступные команды: "
     printfn "0 - напечатать список досутпных команд"
@@ -11,7 +12,8 @@ let printHelp () =
     printfn "5 - напечатать всё текущее содержимое справочника"
     printfn "6 - сохранить текущие данные в файл"
     printfn "7 - считать данные из файла"
-    
+
+/// Adds new record to a phonebook
 let addPhonebookRecord (phonebook : Map<string, string>) =
     let addOrUpdateRecord name phone =
         if phonebook |> Map.containsKey name
@@ -29,7 +31,8 @@ let addPhonebookRecord (phonebook : Map<string, string>) =
     let phone = Console.ReadLine()
     
     addOrUpdateRecord name phone
-    
+
+/// Finds and prints phone by name
 let printPhoneByName (phonebook : Map<string, string>) =
     printf "Введите имя: "
     let name = Console.ReadLine()
@@ -39,7 +42,8 @@ let printPhoneByName (phonebook : Map<string, string>) =
         else printfn "Не удалось найти запись с именем %s." name
     
     phonebook
-    
+
+/// Finds and prints all names by phone
 let printNameByPhone (phonebook : Map<string, string>) =
     printf "Введите номер: "
     let phone = Console.ReadLine()
@@ -52,6 +56,7 @@ let printNameByPhone (phonebook : Map<string, string>) =
     
     phonebook
 
+/// Prints all phonebook records
 let printPhonebook (phonebook : Map<string, string>) =
     printfn "%s" <| if phonebook |> Map.isEmpty 
                         then "Справочник пуст."
@@ -60,6 +65,7 @@ let printPhonebook (phonebook : Map<string, string>) =
     phonebook |> Map.iter (fun key value -> printfn "\t%s : %s" key value)
     phonebook
 
+/// Saves phonebook data to a file
 let savePhonebookToFile (phonebook : Map<string, string>) =
     printf "Введите путь до файла: "
     let path = Console.ReadLine()
@@ -71,6 +77,7 @@ let savePhonebookToFile (phonebook : Map<string, string>) =
     
     phonebook
 
+/// Loads phonebook data from a file
 let loadPhonebookFromFile (phonebook : Map<string, string>) =
     printf "Введите путь до файла: "
     let path = Console.ReadLine()
@@ -86,7 +93,7 @@ let loadPhonebookFromFile (phonebook : Map<string, string>) =
                 (words.[0].Trim(), words.[1].Trim()))
             |> Map.ofSeq
                     
-        
+/// Main program loop
 let rec programLoop (phonebook : Map<string, string>) =
     printf "Введите команду: "
     let input = Console.ReadLine()
@@ -101,6 +108,7 @@ let rec programLoop (phonebook : Map<string, string>) =
     | "7" -> loadPhonebookFromFile phonebook |> programLoop
     | _ -> printfn "Команда не найдена."; programLoop phonebook
 
+/// Program entry point
 [<EntryPoint>]
 let main argv =
     printHelp ()
