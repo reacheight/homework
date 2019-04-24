@@ -20,3 +20,14 @@ module MergeSortTests =
     let ``sort should sort random list`` () =
         let sortWorksRight (ls : list<int>) = sort ls = List.sort ls
         Check.QuickThrowOnFailure sortWorksRight
+    
+    [<Test>]
+    [<MaxTime(500)>]
+    let ``sort should be fast`` () =
+        let generateRandomList length =
+            let random = System.Random()
+            List.init length (fun _ -> random.Next())
+            
+        let bigList = generateRandomList 10000
+        sort bigList |> should equal (List.sort bigList)
+        
