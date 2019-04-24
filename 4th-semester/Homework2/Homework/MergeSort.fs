@@ -13,12 +13,13 @@ module MergeSort =
             accMerge left right []
         
         let divide ls =
-            let rec divide left right =
-                if (List.length left - List.length right <= -1)
-                    then divide (left @ [List.head right]) (List.tail right)
-                    else left, right
+            let rec divide ls left right =
+                match ls with
+                | [] -> left, right
+                | [a] -> (a :: left), right
+                | a::b::tail -> divide tail (a :: left) (b :: right)
                 
-            divide [] ls
+            divide ls [] []
         
         match List.length ls with 
         | 0 | 1 -> ls
