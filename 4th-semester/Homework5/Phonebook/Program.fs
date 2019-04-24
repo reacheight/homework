@@ -12,22 +12,22 @@ let printHelp () =
     printfn "7 - считать данные из файла"
     
 let addPhonebookRecord (phonebook : Map<string, string>) =
-    let addOrUpdateRecord name number =
+    let addOrUpdateRecord name phone =
         if Map.containsKey name phonebook
         then printf "Найдена запись с именем %s. Перезаписать её? (1 -- перезаписать, всё остальное -- не переписывать): " name
              let answer = Console.ReadLine()
              match answer with
-             | "1" -> Map.add name number phonebook
+             | "1" -> Map.add name phone phonebook
              | _ -> phonebook
              
-        else Map.add name number phonebook
+        else Map.add name phone phonebook
         
     printf "Введите имя: "
     let name = Console.ReadLine()
     printf "Введите номер: "
-    let number = Console.ReadLine()
+    let phone = Console.ReadLine()
     
-    addOrUpdateRecord name number
+    addOrUpdateRecord name phone
     
 let printPhonebook (phonebook : Map<string, string>) =
     printfn "%s" <| if Map.isEmpty phonebook
@@ -49,12 +49,12 @@ let printPhoneByName (phonebook : Map<string, string>) =
     
 let printNameByPhone (phonebook : Map<string, string>) =
     printf "Введите номер: "
-    let number = Console.ReadLine()
+    let phone = Console.ReadLine()
     
-    let numberRecords = Map.filter (fun key value -> value = number) phonebook
+    let numberRecords = Map.filter (fun key value -> value = phone) phonebook
     if Map.isEmpty numberRecords
-        then printfn "Не удалось найти записей с номером %s" number
-        else printfn "Имена с номером %s: " number
+        then printfn "Не удалось найти записей с номером %s" phone
+        else printfn "Имена с номером %s: " phone
              numberRecords |> Map.iter (fun key value -> printfn "\t%s" key)
     
     phonebook
