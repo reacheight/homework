@@ -1,4 +1,5 @@
 ﻿open System
+open System.IO
 
 let printHelp () =
     printfn "Доступные команды: "
@@ -58,6 +59,18 @@ let printNameByPhone (phonebook : Map<string, string>) =
              numberRecords |> Map.iter (fun key value -> printfn "\t%s" key)
     
     phonebook
+
+let savePhonebookToFile (phonebook : Map<string, string>) =
+    printf "Введите путь до файла: "
+    let path = Console.ReadLine()
+    try
+        use writer = new StreamWriter (path)
+        writer.WriteLine("Все записи справочника:")
+        phonebook |> Map.iter (fun key value -> writer.WriteLine(sprintf "%s : %s" key value))
+    with
+        | :? Exception -> printfn "Не удалось открыть файл."
+    
+    phonebook
     
 let rec programLoop (phonebook : Map<string, string>) =
     printf "Введите команду: "
@@ -69,6 +82,7 @@ let rec programLoop (phonebook : Map<string, string>) =
     | "3" -> printPhoneByName phonebook |> programLoop
     | "4" -> printNameByPhone phonebook |> programLoop
     | "5" -> printPhonebook phonebook |> programLoop
+    | "6" -> savePhonebookToFile phonebook |> programLoop
     | _ -> printfn "not implemented"; programLoop phonebook
 
 [<EntryPoint>]
