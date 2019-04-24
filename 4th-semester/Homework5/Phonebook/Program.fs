@@ -43,6 +43,16 @@ let printPhonebook (phonebook : Map<string, string>) =
     printPairList (Map.toList phonebook)
     phonebook
     
+let printPhoneByName (phonebook : Map<string, string>) =
+    printf "Введите имя: "
+    let name = Console.ReadLine()
+    
+    if Map.containsKey name phonebook
+        then printfn "Телефон в записи с именем %s: %s" name (Map.find name phonebook)
+        else printfn "Не удалось найти запись с именем %s" name
+    
+    phonebook
+    
 let rec programLoop (phonebook : Map<string, string>) =
     printf "Введите команду: "
     let input = Console.ReadLine()
@@ -50,6 +60,7 @@ let rec programLoop (phonebook : Map<string, string>) =
     | "0" -> printHelp (); programLoop phonebook
     | "1" -> ()
     | "2" -> addPhonebookRecord phonebook |> programLoop
+    | "3" -> printPhoneByName phonebook |> programLoop
     | "5" -> printPhonebook phonebook |> programLoop
     | _ -> printfn "not implemented"; programLoop phonebook
 
