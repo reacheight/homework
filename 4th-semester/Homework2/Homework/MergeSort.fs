@@ -5,11 +5,11 @@ module MergeSort =
         let merge left right =
             let rec accMerge left right acc =
                 match left, right with 
-                | l, [] -> acc @ l
-                | [], r -> acc @ r
+                | l, [] -> (acc |> List.rev) @ l
+                | [], r -> (acc |> List.rev) @ r
                 | lHead :: lTail, rHead :: rTail -> if (lHead < rHead)
-                                                        then accMerge lTail right (acc @ [lHead])
-                                                        else accMerge left rTail (acc @ [rHead])
+                                                        then accMerge lTail right (lHead :: acc)
+                                                        else accMerge left rTail (rHead :: acc)
             accMerge left right []
         
         let divide ls =
