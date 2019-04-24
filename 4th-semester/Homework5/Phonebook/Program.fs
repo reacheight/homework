@@ -13,6 +13,24 @@ let printHelp () =
     printfn "6 - сохранить текущие данные в файл"
     printfn "7 - считать данные из файла"
     
+let addPhonebookRecord (phonebook : Map<string, string>) =
+    let addOrUpdateRecord name number =
+        if Map.containsKey name phonebook
+        then printf "Найдена запись с именем %s. Перезаписать её? (1 -- перезаписать, всё остальное -- не переписывать): " name
+             let answer = Console.ReadLine()
+             match answer with
+             | "1" -> Map.add name number phonebook
+             | _ -> phonebook
+             
+        else Map.add name number phonebook
+        
+    printf "Введите имя: "
+    let name = Console.ReadLine()
+    printf "Введите номер: "
+    let number = Console.ReadLine()
+    
+    addOrUpdateRecord name number
+    
 let printPhonebook (phonebook : Map<string, string>) =
     let rec printPairList ls =
         match ls with
@@ -31,6 +49,7 @@ let rec programLoop (phonebook : Map<string, string>) =
     match input with
     | "0" -> printHelp (); programLoop phonebook
     | "1" -> ()
+    | "2" -> addPhonebookRecord phonebook |> programLoop
     | "5" -> printPhonebook phonebook |> programLoop
     | _ -> printfn "not implemented"; programLoop phonebook
 
