@@ -3,7 +3,7 @@ namespace Homework.Tests
 module StringCalculatorWorkflowTests =
     open NUnit.Framework
     open FsUnit
-    open StringCalculatorWorkflow
+    open Homework.StringCalculatorWorkflow
     
     let stringCalculator = new StringCalculatorBuilder()
     
