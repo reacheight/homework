@@ -16,6 +16,7 @@
 
     <ItemGroup>
         <Compile Include="StackTests.fs" />
+        <Compile Include="CorrectBracketSequenceTests.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 

@@ -7,6 +7,7 @@
 
     <ItemGroup>
         <Compile Include="Stack.fs" />
+        <Compile Include="Utils.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 

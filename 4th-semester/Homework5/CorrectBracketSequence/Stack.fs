@@ -1,4 +1,4 @@
-namespace CorrectBracketSequence.Stack
+namespace CorrectBracketSequence
 
 module Stack =
     type Stack<'a> =
