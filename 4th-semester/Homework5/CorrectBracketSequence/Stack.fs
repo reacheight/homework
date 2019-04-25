@@ -15,10 +15,10 @@ module Stack =
             
             member stack.Top =
                 match stack with
-                | Null -> failwith "The stack is empty."
+                | Null -> invalidOp "The stack is empty."
                 | Stack(value, _) -> value
             
             member stack.Pop =
                 match stack with
-                | Null -> failwith "The stack is empty."
+                | Null -> invalidOp "The stack is empty."
                 | Stack(value, tail) -> tail
