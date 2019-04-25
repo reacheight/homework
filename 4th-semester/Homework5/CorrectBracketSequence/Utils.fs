@@ -1,13 +1,19 @@
 namespace CorrectBracketSequence
 
+/// Utils functions for checking whether bracket sequence is correct
 module Utils =
     open Stack
     
     let openingBrackets = ['('; '['; '{']
     let closingBrackets = [')'; '}'; ']']
+    
+    /// Gets whether character is opening bracket
     let isOpeningBracket c = openingBrackets |> List.contains c
+    
+    /// Gets whether character is closing bracket
     let isClosingBracket c = closingBrackets |> List.contains c
     
+    /// Gets whether given characters are opening and closing brackets of the same kind
     let areSameKindBrackets first second =
         let areSameKindBrackets first second =
             first = '(' && second = ')' ||
@@ -16,9 +22,11 @@ module Utils =
          
         areSameKindBrackets first second || areSameKindBrackets second first
     
+    /// Gets string that contains only bracket characters
     let extractBracketSequence string =
         string |> Seq.filter (fun c -> isOpeningBracket c || isClosingBracket c)
     
+    /// Gets whether list of bracket-characters is correct bracket sequence
     let isCorrectBracketSequence sequence =
         let rec isCorrectBracketSequence sequence (stack : Stack<char>)=
             match sequence with
