@@ -1,7 +1,16 @@
 ﻿namespace CorrectBracketSequence
 
 module EntryPoint =
+    open System
+    open Utils
+    
     [<EntryPoint>]
     let main argv =
-        printfn "Hello World from F#!"
+        printf "Введите строку содержащуюю последовательность скобок: "
+        let input = Console.ReadLine()
+        
+        if input |> extractBracketSequence |> Seq.toList |> isCorrectBracketSequence
+            then printfn "Последовательность скобок корректна."
+            else printfn "Последовательность скобок некорректна."
+            
         0 

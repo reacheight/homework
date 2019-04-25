@@ -28,4 +28,3 @@ module Utils =
             | _ -> false
         
         isCorrectBracketSequence sequence Null
-
