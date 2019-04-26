@@ -16,11 +16,13 @@
 
     <ItemGroup>
         <Compile Include="MaxPalindromeTest.fs" />
+        <Compile Include="QueueTests.fs" />
         <Compile Include="Program.fs" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\MaxPalindrome\MaxPalindrome.fsproj" />
+      <ProjectReference Include="..\PriorityQueue\PriorityQueue.fsproj" />
     </ItemGroup>
 
 </Project>
