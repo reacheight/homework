@@ -20,5 +20,5 @@ module MaxPalindrome =
     
     [<EntryPoint>]
     let main argv =
-        printfn "Наибольший палиндром: %s" findMaxPalindrome
+        printfn "Cамый большой палиндром, полученный произведением двух трёхзначных чисел: %s" findMaxPalindrome
         0
