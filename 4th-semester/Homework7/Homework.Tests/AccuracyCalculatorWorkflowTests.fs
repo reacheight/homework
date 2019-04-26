@@ -7,13 +7,35 @@ module AccuracyCalculatorWorkflowTests =
     
     let rounding = AccuracyCalculatorBuilder
     let tolerance = 0.00001
+    let equalWithinTolerance = equalWithin tolerance
     
     [<Test>]
-    let ``calculator should calculate simple workflow`` () =
+    let ``calculator should calculate and round simple workflow`` () =
         let result = rounding 3 {
             let! a = 2.0 / 12.0
             let! b = 3.5
             return a / b
         }
         
-        result |> should (equalWithin tolerance) 0.048
+        result |> should equalWithinTolerance 0.048
+    
+    [<Test>]
+    let ``calculator should correctly handle 0`` () =
+        let result = rounding 3 {
+            let! a = 5.3
+            let! b = 9.7
+            let! c = 9.7 + 5.3
+            return c - a - b
+        }
+        
+        result |> should equalWithinTolerance 0.0
+    
+    [<Test>]
+    let ``calculator should correctly handle zero accuracy`` () =
+        let result = rounding 0 {
+            let! a = 5.0
+            let! b = 3.45
+            return a + b
+        }
+        
+        result |> should equalWithinTolerance 8.0
