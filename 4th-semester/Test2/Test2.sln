@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "MaxPalindrome", "MaxPalindrome\MaxPalindrome.fsproj", "{3EBBF41A-8D9A-4993-B395-A913CF882A75}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Test.Tests", "Test.Tests\Test.Tests.fsproj", "{2E62276C-095F-47CA-B39A-842F91E846BC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{3EBBF41A-8D9A-4993-B395-A913CF882A75}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EBBF41A-8D9A-4993-B395-A913CF882A75}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3EBBF41A-8D9A-4993-B395-A913CF882A75}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EBBF41A-8D9A-4993-B395-A913CF882A75}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E62276C-095F-47CA-B39A-842F91E846BC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E62276C-095F-47CA-B39A-842F91E846BC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E62276C-095F-47CA-B39A-842F91E846BC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E62276C-095F-47CA-B39A-842F91E846BC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
