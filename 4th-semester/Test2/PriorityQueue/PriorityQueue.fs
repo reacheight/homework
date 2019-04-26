@@ -22,7 +22,7 @@ type PriorityQueue<'T>() =
     member this.Dequeue() =
         if queue.Count = 0
             then
-                failwith "Queue is empty!"
+                failwith (invalidOp "Queue is empty!")
             else
                 let result = queue.Last() |> fst
                 queue.RemoveAt(queue.Count - 1)
