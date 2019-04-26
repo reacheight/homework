@@ -13,7 +13,7 @@ type PriorityQueue<'T>() =
     
     /// Enqueues value with weight
     member this.Enqueue(value, weigth) =
-        let index = queue.FindIndex(fun (v, w) -> w > weigth)
+        let index = queue.FindIndex(fun (v, w) -> w >= weigth)
         match index with
         | -1 -> queue.Add(value, weigth)
         | i -> queue.Insert(i, (value, weigth))

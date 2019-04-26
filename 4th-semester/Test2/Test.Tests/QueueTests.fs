@@ -53,4 +53,11 @@ type ``queue should`` () =
     [<Test>]
     member this.``fail on dequeue call from empty queue`` () =
         (fun () -> queue.Dequeue() |> ignore)
-            |> should throw typeof<InvalidOperationException> 
+            |> should throw typeof<InvalidOperationException>
+    
+    [<Test>]
+    member this.``dequeue first enqueued value if there is values with the same weight`` () =
+        queue.Enqueue(10, 7)
+        queue.Enqueue(6, 7)
+        
+        queue.Dequeue() |> should equal 10
