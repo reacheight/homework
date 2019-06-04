@@ -6,8 +6,8 @@
 
     <ItemGroup>
       <Compile Include="ILazy.fs" />
-      <Compile Include="LazyFactory.fs" />
       <Compile Include="SingleThreadedLazy.fs" />
+      <Compile Include="LazyFactory.fs" />
     </ItemGroup>
 
 </Project>
