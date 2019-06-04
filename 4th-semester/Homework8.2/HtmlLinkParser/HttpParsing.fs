@@ -1,8 +1,9 @@
 module HtmlLinkParser.HttpParsing
 
-open FSharp.Collections.ParallelSeq
 open HtmlAgilityPack
 open System
+open System.IO
+open System.Net
 
 let getAllHttpUrlsFromUrlHtml (url : string) =
     let htmlParser = HtmlWeb()
@@ -13,7 +14,14 @@ let getAllHttpUrlsFromUrlHtml (url : string) =
         |> Seq.toList
 
 let getUrlHtmlSize (url : string) =
-    HtmlWeb().Load(url).Text.Length
+    async {
+        let request = WebRequest.Create(url)
+        use! response = request.AsyncGetResponse()
+        use stream = response.GetResponseStream()
+        use reader = new StreamReader(stream)
+        let html = reader.ReadToEnd()
+        return html.Length
+    }
   
 let isUrl (candidate : string) =
     let mutable uri = Uri("http://empty.com")
@@ -23,8 +31,12 @@ let isUrl (candidate : string) =
 let printAllUrlsFromUrlHtml (startUrl : string) =
     let containedUrls = startUrl |> getAllHttpUrlsFromUrlHtml
     let urlSizePairs = containedUrls
-                       |> PSeq.map (fun url -> url, getUrlHtmlSize url)
-                       |> PSeq.toList
+                       |> Seq.map (fun url -> async {
+                           let! length = getUrlHtmlSize url
+                           return url, length
+                       })
+                       |> Async.Parallel
+                       |> Async.RunSynchronously
     
     Console.WriteLine("All urls from " + startUrl + ":")
     urlSizePairs |> Seq.iter (fun (url, size) -> printfn "%s --- %i" url size)
