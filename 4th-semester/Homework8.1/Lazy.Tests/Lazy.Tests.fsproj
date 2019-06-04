@@ -15,7 +15,6 @@
 
     <ItemGroup>
         <Compile Include="SingleThreadedLazyTests.fs" />
-        <Compile Include="Program.fs" />
     </ItemGroup>
 
     <ItemGroup>

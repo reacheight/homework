@@ -9,7 +9,6 @@ type SingleThreadedLazy<'a>(supplier: unit -> 'a) =
         /// Gets evaluation result
         /// Supplier function is called only once
         member this.Get() =
-            match result with
-            | None -> result <- Some (supplier ())
-                      result.Value
-            | Some value -> value
+            if result.IsNone then result <- Some (supplier ())
+            
+            result.Value
