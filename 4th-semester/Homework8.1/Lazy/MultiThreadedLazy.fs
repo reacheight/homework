@@ -17,4 +17,3 @@ type MultiThreadedLazy<'a>(supplier: unit -> 'a) =
                                                     then result <- Some (supplier ()))
             
             result.Value
-
