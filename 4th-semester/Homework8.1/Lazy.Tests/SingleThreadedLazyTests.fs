@@ -25,7 +25,7 @@ type ``single threaded lazy should``() =
         lazyObject.Get() |> should equal (supplier ())
         
     [<Test>]
-    member this.``evaluate supplier function only once`` () =
+    member this.``call supplier function only once`` () =
         let mutable evaluationCount = 0
         lazyObject <- LazyFactory.CreateSingleThreadedLazy
                           (fun () -> evaluationCount <- evaluationCount + 1
