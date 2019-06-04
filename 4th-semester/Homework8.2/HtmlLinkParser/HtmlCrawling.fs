@@ -25,7 +25,7 @@ let getUrlHtmlSize (url : string) =
         return html.Length
     }
 
-/// Gets whether string is correct url
+/// Gets whether a string is correct url
 let isUrl (candidate : string) =
     let mutable uri = Uri("http://empty.com")
     Uri.TryCreate(candidate, UriKind.Absolute,  &uri)
