@@ -5,6 +5,7 @@ open System
 open System.IO
 open System.Net
 
+/// Gets list of all urls from given url html
 let getAllHttpUrlsFromUrlHtml (url : string) =
     let htmlParser = HtmlWeb()
     let htmlDoc = htmlParser.Load(url)
@@ -13,6 +14,7 @@ let getAllHttpUrlsFromUrlHtml (url : string) =
         |> Seq.filter (fun url -> url.StartsWith("http://"))
         |> Seq.toList
 
+/// Gets url html size
 let getUrlHtmlSize (url : string) =
     async {
         let request = WebRequest.Create(url)
@@ -22,12 +24,14 @@ let getUrlHtmlSize (url : string) =
         let html = reader.ReadToEnd()
         return html.Length
     }
-  
+
+/// Gets whether string is correct url
 let isUrl (candidate : string) =
     let mutable uri = Uri("http://empty.com")
     Uri.TryCreate(candidate, UriKind.Absolute,  &uri)
         && (uri.Scheme = Uri.UriSchemeHttp || uri.Scheme = Uri.UriSchemeHttps);
-   
+
+/// Prints all urls and their size from given url html
 let printAllUrlsFromUrlHtml (startUrl : string) =
     let containedUrls = startUrl |> getAllHttpUrlsFromUrlHtml
     let urlSizePairs = containedUrls
