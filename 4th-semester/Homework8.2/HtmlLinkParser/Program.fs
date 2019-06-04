@@ -1,5 +1,5 @@
 ﻿open System
-open HtmlLinkParser.HttpParsing
+open HtmlLinkParser.HtmlCrawling
 
 [<EntryPoint>]
 let main argv =

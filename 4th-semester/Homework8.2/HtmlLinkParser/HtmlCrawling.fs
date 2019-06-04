@@ -1,4 +1,4 @@
-module HtmlLinkParser.HttpParsing
+module HtmlLinkParser.HtmlCrawling
 
 open HtmlAgilityPack
 open System
