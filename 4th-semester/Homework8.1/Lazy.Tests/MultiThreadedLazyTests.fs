@@ -8,15 +8,16 @@ open Lazy
 [<TestFixture>]
 type ``multi threaded lazy should``() =
     let supplier = fun () -> "result"
-    let mutable lazyObject = LazyFactory.CreateMultiThreadedLazy (supplier)
+    let mutable lazyObject = LazyFactory.CreateMultiThreadedLazy supplier
     
     let workOnMultipleThreads (supplier : unit -> 'a) =
-        let results = ResizeArray<'a>(10)
-        let threads = List.init results.Count (fun i -> Thread(fun () -> results.[i] <- supplier()))
+        let newLazyObject = LazyFactory.CreateMultiThreadedLazy supplier
+        let results = Array.zeroCreate 10
+        let threads = List.init results.Length (fun i -> Thread(fun () -> results.[i] <- newLazyObject.Get()))
         threads |> List.iter (fun thread -> thread.Start())
         threads |> List.iter (fun thread -> thread.Join())
         
-        results |> Seq.toList
+        results
         
     
     [<SetUp>]
@@ -46,4 +47,11 @@ type ``multi threaded lazy should``() =
     [<Test>]
     member this.``get correct result in multiple threads`` () =
         let results = workOnMultipleThreads supplier
-        results |> List.forall (fun result -> result = supplier()) |> should be True
+        results |> Array.forall (fun result -> result = supplier()) |> should be True
+        
+    [<Test>]
+    member this.``call supplier function only once from multiple threads`` () =
+        let mutable counter = 0
+        workOnMultipleThreads (fun () -> counter <- counter + 1
+                                         supplier()) |> ignore
+        counter |> should equal 1       
