@@ -11,7 +11,7 @@ type ``single threaded lazy should``() =
     
     [<SetUp>]
     member this.SetUp() =
-        lazyObject <- LazyFactory.CreateSingleThreadedLazy (fun () -> "result")
+        lazyObject <- LazyFactory.CreateSingleThreadedLazy (supplier)
      
     [<Test>]
     member this.``get result on first call`` () =
@@ -19,9 +19,8 @@ type ``single threaded lazy should``() =
         
     [<Test>]
     member this.``get result on multiple calls`` () =
-        lazyObject.Get() |> should equal (supplier ())
-        lazyObject.Get() |> should equal (supplier ())
-        lazyObject.Get() |> should equal (supplier ())
+        for i in 1..10 do
+            lazyObject.Get() |> should equal (supplier ())
         
     [<Test>]
     member this.``call supplier function only once`` () =
@@ -29,8 +28,7 @@ type ``single threaded lazy should``() =
         lazyObject <- LazyFactory.CreateSingleThreadedLazy
                           (fun () -> evaluationCount <- evaluationCount + 1
                                      supplier())
-        lazyObject.Get() |> ignore
-        lazyObject.Get() |> ignore
-        lazyObject.Get() |> ignore
+        for i in 1..10 do
+            lazyObject.Get() |> ignore
         
         evaluationCount |> should equal 1
