@@ -8,3 +8,6 @@ type LazyFactory() =
         
     static member CreateMultiThreadedLazy<'a>(supplier: unit -> 'a) =
         MultiThreadedLazy supplier :> ILazy<'a>
+        
+    static member CreateLockfreeLazy<'a>(supplier: unit -> 'a) =
+        LockfreeLazy supplier :> ILazy<'a>
