@@ -11,6 +11,7 @@ type LockfreeLazy<'a>(supplier: unit -> 'a) =
         /// Supplier function is called only once
         member this.Get() =
             while result.IsNone do
-                Interlocked.Exchange (ref result, Some (supplier())) |> ignore
+                let value = supplier()
+                Interlocked.CompareExchange(&result, Some value, None) |> ignore
             
             result.Value
