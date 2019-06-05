@@ -8,7 +8,6 @@ type LockfreeLazy<'a>(supplier: unit -> 'a) =
     
     interface ILazy<'a> with
         /// Gets evaluation result
-        /// Supplier function is called only once
         member this.Get() =
             while result.IsNone do
                 let value = supplier()
