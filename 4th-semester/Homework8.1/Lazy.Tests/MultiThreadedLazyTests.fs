@@ -24,11 +24,11 @@ type ``multi threaded lazy should``() =
         lazyObject <- LazyFactory.CreateMultiThreadedLazy (supplier)
         
     [<Test>]
-    member this.``get result on first call`` () =
+    member this.``get correct result on first call`` () =
         lazyObject.Get() |> should equal (supplier ())
         
     [<Test>]
-    member this.``get result on multiple calls`` () =
+    member this.``get correct result on multiple calls`` () =
         for i in 1..10 do
             lazyObject.Get() |> should equal (supplier ())
         
@@ -44,6 +44,6 @@ type ``multi threaded lazy should``() =
         evaluationCount |> should equal 1
         
     [<Test>]
-    member this.``get result in multiple threads`` () =
+    member this.``get correct result in multiple threads`` () =
         let results = workOnMultipleThreads supplier
         results |> List.forall (fun result -> result = supplier()) |> should be True
