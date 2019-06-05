@@ -2,7 +2,6 @@ namespace Lazy.Tests
 
 open NUnit.Framework
 open FsUnit
-open System
 open Lazy
 
 [<TestFixture>]
