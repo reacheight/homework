@@ -6,6 +6,8 @@ Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "CorrectBracketSequence", "C
 EndProject
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Homework.Tests", "Homework.Tests\Homework.Tests.fsproj", "{A5285667-B8C6-47AF-BA4F-BBC5121B85FB}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Pointfree", "Pointfree\Pointfree.fsproj", "{B719C33A-6B90-48B6-9ECC-A636B3C78C3F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{A5285667-B8C6-47AF-BA4F-BBC5121B85FB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A5285667-B8C6-47AF-BA4F-BBC5121B85FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A5285667-B8C6-47AF-BA4F-BBC5121B85FB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B719C33A-6B90-48B6-9ECC-A636B3C78C3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B719C33A-6B90-48B6-9ECC-A636B3C78C3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B719C33A-6B90-48B6-9ECC-A636B3C78C3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B719C33A-6B90-48B6-9ECC-A636B3C78C3F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
