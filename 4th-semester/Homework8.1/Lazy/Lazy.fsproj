@@ -8,6 +8,7 @@
       <Compile Include="ILazy.fs" />
       <Compile Include="MultiThreadedLazy.fs" />
       <Compile Include="SingleThreadedLazy.fs" />
+      <Compile Include="LockfreeLazy.fs" />
       <Compile Include="LazyFactory.fs" />
     </ItemGroup>
 
