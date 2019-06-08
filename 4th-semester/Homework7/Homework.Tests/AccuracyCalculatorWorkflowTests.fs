@@ -39,3 +39,14 @@ module AccuracyCalculatorWorkflowTests =
         }
         
         result |> should equalWithinTolerance 8.0
+        
+    [<Test>]
+    let ``rounding should happen on every calculation`` () =
+        let result = rounding 0 {
+            let! a = 5.4
+            let! b = 5.4
+            let! c = 10.8 - 2.0
+            return a + b + c
+        }
+        
+        result |> should equalWithinTolerance 19.0
