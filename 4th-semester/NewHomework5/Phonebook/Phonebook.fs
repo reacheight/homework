@@ -25,7 +25,7 @@ let findNames phone (phonebook : Phonebook) =
     let phoneNames = phonebook
                      |> Map.filter (fun key value -> value = phone)
                      |> Map.toList
-                     |> List.map (fun (name, phone) -> phone)
+                     |> List.map (fun (name, phone) -> name)
     if List.isEmpty phoneNames
         then None
         else Some (phoneNames)

@@ -79,7 +79,7 @@ let savePhonebookToFile (phonebook : Phonebook) =
     phonebook
 
 /// Loads phonebook data from a file
-let loadPhonebookFromFile =
+let loadPhonebookFromFile () =
     printf "Введите путь до файла: "
     let path = Console.ReadLine()
     if not(File.Exists(path))
@@ -107,7 +107,7 @@ let rec programLoop (phonebook : Phonebook) =
     | "4" -> printNameByPhone phonebook |> programLoop
     | "5" -> printPhonebook phonebook |> programLoop
     | "6" -> savePhonebookToFile phonebook |> programLoop
-    | "7" -> loadPhonebookFromFile |> programLoop
+    | "7" -> loadPhonebookFromFile () |> programLoop
     | _ -> printfn "Команда не найдена."
            phonebook |> programLoop
 
