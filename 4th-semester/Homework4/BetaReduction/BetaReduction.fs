@@ -10,17 +10,15 @@ type LambdaTerm =
 let rec getFreeVariables expression =
     match expression with
     | Variable x -> Set.empty |> Set.add x
-    | Application(leftTerm, rightTerm) -> getFreeVariables leftTerm |> Set.union (getFreeVariables rightTerm)
+    | Application(leftTerm, rightTerm) -> (getFreeVariables leftTerm) |> Set.union (getFreeVariables rightTerm)
     | Abstraction(variable, term) -> getFreeVariables term |> Set.remove variable
-
-let getNewVariable used =
-    let names = Set.ofSeq['a'..'z']
-    used |> Set.difference names |> Set.maxElement
-    
-
 
 let rec substitute variable term expression =
     let alphaConversionSubstitude variable term expression =
+        let getNewVariable used =
+            let names = Set.ofSeq['a'..'z']
+            (used |> Set.difference names) |> Set.maxElement
+            
         match expression with
         | Abstraction(abstractionVar, abstractionTerm) ->
             let abstractionTermFreeVariables = abstractionTerm |> getFreeVariables
@@ -33,7 +31,7 @@ let rec substitute variable term expression =
                                    |> getNewVariable
                     let substituted = abstractionTerm
                                       |> substitute abstractionVar (Variable freeName)
-                    (variable, substituted)
+                    (freeName, substituted)
                 else
                     (abstractionVar, abstractionTerm)
         | _ -> failwith "only lambda abstraction can be alfa-conversioned"
@@ -46,7 +44,7 @@ let rec substitute variable term expression =
         let rightSubstituted = rightTerm |> substitute variable term
         Application(leftSubstituted, rightSubstituted)
     | Abstraction(var, _) when var = variable -> expression
-    | Abstraction(abstractionVar, abstractionTerm) ->
+    | Abstraction _ ->
         let (newVar, newTerm) = expression |> alphaConversionSubstitude variable term
         Abstraction(newVar, newTerm |> substitute variable term)
                 

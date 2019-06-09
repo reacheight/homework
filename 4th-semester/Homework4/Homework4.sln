@@ -2,6 +2,8 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BetaReduction", "BetaReduction\BetaReduction.fsproj", "{9916A91B-6C13-4BC4-9D24-D2EC245F821F}"
 EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "BetaReduction.Tests", "BetaReduction.Tests\BetaReduction.Tests.fsproj", "{F03E34C6-229B-4B26-8315-CC6EA06C2ED3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -12,5 +14,9 @@ Global
 		{9916A91B-6C13-4BC4-9D24-D2EC245F821F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{9916A91B-6C13-4BC4-9D24-D2EC245F821F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9916A91B-6C13-4BC4-9D24-D2EC245F821F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F03E34C6-229B-4B26-8315-CC6EA06C2ED3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F03E34C6-229B-4B26-8315-CC6EA06C2ED3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F03E34C6-229B-4B26-8315-CC6EA06C2ED3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F03E34C6-229B-4B26-8315-CC6EA06C2ED3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
