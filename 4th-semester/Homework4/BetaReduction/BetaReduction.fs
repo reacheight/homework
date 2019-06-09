@@ -16,7 +16,7 @@ let rec getFreeVariables expression =
     | Application(leftTerm, rightTerm) -> (getFreeVariables leftTerm) |> Set.union (getFreeVariables rightTerm)
     | Abstraction(variable, term) -> getFreeVariables term |> Set.remove variable
 
-/// Performs lambda calculust substitution
+/// Performs term substitution
 let rec substitute variable term expression =
     let alphaConversionSubstitude variable term expression =
         let getNewVariable used =
