@@ -75,7 +75,9 @@ module PhonebookTests =
         |> Phonebook.saveToFile path
         
         use reader = new StreamReader (path)
-        reader.ReadToEnd () |> should equal "name1 : phone1\nname2 : phone2\n"
+        let fileText = reader.ReadToEnd ()
+        (fileText = "name1 : phone1\nname2 : phone2\n"
+         || fileText = "name1 : phone1\r\nname2 : phone2\r\n") |> should be True 
     
     [<Test>]
     let ``loadFromFile should load phonebook from correct file`` () =
