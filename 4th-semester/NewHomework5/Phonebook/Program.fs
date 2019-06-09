@@ -1,5 +1,8 @@
-﻿open System
+﻿module Main
+
+open System
 open System.IO
+open Phonebook
 
 /// Prints command list
 let printHelp () =
@@ -14,16 +17,16 @@ let printHelp () =
     printfn "7 - считать данные из файла"
 
 /// Adds new record to a phonebook
-let addPhonebookRecord (phonebook : Map<string, string>) =
+let addPhonebookRecord (phonebook : Phonebook) =
     let addOrUpdateRecord name phone =
-        if phonebook |> Map.containsKey name
+        if phonebook |> Phonebook.containsName name
         then printf "Найдена запись с именем %s. Перезаписать её? (1 -- перезаписать, всё остальное -- не переписывать): " name
              let answer = Console.ReadLine()
              match answer with
-             | "1" -> phonebook |> Map.add name phone
+             | "1" -> phonebook |> Phonebook.addRecord name phone
              | _ -> phonebook
              
-        else phonebook |> Map.add name phone
+        else phonebook |> Phonebook.addRecord name phone
         
     printf "Введите имя: "
     let name = Console.ReadLine()
@@ -33,31 +36,30 @@ let addPhonebookRecord (phonebook : Map<string, string>) =
     addOrUpdateRecord name phone
 
 /// Finds and prints phone by name
-let printPhoneByName (phonebook : Map<string, string>) =
+let printPhoneByName (phonebook : Phonebook) =
     printf "Введите имя: "
     let name = Console.ReadLine()
     
-    if phonebook |> Map.containsKey name
-        then printfn "Телефон в записи с именем %s: %s" name (phonebook |> Map.find name)
-        else printfn "Не удалось найти запись с именем %s." name
+    match phonebook |> Phonebook.findPhone name with
+    | Some phone -> printfn "Телефон в записи с именем %s: %s" name phone
+    | None -> printfn "Не удалось найти запись с именем %s." name
     
     phonebook
 
 /// Finds and prints all names by phone
-let printNameByPhone (phonebook : Map<string, string>) =
+let printNameByPhone (phonebook : Phonebook) =
     printf "Введите номер: "
     let phone = Console.ReadLine()
     
-    let numberRecords = phonebook |> Map.filter (fun key value -> value = phone)
-    if Map.isEmpty numberRecords
-        then printfn "Не удалось найти записей с номером %s." phone
-        else printfn "Имена с номером %s: " phone
-             numberRecords |> Map.iter (fun key value -> printfn "\t%s" key)
+    match phonebook |> Phonebook.findNames phone with
+    | Some names -> printfn "Имена с номером %s: " phone
+                    names |> List.iter (fun name -> printfn "\t%s" name)
+    | None -> printfn "Не удалось найти записей с номером %s." phone
     
     phonebook
 
 /// Prints all phonebook records
-let printPhonebook (phonebook : Map<string, string>) =
+let printPhonebook (phonebook : Phonebook) =
     printfn "%s" <| if phonebook |> Map.isEmpty 
                         then "Справочник пуст."
                         else "Все записи справочника:\n\tимя : номер"
@@ -66,47 +68,48 @@ let printPhonebook (phonebook : Map<string, string>) =
     phonebook
 
 /// Saves phonebook data to a file
-let savePhonebookToFile (phonebook : Map<string, string>) =
+let savePhonebookToFile (phonebook : Phonebook) =
     printf "Введите путь до файла: "
     let path = Console.ReadLine()
     try
-        use writer = new StreamWriter (path)
-        phonebook |> Map.iter (fun key value -> writer.WriteLine(sprintf "%s : %s" key value))
+        phonebook |> Phonebook.saveToFile path
     with
-        | :? Exception -> printfn "Не удалось открыть файл."
+        | _ -> printfn "Не удалось сохранить записи справочника в файл."
     
     phonebook
 
 /// Loads phonebook data from a file
-let loadPhonebookFromFile (phonebook : Map<string, string>) =
+let loadPhonebookFromFile =
     printf "Введите путь до файла: "
     let path = Console.ReadLine()
     if not(File.Exists(path))
         then printfn "Не удалось найти файл с таким именем."
-             phonebook
+             Map.empty
         else
-            use reader = new StreamReader (path)
-            seq { while not reader.EndOfStream do
-                    yield reader.ReadLine() }
-            |> Seq.map (fun line -> 
-                let words = line.Split [|':'|]
-                (words.[0].Trim(), words.[1].Trim()))
-            |> Map.ofSeq
+            try
+                Phonebook.loadFromFile path
+            with
+                | :? FormatException as ex -> printfn "%s" ex.Message
+                                              Map.empty
+                | _ -> printfn "Не удалось загрузить данные из файла."
+                       Map.empty
                     
 /// Main program loop
-let rec programLoop (phonebook : Map<string, string>) =
+let rec programLoop (phonebook : Phonebook) =
     printf "Введите команду: "
     let input = Console.ReadLine()
     match input with
-    | "0" -> printHelp (); programLoop phonebook
+    | "0" -> printHelp ()
+             phonebook |> programLoop
     | "1" -> ()
     | "2" -> addPhonebookRecord phonebook |> programLoop
     | "3" -> printPhoneByName phonebook |> programLoop
     | "4" -> printNameByPhone phonebook |> programLoop
     | "5" -> printPhonebook phonebook |> programLoop
     | "6" -> savePhonebookToFile phonebook |> programLoop
-    | "7" -> loadPhonebookFromFile phonebook |> programLoop
-    | _ -> printfn "Команда не найдена."; programLoop phonebook
+    | "7" -> loadPhonebookFromFile |> programLoop
+    | _ -> printfn "Команда не найдена."
+           phonebook |> programLoop
 
 /// Program entry point
 [<EntryPoint>]
