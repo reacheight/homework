@@ -5,6 +5,7 @@ dist: xenial
 mono: none
 dotnet: 2.2
 install:
-- dotnet restore 4th-semester/Homework5/
+- dotnet restore 4th-semester/Homework4/
 script:
-- dotnet build 4th-semester/Homework5/Homework5.sln
+- dotnet build 4th-semester/Homework4/Homework4.sln
+- dotnet test 4th-semester/Homework4/
