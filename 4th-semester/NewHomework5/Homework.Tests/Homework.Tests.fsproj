@@ -16,6 +16,7 @@
 
     <ItemGroup>
         <Compile Include="CorrectBracketSequenceTests.fs" />
+        <Compile Include="PhonebookTests.fs" />
         <Compile Include="StackTests.fs" />
         <Compile Include="PointfreeTests.fs" />
         <Compile Include="Program.fs" />
@@ -23,6 +24,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\CorrectBracketSequence\CorrectBracketSequence.fsproj" />
+      <ProjectReference Include="..\Phonebook\Phonebook.fsproj" />
       <ProjectReference Include="..\Pointfree\Pointfree.fsproj" />
     </ItemGroup>
 

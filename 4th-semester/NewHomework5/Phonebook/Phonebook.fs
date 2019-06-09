@@ -5,13 +5,15 @@ open System.IO
 
 type Phonebook = Map<string, string>
 
+let empty = Map.empty
+
 /// Gets whether phonebook contains record with given name
 let containsName name (phonebook : Phonebook) =
     phonebook |> Map.containsKey name
 
 /// Adds new record to a phonebook
 /// If phonebook contains record with given name, overrides it
-let addRecord name phone (phonebook : Phonebook) : Phonebook=
+let addRecord name phone (phonebook : Phonebook) : Phonebook =
     phonebook |> Map.add name phone
     
 /// Finds phone by name
