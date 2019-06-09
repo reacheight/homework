@@ -1,8 +1,10 @@
 ﻿namespace Homework
 
+/// Module for string calculator workflow implementation
 module StringCalculatorWorkflow =
     open System
     
+    /// Evaluates arithmetic expressions with numbers given as strings
     type StringCalculatorBuilder() =
         member this.Bind(x : string, f) =
             match Double.TryParse(x) with

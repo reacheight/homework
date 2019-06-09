@@ -1,8 +1,10 @@
 ﻿namespace Homework
 
+/// Module for accuracy calculator workflow implementation
 module AccuracyCalculatorWorkflow =
     open System
     
+    /// Rounds arithmetic expressions with given precision    
     type AccuracyCalculatorBuilder (accuracy : int) =
         member this.Bind(x : float, f) = f (Math.Round(x, accuracy))
         
