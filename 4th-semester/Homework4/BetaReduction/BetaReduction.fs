@@ -1,18 +1,22 @@
+/// Module for beta reduction implementation
 module BetaReduction
 
 type Variable = char
 
+/// Represents lambda term
 type LambdaTerm =
     | Variable of Variable
     | Application of LambdaTerm * LambdaTerm
     | Abstraction of Variable * LambdaTerm
 
+/// Gets term free variables
 let rec getFreeVariables expression =
     match expression with
     | Variable x -> Set.empty |> Set.add x
     | Application(leftTerm, rightTerm) -> (getFreeVariables leftTerm) |> Set.union (getFreeVariables rightTerm)
     | Abstraction(variable, term) -> getFreeVariables term |> Set.remove variable
 
+/// Performs lambda calculust substitution
 let rec substitute variable term expression =
     let alphaConversionSubstitude variable term expression =
         let getNewVariable used =
@@ -47,7 +51,8 @@ let rec substitute variable term expression =
     | Abstraction _ ->
         let (newVar, newTerm) = expression |> alphaConversionSubstitude variable term
         Abstraction(newVar, newTerm |> substitute variable term)
-                
+            
+/// Performs beta reduction with normal strategy    
 let rec betaReduction expression =
     match expression with
     | Variable x -> Variable x
