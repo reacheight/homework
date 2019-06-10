@@ -1,0 +1,10 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="IsPalindrome.fs" />
+    <Compile Include="ListSearch.fs" />
+    <Compile Include="MergeSort.fs" />
+  </ItemGroup>
+</Project>
