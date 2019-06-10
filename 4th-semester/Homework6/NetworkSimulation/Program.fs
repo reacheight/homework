@@ -19,16 +19,16 @@ let main argv =
                                                    if i % 2 = 0
                                                        then Linux() :> IOperatingSystem
                                                        else Windows() :> IOperatingSystem
-                                                       )
+                                                       ) :> IComputer
                     )
                     
-    let connections = [(computers.[0] :> IComputer, [computers.[1] :> IComputer; computers.[3] :> IComputer]);
-                       (computers.[1] :> IComputer, [computers.[0] :> IComputer; computers.[3] :> IComputer; computers.[6] :> IComputer]);
-                       (computers.[2] :> IComputer, [computers.[4] :> IComputer]);
-                       (computers.[3] :> IComputer, [computers.[0] :> IComputer]);
-                       (computers.[4] :> IComputer, [computers.[2] :> IComputer]);
-                       (computers.[5] :> IComputer, []);
-                       (computers.[6] :> IComputer, [computers.[1] :> IComputer])]
+    let connections = [(computers.[0], [computers.[1]; computers.[3]]);
+                       (computers.[1], [computers.[0]; computers.[3]; computers.[6]]);
+                       (computers.[2], [computers.[4]]);
+                       (computers.[3], [computers.[0]]);
+                       (computers.[4], [computers.[2]]);
+                       (computers.[5], []);
+                       (computers.[6], [computers.[1]])]
     
     let network = Network(connections)
     
