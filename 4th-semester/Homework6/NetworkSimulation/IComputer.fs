@@ -6,7 +6,7 @@ type IComputer =
     abstract member Id : int
     
     /// Gets computer operating system
-    abstract member OperatingSystem : IOperatingSysmtem
+    abstract member OperatingSystem : IOperatingSystem
     
     /// Gets and sets whether computer is infected
     abstract member Infected : bool with get, set

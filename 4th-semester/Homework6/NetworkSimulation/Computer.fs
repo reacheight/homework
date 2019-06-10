@@ -1,7 +1,7 @@
 namespace NetworkSimulation
 
 /// Implements computer
-type Computer(id, infected, operatingSystem : IOperatingSysmtem) =
+type Computer(id, infected, operatingSystem : IOperatingSystem) =
     let mutable infected = infected
     
     interface IComputer with

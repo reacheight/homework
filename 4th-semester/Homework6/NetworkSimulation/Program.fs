@@ -4,11 +4,11 @@ open NetworkSimulation
 open System
 
 type Linux() =
-    interface IOperatingSysmtem with
+    interface IOperatingSystem with
         member this.InfectionProbability = 0.3
 
 type Windows() =
-    interface IOperatingSysmtem with
+    interface IOperatingSystem with
         member this.InfectionProbability = 0.7
 
 [<EntryPoint>]
@@ -17,8 +17,8 @@ let main argv =
                     |> List.map (fun i -> Computer(i,
                                                    i % 3 = 0,
                                                    if i % 2 = 0
-                                                       then Linux() :> IOperatingSysmtem
-                                                       else Windows() :> IOperatingSysmtem
+                                                       then Linux() :> IOperatingSystem
+                                                       else Windows() :> IOperatingSystem
                                                        )
                     )
                     
