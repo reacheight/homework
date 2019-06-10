@@ -1,0 +1,11 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="BinaryTreeMap.fs" />
+    <Compile Include="EvenCount.fs" />
+    <Compile Include="ParseTree.fs" />
+    <Compile Include="PrimeNumbers.fs" />
+  </ItemGroup>
+</Project>
