@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "StringCalculatorWorkflow", "StringCalculatorWorkflow\StringCalculatorWorkflow.fsproj", "{55FF3A5C-BC84-4075-9E12-6209DD1B0D5E}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Homework.Tests", "Homework.Tests\Homework.Tests.fsproj", "{AF55DABC-4207-4664-8EE7-CA14DBDF6C7C}"
+EndProject
+Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "AccuracyCalculatorWorkflow", "AccuracyCalculatorWorkflow\AccuracyCalculatorWorkflow.fsproj", "{57FA2E4A-A761-428C-A038-5EFC111369C9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{55FF3A5C-BC84-4075-9E12-6209DD1B0D5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{55FF3A5C-BC84-4075-9E12-6209DD1B0D5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{55FF3A5C-BC84-4075-9E12-6209DD1B0D5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{55FF3A5C-BC84-4075-9E12-6209DD1B0D5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AF55DABC-4207-4664-8EE7-CA14DBDF6C7C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AF55DABC-4207-4664-8EE7-CA14DBDF6C7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AF55DABC-4207-4664-8EE7-CA14DBDF6C7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AF55DABC-4207-4664-8EE7-CA14DBDF6C7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{57FA2E4A-A761-428C-A038-5EFC111369C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{57FA2E4A-A761-428C-A038-5EFC111369C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{57FA2E4A-A761-428C-A038-5EFC111369C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{57FA2E4A-A761-428C-A038-5EFC111369C9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
