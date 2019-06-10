@@ -17,17 +17,23 @@ module NetworkSimulationTests =
     let ``infection should behave as breadth first search with infected operating systems computer`` () =
         let computers = [0 .. 10]
                         |> List.map
-                            (fun i -> Computer(i, (if i = 0 then true else false), infectedOperatingSystem) :> IComputer)
+                            (fun i -> Computer(i, (i = 0), infectedOperatingSystem) :> IComputer)
         
         let connections = [computers.[0], [computers.[1]; computers.[2]];
                            computers.[1], [computers.[0]; computers.[3]; computers.[4]];
                            computers.[2], [computers.[0]; computers.[5]; computers.[6]];
                            computers.[3], [computers.[1]; computers.[7]; computers.[8]];
-                           computers.[4], [computers.[1]; computers.[9]; computers.[10]]]
+                           computers.[4], [computers.[1]; computers.[9]; computers.[10]];
+                           computers.[5], [computers.[2]];
+                           computers.[6], [computers.[2]];
+                           computers.[7], [computers.[3]];
+                           computers.[8], [computers.[3]];
+                           computers.[9], [computers.[4]];
+                           computers.[10], [computers.[4]]]
         
         let network = Network(connections)
         
-        for i in [1; 3; 6; 11] do
+        for i in [1; 3; 7; 11] do
             network.CurrentState
             |> List.forall (fun (id, infected) -> if id < i then infected else not infected)
             |> should be True
@@ -44,7 +50,13 @@ module NetworkSimulationTests =
                            computers.[1], [computers.[0]; computers.[3]; computers.[4]];
                            computers.[2], [computers.[0]; computers.[5]; computers.[6]];
                            computers.[3], [computers.[1]; computers.[7]; computers.[8]];
-                           computers.[4], [computers.[1]; computers.[9]; computers.[10]]]
+                           computers.[4], [computers.[1]; computers.[9]; computers.[10]];
+                           computers.[5], [computers.[2]];
+                           computers.[6], [computers.[2]];
+                           computers.[7], [computers.[3]];
+                           computers.[8], [computers.[3]];
+                           computers.[9], [computers.[4]];
+                           computers.[10], [computers.[4]]]
         
         let network = Network(connections)
         
